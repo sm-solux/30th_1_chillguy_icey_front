@@ -31,7 +31,8 @@ export default defineConfig([
     rules: {
       "no-unused-vars": "off",
       "react/prop-types": "off",
-      "prettier/prettier": "error",
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
+      "react-refresh/only-export-components": "off",
     },
   },
 ]);

@@ -1,0 +1,46 @@
+.Button {
+  background-color: #ffffff;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
+  width: 80px;
+  height: 50px;
+  padding: 10px 5px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #4b527e;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Button_blue {
+  background-color: #597edb;
+  color: #ffffff;
+}
+
+.Button_mid {
+  width: 200px;
+}
+
+.Button_midBlue {
+  width: 200px;
+  background-color: #597edb;
+  color: #ffffff;
+}
+
+.Button_midStroke {
+  width: 200px;
+  border: 2px solid #4b527e;
+}
+
+.Button_long {
+  width: 330px;
+}
+
+.Button_longBlue {
+  width: 330px;
+  background-color: #597edb;
+  color: #ffffff;
+}
