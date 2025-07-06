@@ -1,3 +1,4 @@
+/* 기본 버튼. 80x50 흰색 버튼 */
 .Button {
   background-color: #ffffff;
   cursor: pointer;
@@ -15,31 +16,37 @@
   align-items: center;
 }
 
-.Button_blue {
+/* 기본 버튼 파란색 버전 */
+.Button-blue {
   background-color: #597edb;
   color: #ffffff;
 }
 
-.Button_mid {
+/* 200x50 흰색 버튼 */
+.Button-mid {
   width: 200px;
 }
 
-.Button_midBlue {
+/* 200x50 파란색 버튼 */
+.Button-midBlue {
   width: 200px;
   background-color: #597edb;
   color: #ffffff;
 }
 
-.Button_midStroke {
+/* 200x50 흰색 배경 진한 테두리 버튼 */
+.Button-midStroke {
   width: 200px;
   border: 2px solid #4b527e;
 }
 
-.Button_long {
+/* 330x50 흰색 버튼 */
+.Button-long {
   width: 330px;
 }
 
-.Button_longBlue {
+/* 330x50 파란색 버튼 */
+.Button-longBlue {
   width: 330px;
   background-color: #597edb;
   color: #ffffff;
