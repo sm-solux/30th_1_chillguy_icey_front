@@ -1,0 +1,47 @@
+.team-create-content {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  align-items: center; /* 세로 중앙 */
+  justify-content: center; /* 가로 중앙 */
+}
+
+.team-create-box {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  width: 100%;
+}
+
+.team-create-mid-text {
+  width: 110px;
+  color: var(--Font-Color-50, #4b527e);
+
+  /* Body1/SemiBold/24px */
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 33.6px */
+  letter-spacing: -0.48px;
+}
+
+.team-create-input {
+  flex-grow: 1; /* ✅ 남은 공간 꽉 채움 */
+  height: 35px;
+
+  color: var(--Font-Color-30, #a4abd5);
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 28px */
+  letter-spacing: -0.4px;
+
+  border: none;
+  border-bottom: 3px solid #7b83b1;
+  background: transparent; /* ✅ 투명 배경 */
+  outline: none; /* 클릭 시 테두리 제거 */
+}
