@@ -1,8 +1,8 @@
 import "./App.css";
-import Login from "/pages/Login";
 // import Header from "./components/Header";
 // import MyCard from "./pages/MyCard";
 // import Letter from "./pages/Letter";
+// import Login from "./pages/icyLogin";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       {/* <Header /> */}
       {/* <MyCard /> */}
       {/* <Letter /> */}
-      <Login />
+      {/* <Login /> */}
     </div>
   );
 }
