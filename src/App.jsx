@@ -1,13 +1,14 @@
 import "./App.css";
 import Header from "./components/Header";
-import MyCard from "./pages/MyCard";
-import Letter from "./pages/Letter";
+// import Team from "./pages/Team";
+// import MyCard from "./pages/MyCard";
+// import Letter from "./pages/Letter";
 
 function App() {
   return (
     <div className="App-background">
       <Header />
-      <MyCard />
+      {/* <Team /> */}
       {/* <Letter /> */}
     </div>
   );
