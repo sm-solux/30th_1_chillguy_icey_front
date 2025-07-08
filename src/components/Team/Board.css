@@ -16,7 +16,16 @@
   position: relative;
 }
 
-.team-name {
+.board-team-box {
+  /* background-color: aqua; */
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  align-items: end;
+  justify-content: start;
+}
+
+.board-team-name {
   color: #fff;
 
   /* font */
@@ -31,7 +40,23 @@
   letter-spacing: -0.96px;
 }
 
-.team-board {
+.board-team-number {
+  color: #fff;
+  padding-bottom: 10px;
+
+  /* font */
+  text-shadow: 0px 2px 10px rgba(89, 126, 219, 0.5);
+
+  /* Body1/Bold/24px */
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 33.6px */
+  letter-spacing: -0.48px;
+}
+
+.board-team-notice {
   background-color: #fff;
   border-radius: 20px;
   flex-grow: 1;
