@@ -97,7 +97,7 @@
 
 /* box4 확장 상태 */
 .promExpanded {
-  height: 100% !important;
+  height: 600px !important;
 }
 .listShrinked {
   height: 203px !important;
