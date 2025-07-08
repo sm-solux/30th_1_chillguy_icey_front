@@ -15,7 +15,7 @@
 .team-button-section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   height: 45px;
 }
 
@@ -92,6 +92,8 @@
 .dday {
   min-width: 60px;
   text-align: right;
+  padding-right: 5px;
+
   color: #ff4f49;
 
   font-family: Inter;
