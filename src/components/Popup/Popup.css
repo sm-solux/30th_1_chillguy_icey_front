@@ -1,0 +1,68 @@
+.popup-basic-space {
+  position: fixed; /* ✅ 화면에 고정 */
+  top: 20px; /* ✅ 현재 위치 그대로 유지 */
+  left: 50%; /* ✅ 가로 가운데 정렬 */
+  transform: translateX(-50%); /* ✅ 수평 가운데 정렬 */
+
+  z-index: 999; /* ✅ 충분히 위에 보이게 */
+
+  width: 550px;
+  height: 180px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: #fff;
+
+  padding: 30px 100px;
+
+  /* 글래스모피즘 종합 */
+  box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.5) inset;
+  backdrop-filter: blur(22.5px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.popup-basic-text-space {
+  color: var(--Font-Color-70, #252b5a);
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 42px */
+  letter-spacing: -0.6px;
+}
+
+.popup-basic-button-space {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* .
+.
+.
+. */
+
+.test-text {
+  width: 100%;
+  min-width: 230px;
+  height: 35px;
+  margin-left: 30px;
+
+  color: var(--Font-Color-50, #4b527e);
+
+  /* Body2/Bold/20px */
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 28px */
+  letter-spacing: -0.4px;
+
+  /* ✅ 하단 경계선만 */
+  border-bottom: 3px solid #7b83b1;
+}

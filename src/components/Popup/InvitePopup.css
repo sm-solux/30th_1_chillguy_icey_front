@@ -1,0 +1,65 @@
+.popup-invite-space {
+  position: fixed; /* ✅ 화면 고정 */
+  top: 20px; /* ✅ 원하는 위치 (원래 padding-top이었음) */
+  left: 50%;
+  transform: translateX(-50%); /* 가로 중앙 정렬 */
+
+  z-index: 999;
+
+  width: 550px;
+  height: 180px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: #fff;
+
+  padding: 25px;
+
+  /* 글래스모피즘 종합 */
+  box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.5) inset;
+  backdrop-filter: blur(22.5px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.popup-invite-text-space {
+  width: 100%;
+  color: var(--Font-Color-70, #252b5a);
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 42px */
+  letter-spacing: -0.6px;
+}
+
+.popup-invite-link-space {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.link-text {
+  width: 400px;
+  height: 35px;
+
+  color: var(--Font-Color-30, #a4abd5);
+
+  /* Body2/Bold/20px */
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 28px */
+  letter-spacing: -0.4px;
+
+  /* ✅ 하단 경계선만 */
+  border-bottom: 3px solid #7b83b1;
+  overflow: hidden;
+}
