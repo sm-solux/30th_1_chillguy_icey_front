@@ -39,6 +39,7 @@
 
 .massage-title {
   color: var(--Font-Color-70, #252b5a);
+  margin: 5px 0;
 
   /* Subtitle1/Bold/36px */
   font-family: Inter;
