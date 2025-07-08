@@ -1,0 +1,117 @@
+.team-button {
+  background-color: #fff;
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+  padding: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* gap: 30px; */
+}
+
+/* 공통 영역 */
+.team-button-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 45px;
+}
+
+/* 왼쪽: 체크박스 + 팀 이름 */
+/* .team-button-section.left {
+  flex-grow: 1;
+} */
+
+.check-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 45px;
+  height: 45px;
+  aspect-ratio: 1 / 1;
+
+  border: none;
+  border-radius: 15px;
+  background: var(--Netural-Gray20, #d1d1d1);
+  cursor: pointer;
+}
+
+.isCheck {
+  background: var(--Font-Color-40, #7b83b1);
+}
+
+.check-img-size {
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin: auto;
+}
+
+/* 가운데: 링크 버튼 + 구분선 */
+.team-button-section.middle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 45px;
+}
+
+.link-button {
+  width: 45px;
+  height: 45px;
+  aspect-ratio: 1 / 1;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-img-size {
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin: auto;
+}
+
+/* 세로 구분선 */
+.v-line {
+  width: 2.5px;
+  height: 25px;
+  border-radius: 50px;
+  background-color: var(--Font-Color-40, #7b83b1);
+  align-self: center;
+}
+
+/* 오른쪽: D-day */
+.dday {
+  min-width: 60px;
+  text-align: right;
+  color: #ff4f49;
+
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: -0.4px;
+}
+
+/* 팀 이름 */
+.teamName {
+  color: #333;
+
+  width: 150px;
+  /* background-color: aqua; */
+
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: -0.4px;
+}
