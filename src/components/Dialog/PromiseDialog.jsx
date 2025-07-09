@@ -1,7 +1,7 @@
-import "./PromiseSnackbar.css";
+import "./PromiseDialog.css";
 import Button from "../Button";
 
-const PromiseSnackbar = () => {
+const PromiseDialog = () => {
   return (
     <div className="black-background">
       <div className="popup-space">
@@ -28,4 +28,4 @@ const PromiseSnackbar = () => {
   );
 };
 
-export default PromiseSnackbar;
+export default PromiseDialog;
