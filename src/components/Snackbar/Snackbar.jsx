@@ -1,7 +1,7 @@
-import "./Popup.css";
+import "./Snackbar.css";
 import Button from "../Button";
 
-const Popup = ({ text, buttontext, buttonOnclick }) => {
+const Snackbar = ({ text, buttontext, buttonOnclick }) => {
   return (
     <div className="popup-basic-space">
       <div className="popup-basic-text-space">{text}</div>
@@ -13,4 +13,4 @@ const Popup = ({ text, buttontext, buttonOnclick }) => {
   );
 };
 
-export default Popup;
+export default Snackbar;

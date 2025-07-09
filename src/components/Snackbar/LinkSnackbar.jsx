@@ -1,7 +1,7 @@
-import "./InvitePopup.css";
+import "./LinkSnackbar.css";
 import Button from "../Button";
 
-const InvitePopup = () => {
+const LinkSnackbar = () => {
   return (
     <div className="popup-invite-space">
       <div className="popup-invite-text-space">
@@ -16,4 +16,4 @@ const InvitePopup = () => {
   );
 };
 
-export default InvitePopup;
+export default LinkSnackbar;
