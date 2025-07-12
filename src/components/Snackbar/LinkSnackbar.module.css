@@ -1,4 +1,4 @@
-.popup-invite-space {
+.popup_invite_space {
   position: fixed; /* ✅ 화면 고정 */
   top: 20px; /* ✅ 원하는 위치 (원래 padding-top이었음) */
   left: 50%;
@@ -25,7 +25,7 @@
   gap: 25px;
 }
 
-.popup-invite-text-space {
+.popup_invite_text_space {
   width: 100%;
   color: var(--Font-Color-70, #252b5a);
   text-align: center;
@@ -38,14 +38,14 @@
   letter-spacing: -0.6px;
 }
 
-.popup-invite-link-space {
+.popup_invite_link_space {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.link-text {
+.link_text {
   width: 400px;
   height: 35px;
 

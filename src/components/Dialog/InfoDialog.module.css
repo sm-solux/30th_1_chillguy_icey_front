@@ -1,4 +1,4 @@
-.info-black-background {
+.info_black_background {
   position: fixed; /* 화면에 고정 */
   top: 0;
   left: 0;
@@ -14,7 +14,7 @@
   justify-content: center;
 }
 
-.info-popup-space {
+.info_popup_space {
   width: 800px;
   height: 450px;
   flex-shrink: 0;
@@ -34,7 +34,7 @@
   gap: 30px;
 }
 
-.info-text-space {
+.info_text_space {
   color: var(--Font-Color-70, #252b5a);
   text-align: center;
 
@@ -47,7 +47,7 @@
   letter-spacing: -0.72px;
 }
 
-.info-select-space {
+.info_select_space {
   width: 100%;
   height: 160px;
   display: flex;
@@ -73,13 +73,13 @@
   backdrop-filter: blur(22.5px);
 }
 
-.info-mid-size-text-space {
+.info_mid_size_text_space {
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
 
-.info-mid-size-text {
+.info_mid_size_text {
   width: 150px;
 
   color: var(--Font-Color-50, #4b527e);
@@ -95,20 +95,20 @@
   margin-bottom: 2px;
 } */
 
-.info-popup-button-space {
+.info_popup_button_space {
   width: 570px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
 }
-/* .
+/* . 
 .
 .
 . */
 
 /* 세로 구분선 */
-.info-popup-v-line {
+.info_popup_v_line {
   width: 3px;
   height: 95px;
   border-radius: 50px;
@@ -116,7 +116,7 @@
   align-self: center;
 }
 
-.info-test-text {
+.info_test_text {
   width: 100%;
   min-width: 200px;
   height: 35px;

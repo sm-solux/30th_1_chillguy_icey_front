@@ -1,12 +1,12 @@
-import "./Snackbar.css";
+import styles from "./Snackbar.module.css";
 import Button from "../Button";
 
 const Snackbar = ({ text, buttontext, buttonOnclick }) => {
   return (
-    <div className="popup-basic-space">
-      <div className="popup-basic-text-space">{text}</div>
+    <div className={styles.popup_basic_space}>
+      <div className={styles.popup_basic_text_space}>{text}</div>
 
-      <div className="popup-basic-button-space">
+      <div className={styles.popup_basic_button_space}>
         <Button text={buttontext} type={"midBlue"} onClick={buttonOnclick} />
       </div>
     </div>

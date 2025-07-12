@@ -1,4 +1,4 @@
-.popup-basic-space {
+.popup_basic_space {
   position: fixed; /* ✅ 화면에 고정 */
   top: 20px; /* ✅ 현재 위치 그대로 유지 */
   left: 50%; /* ✅ 가로 가운데 정렬 */
@@ -25,7 +25,7 @@
   gap: 25px;
 }
 
-.popup-basic-text-space {
+.popup_basic_text_space {
   color: var(--Font-Color-70, #252b5a);
   text-align: center;
 
@@ -37,17 +37,17 @@
   letter-spacing: -0.6px;
 }
 
-.popup-basic-button-space {
+.popup_basic_button_space {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-/* .
-.
-.
-. */
 
-.test-text {
+/* . */
+/* . */
+/* . */
+
+.test_text {
   width: 100%;
   min-width: 230px;
   height: 35px;
