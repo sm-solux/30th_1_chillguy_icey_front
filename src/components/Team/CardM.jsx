@@ -3,7 +3,7 @@ import Img from "../../assets/exPig.png";
 
 const CardM = () => {
   return (
-    <div className={st.CardM_content}>
+    <div className={st.CardM_content} onClick="">
       <div className={st.cardM_img_background}>
         <img className={st.cardM_img} src={Img} alt="" />
       </div>

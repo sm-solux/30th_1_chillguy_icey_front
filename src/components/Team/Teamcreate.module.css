@@ -44,6 +44,8 @@
   border-bottom: 3px solid #7b83b1;
   background: transparent; /* ✅ 투명 배경 */
   outline: none; /* 클릭 시 테두리 제거 */
+
+  padding-bottom: 5px;
 }
 
 .team_create_input::placeholder {
