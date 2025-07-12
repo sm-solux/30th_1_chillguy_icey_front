@@ -32,7 +32,7 @@
   flex-grow: 1; /* ✅ 남은 공간 꽉 채움 */
   height: 35px;
 
-  color: var(--Font-Color-30, #a4abd5);
+  color: #7b83b1;
   font-family: Inter;
   font-size: 20px;
   font-style: normal;
@@ -44,4 +44,8 @@
   border-bottom: 3px solid #7b83b1;
   background: transparent; /* ✅ 투명 배경 */
   outline: none; /* 클릭 시 테두리 제거 */
+}
+
+.team_create_input::placeholder {
+  color: var(--Font-Color-30, #a4abd5);
 }
