@@ -1,6 +1,6 @@
 import st from "./Teamcreate.module.css";
 
-const Teamcreate = () => {
+const Teamcreate = ({ value, onChange }) => {
   return (
     <div className={st.team_create_content}>
       <div className={st.team_create_box}>
@@ -9,7 +9,9 @@ const Teamcreate = () => {
           className={st.team_create_input}
           type="text"
           placeholder="직접 입력"
-          maxLength="7" // 만약 글자수 제한 시 사용
+          maxLength="7"
+          value={value}
+          onChange={onChange}
         />
       </div>
     </div>
