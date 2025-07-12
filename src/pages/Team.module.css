@@ -40,7 +40,7 @@
   justify-content: center;
 }
 
-/* 아래쪽 2개 박스 (카드 + 메시지) */
+/* 아래쪽 카드 + 메시지 */
 .Team_section1 > div:last-child {
   display: flex;
   flex-direction: row;
@@ -67,7 +67,7 @@
   justify-content: center;
 }
 
-/* Section2: 오른쪽 작게 2개 */
+/* Section2: 오른쪽 2개 박스 */
 .Team_section2 {
   display: flex;
   flex-direction: column;
@@ -82,6 +82,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .team_list_box {
@@ -92,15 +93,37 @@
 /* 기본 높이 상태 */
 .team_promise_box {
   height: 250px;
+  overflow: hidden;
 }
 .team_list_box {
   height: 560px;
 }
 
-/* box4 확장 상태 */
+/* 확장/축소 상태 */
 .promExpanded {
   height: 600px !important;
 }
 .listShrinked {
   height: 203px !important;
+}
+
+/* 전환용 fadeWrap */
+.fadeWrap {
+  width: 100%;
+  height: 100%;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.hide {
+  opacity: 0;
+  transform: scale(0.97);
+  pointer-events: none;
 }
