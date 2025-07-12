@@ -1,4 +1,4 @@
-.Massage-button {
+.Massage_button {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.massage-back {
+.massage_back {
   border-radius: 20px;
   background: var(--Primary-Color-20, #afcdff);
   width: 100%;
@@ -17,14 +17,14 @@
   z-index: 1;
 }
 
-.massage-Inner {
+.massage_Inner {
   border-radius: 20px;
   background: #fff;
   width: 100%;
   height: 100%;
 }
 
-.massage-front {
+.massage_front {
   border-radius: 20px;
   background: var(--Primary-Color-20, #afcdff);
   z-index: 99;
@@ -37,27 +37,23 @@
   padding: 20px;
 }
 
-.massage-title {
+.massage_title {
   color: var(--Font-Color-70, #252b5a);
   margin: 5px 0;
-
-  /* Subtitle1/Bold/36px */
   font-family: Inter;
   font-size: 36px;
   font-style: bold;
   font-weight: 700;
-  line-height: 140%; /* 50.4px */
+  line-height: 140%;
   letter-spacing: -0.72px;
 }
 
-.massage-subtitle {
+.massage_subtitle {
   color: var(--Font-Color-50, #4b527e);
-
-  /* Body3/SemiBold/16px */
   font-family: Inter;
   font-size: 16px;
   font-style: bold;
   font-weight: 700;
-  line-height: 140%; /* 22.4px */
+  line-height: 140%;
   letter-spacing: -0.32px;
 }

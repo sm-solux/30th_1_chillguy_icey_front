@@ -6,7 +6,7 @@
   font-size: 48px;
 } */
 
-.Board-content {
+.Board_content {
   gap: 20px;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@
   position: relative;
 }
 
-.board-team-box {
+.board_team_box {
   /* background-color: aqua; */
   display: flex;
   gap: 20px;
@@ -25,7 +25,7 @@
   justify-content: start;
 }
 
-.board-team-name {
+.board_team_name {
   color: #fff;
 
   /* font */
@@ -36,11 +36,11 @@
   font-size: 48px;
   font-style: normal;
   font-weight: 700;
-  line-height: 140%; /* 67.2px */
+  line-height: 140%;
   letter-spacing: -0.96px;
 }
 
-.board-team-number {
+.board_team_number {
   color: #fff;
   padding-bottom: 10px;
 
@@ -52,11 +52,11 @@
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
-  line-height: 140%; /* 33.6px */
+  line-height: 140%;
   letter-spacing: -0.48px;
 }
 
-.board-team-notice {
+.board_team_notice {
   background-color: #fff;
   border-radius: 20px;
   flex-grow: 1;

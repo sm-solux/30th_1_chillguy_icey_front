@@ -1,12 +1,13 @@
-import "./Teamlist.css";
+import st from "./Teamlist.module.css";
 import Button from "../Button";
 import Teambutton from "./Teambutton";
 import Teamcreate from "./Teamcreate";
 
 const Teamlist = () => {
   return (
-    // <div className="Teamlist-content">
-    //   <div className="Teamlist-space">
+    // 주석 처리된 부분은 필요 시 다시 열면 됩니다.
+    // <div className={st.Teamlist_content}>
+    //   <div className={st.Teamlist_space}>
     //     <Teambutton
     //       teamname="우리팀"
     //       dday="D-2"
@@ -43,15 +44,16 @@ const Teamlist = () => {
     //       // linkonClick={handleLinkClick}
     //     />
     //   </div>
-    //   <div className="Teamlist-button-space">
+    //   <div className={st.Teamlist_button_space}>
     //     <Button text={"팀 생성"} type={"mid"} />
     //   </div>
     // </div>
-    <div className="Teamlist-content">
-      <div className="Teamlist-space">
+
+    <div className={st.Teamlist_content}>
+      <div className={st.Teamlist_space}>
         <Teamcreate />
       </div>
-      <div className="Teamlist-button-space">
+      <div className={st.Teamlist_button_space}>
         <Button text={"팀 생성"} type={"mid"} />
       </div>
     </div>

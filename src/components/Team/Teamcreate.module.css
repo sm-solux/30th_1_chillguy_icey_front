@@ -1,4 +1,4 @@
-.team-create-content {
+.team_create_content {
   height: 100%;
   width: 100%;
 
@@ -7,7 +7,7 @@
   justify-content: center; /* 가로 중앙 */
 }
 
-.team-create-box {
+.team_create_box {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -15,7 +15,7 @@
   width: 100%;
 }
 
-.team-create-mid-text {
+.team_create_mid_text {
   width: 110px;
   color: var(--Font-Color-50, #4b527e);
 
@@ -28,7 +28,7 @@
   letter-spacing: -0.48px;
 }
 
-.team-create-input {
+.team_create_input {
   flex-grow: 1; /* ✅ 남은 공간 꽉 채움 */
   height: 35px;
 

@@ -1,14 +1,14 @@
-import "./Massage.css";
+import st from "./Massage.module.css";
 
 const Massage = () => {
   return (
-    <div className="Massage-button">
-      <div className="massage-back">
-        <div className="massage-Inner"></div>
+    <div className={st.Massage_button}>
+      <div className={st.massage_back}>
+        <div className={st.massage_Inner}></div>
       </div>
-      <div className="massage-front">
-        <div className="massage-title">쪽지함</div>
-        <div className="massage-subtitle">쪽지 & 팀 명함 확인하기</div>
+      <div className={st.massage_front}>
+        <div className={st.massage_title}>쪽지함</div>
+        <div className={st.massage_subtitle}>쪽지 & 팀 명함 확인하기</div>
       </div>
     </div>
   );

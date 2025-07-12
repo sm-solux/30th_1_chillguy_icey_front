@@ -1,11 +1,11 @@
-import "./Teamcreate.css";
+import st from "./Teamcreate.module.css";
 
 const Teamcreate = () => {
   return (
-    <div className="team-create-content">
-      <div className="team-create-box">
-        <div className="team-create-mid-text">팀 이름</div>
-        <div className="team-create-input">직접 작성</div>
+    <div className={st.team_create_content}>
+      <div className={st.team_create_box}>
+        <div className={st.team_create_mid_text}>팀 이름</div>
+        <div className={st.team_create_input}>직접 작성</div>
       </div>
     </div>
   );

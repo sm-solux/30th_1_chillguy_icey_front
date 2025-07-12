@@ -1,4 +1,4 @@
-import "./PromiseCheck.css";
+import st from "./PromiseCheck.module.css";
 import Promise from "./Promise.jsx";
 // import Promise_date from "./promise/Promise.jsx";
 // import Promise_time from "./promise/Promise.jsx";
@@ -8,17 +8,17 @@ const PromiseCheck = () => {
   return (
     <div>
       <Promise />
-      <div className="button-space">
-        <div className="button-section">
+      <div className={st.button_space}>
+        <div className={st.button_section}>
           <Button text={"날짜"} type={"no"} />
           <Button text={"시간"} />
         </div>
-        <div className="button-section">
+        <div className={st.button_section}>
           <Button text={"약속 확정"} type={"promise-no"} />
           <Button text={"완료"} />
         </div>
       </div>
-      <div className="promise-check-box">
+      <div className={st.promise_check_box}>
         {/* <Promise_date /> */}
         {/* <Promise_time /> */}
       </div>

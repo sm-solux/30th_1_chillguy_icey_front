@@ -1,4 +1,4 @@
-.CardM-content {
+.CardM_content {
   gap: 20px;
   display: flex;
   flex-direction: row;
@@ -10,47 +10,44 @@
   justify-content: center;
 }
 
-.cardM-text {
+.cardM_text {
   color: var(--Font-Color-50, #4b527e);
-  /* font */
   text-shadow: 0px 2px 10px rgba(89, 126, 219, 0.5);
-  /* Body3/SemiBold/16px */
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  line-height: 140%; /* 22.4px */
+  line-height: 140%;
   letter-spacing: -0.32px;
-
   width: 110px;
 }
 
-.cardM-img-background {
+.cardM_img_background {
   background-color: #fff;
   border-radius: 20px;
   width: 140px;
   height: 140px;
-  padding: 10px; /* ✅ 패딩 추가 */
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box; /* ✅ 패딩 포함해 크기 유지 */
+  box-sizing: border-box;
 }
 
-.cardM-img {
+.cardM_img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* ✅ 비율 유지하며 들어가게 */
-  object-position: center; /* ✅ 가운데 정렬 */
+  object-fit: contain;
+  object-position: center;
 }
 
-.cardM-board {
+.cardM_board {
   gap: 5px;
   display: flex;
   flex-direction: column;
 }
 
-.team-board {
+.team_board {
   background-color: #fff;
   border-radius: 20px;
   flex-grow: 1;
