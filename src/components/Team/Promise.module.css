@@ -1,17 +1,16 @@
-.Promise-content {
+.Promise_content {
   /* background-color: aqua; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
   gap: 20px;
   /* box-sizing: border-box; */
 }
 
 /* 달력 박스 (왼쪽 영역) */
-.promise-calendar-box {
+.promise_calendar_box {
   width: 200px;
   aspect-ratio: 1 / 1; /* ✅ 항상 정사각형 유지 */
   background-color: #fff;
@@ -19,17 +18,17 @@
 }
 
 /* 텍스트 박스 (오른쪽 영역) */
-.promise-text-box {
+.promise_text_box {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
   max-width: 210px;
 }
 
-.promise-text {
+.promise_text {
   color: var(--Netural-white, #fff);
   width: 100%;
   align-items: center;
@@ -49,7 +48,7 @@
 }
 
 /* 날짜와 D-day 표현 (예: 06.27, D-15) */
-.promise-date {
+.promise_date {
   width: 100%;
   color: var(--Font-Color-60, #363d6c);
   text-align: center;
@@ -63,7 +62,7 @@
   letter-spacing: -0.96px;
 }
 
-.promise-dday {
+.promise_dday {
   width: 100%;
   color: #fff;
   text-align: center;

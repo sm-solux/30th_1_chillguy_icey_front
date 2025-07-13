@@ -22,6 +22,34 @@
   color: #ffffff;
 }
 
+/* 기본 버튼 비활성화 버전 */
+.Button-no {
+  cursor: auto;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+}
+
+/* 110x50 흰색 버튼 */
+.Button-promise {
+  width: 110px;
+}
+
+/* 110x50 흰색 비활성화 버튼 */
+.Button-promise-no {
+  width: 110px;
+  cursor: auto;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+}
+
 /* 200x50 흰색 버튼 */
 .Button_mid {
   width: 200px;
