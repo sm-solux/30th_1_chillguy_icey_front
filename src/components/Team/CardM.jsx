@@ -1,9 +1,16 @@
 import st from "./CardM.module.css";
 import Img from "../../assets/exPig.png";
+import { useNavigate } from "react-router-dom";
 
 const CardM = () => {
+  const navigate = useNavigate();
+
+  const handleCardMClick = () => {
+    navigate("/mycard");
+  };
+
   return (
-    <div className={st.CardM_content} onClick="">
+    <div className={st.CardM_content} onClick={handleCardMClick}>
       <div className={st.cardM_img_background}>
         <img className={st.cardM_img} src={Img} alt="" />
       </div>
