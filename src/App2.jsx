@@ -2,12 +2,6 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Header from "./components/Header";
 import Team from "./pages/Team";
-// import PromiseSnackbar from "./components/Snackbar/PromiseSnackbar";
-// import Snackbar from "./components/Snackbar/Snackbar";
-// import LinkSnackbar from "./components/Snackbar/LinkSnackbar";
-// import InfoDialog from "./components/Dialog/InfoDialog";
-// import PromiseDialog from "./components/Dialog/PromiseDialog";
-// import Header from "./components/Header";
 import MyCard from "./pages/MyCard";
 import Letter from "./pages/Letter";
 import Login from "./pages/icyLogin";
@@ -16,19 +10,6 @@ import Layout_Login from "./components/PageLayout/Layout_login";
 
 function App2() {
   return (
-    // <div className="App-background">o
-    //   {/* <Header /> */}
-    //   {/* <Team /> */}
-    //   {/* <PromiseSnackbar /> */}
-    //   {/* <LinkSnackbar /> */}
-    //   {/* <InfoDialog /> */}
-    //   {/* <PromiseDialog /> */}
-    //   {/* <Snackbar text={"약속 확정이 완료되었습니다!"} buttontext={"확인"} /> */}
-    //   {/* <MyCard /> */}
-    //   {/* <Letter /> */}
-    //   {/*<Login />*/}
-    // </div>
-
     <Router>
       {/* 공통 레이아웃이 있는 페이지들 */}
       <Routes>
