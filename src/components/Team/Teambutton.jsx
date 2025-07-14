@@ -9,10 +9,7 @@ const Teambutton = ({ teamname, dday, isCheck, onClick, linkonClick }) => {
       <div className={`${st.team_button_section} left`}>
         <button
           className={`${st.check_box} ${isCheck ? st.isCheck : ""}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick(); // ✅ 여기만 상태 전환
-          }}
+          onClick={onClick} // ✅ 여기만 상태 전환
         >
           <img className={st.check_img_size} src={check} alt="check" />
         </button>
@@ -23,10 +20,7 @@ const Teambutton = ({ teamname, dday, isCheck, onClick, linkonClick }) => {
       <div className={`${st.team_button_section} middle`}>
         <button
           className={st.link_button}
-          onClick={(e) => {
-            e.stopPropagation();
-            linkonClick(); // ✅ 여기만 팝업
-          }}
+          onClick={() => linkonClick(teamname)}
         >
           <img className={st.link_img_size} src={link} alt="link" />
         </button>

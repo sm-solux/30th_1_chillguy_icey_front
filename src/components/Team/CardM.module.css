@@ -30,7 +30,10 @@
   font-weight: 700;
   line-height: 140%;
   letter-spacing: -0.32px;
-  width: 100px;
+  width: 105px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   /* background-color: aqua; */
 }
 

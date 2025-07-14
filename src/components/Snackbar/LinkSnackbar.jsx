@@ -1,7 +1,7 @@
 import styles from "./LinkSnackbar.module.css";
 import Button from "../Button";
 
-const LinkSnackbar = () => {
+const LinkSnackbar = ({ link }) => {
   return (
     <div className={styles.popup_invite_space}>
       <div className={styles.popup_invite_text_space}>
@@ -9,7 +9,7 @@ const LinkSnackbar = () => {
       </div>
 
       <div className={styles.popup_invite_link_space}>
-        <div className={styles.link_text}>https://asdfaasdfsdkfjlsgjksdl</div>
+        <div className={styles.link_text}>{link}</div>
         <Button text="복사" type={"blue"} />
       </div>
     </div>
