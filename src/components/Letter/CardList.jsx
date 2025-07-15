@@ -20,6 +20,7 @@ const CardList = ({
           key={index}
           data={card}
           onOpenModal={showSendButton ? () => onSendClick(card) : null}
+          showSendButton={showSendButton}
           teams={teamsData?.[index] || []}
           selectable={selectable}
           isSelected={selectedCardIndex === index}
