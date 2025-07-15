@@ -19,7 +19,7 @@ const CardModal = ({ onClose, mainTitle, subTitle, defaultValue = {} }) => {
   const [tmi, setTmi] = useState("");
 
   useEffect(() => {
-    if (defaultValue.name) {
+    if (defaultValue && typeof defaultValue.name === "string") {
       // 동물 목록
       const animals = ["강아지", "고양이", "곰", "개구리", "돼지", "토끼"];
 
@@ -41,10 +41,10 @@ const CardModal = ({ onClose, mainTitle, subTitle, defaultValue = {} }) => {
       setAnimal("");
     }
 
-    setMbti(defaultValue.mbti || "");
-    setHobby(defaultValue.hobby || "");
-    setSecret(defaultValue.secret || "");
-    setTmi(defaultValue.tmi || "");
+    setMbti(defaultValue?.mbti || "");
+    setHobby(defaultValue?.hobby || "");
+    setSecret(defaultValue?.secret || "");
+    setTmi(defaultValue?.tmi || "");
   }, [defaultValue]);
 
   const handleSave = () => {

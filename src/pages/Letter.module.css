@@ -59,21 +59,29 @@
 
 /* 스크롤바 전체 영역 */
 .Letter_list::-webkit-scrollbar {
-  width: 10px;
-  height: 6px;
+  width: 6px;
+  height: 26px;
 }
 
 /* 스크롤바 막대 (thumb) */
 .Letter_list::-webkit-scrollbar-thumb {
   background-color: white;
   border-radius: 50px;
-  border: 2px solid transparent;
+  border: 10px solid transparent;
   background-clip: content-box;
 }
 
 /* 스크롤바 트랙 (막대가 움직이는 배경) */
 .Letter_list::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.Letter_list::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+  display: block;
+  background: transparent;
+
+  height: 8px;
 }
 
 .Letter_list_expanded {
