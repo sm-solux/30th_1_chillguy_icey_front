@@ -7,7 +7,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate("/team"); // 소현이 추가하면 home으로 바꾸기
   };
   return (
     <header className={st.Header}>

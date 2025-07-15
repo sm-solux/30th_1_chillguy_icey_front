@@ -9,6 +9,14 @@ const Teamlist = ({ teams, onLinkClick, onTeamCheckClick, onTeamAdd }) => {
   const [teamName, setTeamName] = useState(""); // 입력값 상태
   const contentRef = useRef(null);
 
+  // 엔터키를 눌렀을 때 입력 받기
+  // const [inputText, setInputTest] = useState("");
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
+      handleCreateClick();
+    }
+  };
+
   const handleCreateClick = () => {
     if (showCreate && teamName.trim()) {
       console.log("입력된 팀 이름:", teamName); // ✅ 프론트에서 확인용 출력
@@ -49,6 +57,7 @@ const Teamlist = ({ teams, onLinkClick, onTeamCheckClick, onTeamAdd }) => {
           <Teamcreate
             value={teamName}
             onChange={(e) => setTeamName(e.target.value)}
+            onKeyDown={(e) => activeEnter(e)}
           />
         ) : (
           <>

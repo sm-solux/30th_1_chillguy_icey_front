@@ -226,7 +226,7 @@ const Team = () => {
       <div className={st.Team_container}>
         <section className={st.Team_section1}>
           <div className={`${st.box} ${st.team_borad_box}`}>
-            <Board />
+            <Board team={selectedTeam} />
           </div>
           <div>
             <div className={`${st.box} ${st.team_card_box}`}>
