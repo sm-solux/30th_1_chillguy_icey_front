@@ -3,70 +3,32 @@ import ReceivedLetter from "../components/Letter/ReceivedLetter";
 import CardList from "../components/Letter/CardList";
 import Button from "../components/Button";
 import LetterModal from "../components/Modal/LetterModal";
+import Snackbar from "../components/Snackbar/Snackbar";
 
 import st from "./Letter.module.css";
 
 import { useLetters } from "../hooks/useLetters";
-
-const messages = [
-  "쪽지 내용. 안녕하세요 처음 뵙겠습니다.",
-  "식사 하셨어요? 안하셨다면 같이 어떠세요",
-  "쪽지 내용. 안녕하세요 처음 뵙겠습니다.",
-  "식사 하셨어요? 안하셨다면 같이 어떠세요",
-  "쪽지 내용. 안녕하세요 처음 뵙겠습니다.",
-  "식사 하셨어요? 안하셨다면 같이 어떠세요",
-  "쪽지 내용. 안녕하세요 처음 뵙겠습니다.",
-  "식사 하셨어요? 안하셨다면 같이 어떠세요",
-  "쪽지 내용. 안녕하세요 처음 뵙겠습니다.",
-  "식사 하셨어요? 안하셨다면 같이 어떠세요",
-  "식사 하셨어요? 안하셨다면 같이 어떠세요",
-];
-
-const cards = [
-  {
-    name: "발랄한 고양이",
-    mbti: "INFP",
-    hobby: "산책",
-    secret: "좋은 귀 기울이기",
-    tmi: "커피 중독",
-  },
-  {
-    name: "귀여운 강아지",
-    mbti: "ESTJ",
-    hobby: "축구",
-    secret: "매일 운동하기",
-    tmi: "밤샘 가능",
-  },
-  {
-    name: "귀여운 강아지",
-    mbti: "ESTJ",
-    hobby: "축구",
-    secret: "매일 운동하기",
-    tmi: "밤샘 가능",
-  },
-  {
-    name: "귀여운 강아지",
-    mbti: "ESTJ",
-    hobby: "축구",
-    secret: "매일 운동하기",
-    tmi: "밤샘 가능",
-  },
-];
+import { cards } from "../util/card-info";
+import { messages } from "../util/letter-message";
 
 const Letter = () => {
   // 총 쪽지 개수
-  const totalLetters = 11;
-  // useLetters hook : 읽음 여부, 토글 여부.
+  const totalLetters = messages.length;
+  // hook: 열려있는 쪽지, 각 쪽지의 읽음 여부
   const { openedIndex, readStatus, handleClick } = useLetters(totalLetters);
 
   // state: 모달 열림 상태
   const [modalOpen, setModalOpen] = useState(false);
   // state: 쪽지 보내기로 선택한 명함
   const [selectedCard, setSelectedCard] = useState(null);
+  // state: 쪽지 내용 저장
+  const [sentLetters, setSentLetters] = useState([]);
+  // state: 쪽지 전송 완료 snackbar 상태
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   // ref: 실제 스크롤되는 영역(Letter_list)
   const letterListRef = useRef(null);
-  // ref: 뷰포트 역할 컨테이너(Letter_body)
+  // ref: 뷰포트 역할 요소(Letter_body)
   const letterBodyRef = useRef(null);
   // ref: 선택된 쪽지+내용 영역(Selected_section)
   const selectedSectionRef = useRef(null);
@@ -86,6 +48,28 @@ const Letter = () => {
     setSelectedCard(null); // 닫을 때 초기화
   };
 
+  // Snackbar 닫기 함수
+  const handleSnackbarClose = () => setSnackbarOpen(false);
+
+  // 쪽지 전송 함수
+  const handleSendLetter = (message) => {
+    const newLetter = {
+      recipient: selectedCard.name,
+      content: message,
+      timestamp: new Date().toISOString(), // 시간 기록
+    };
+
+    // 쪽지 저장 로직
+    setSentLetters((prev) => [...prev, newLetter]);
+    closeModal();
+
+    // 전송 완료 알림 띄우기
+    setSnackbarOpen(true);
+
+    // 일정 시간 후 자동 snackbar 닫기
+    setTimeout(() => setSnackbarOpen(false), 3000);
+  };
+
   // 선택된 쪽지를 Letter_body 뷰포트 기준 중앙에 위치시키기
   useEffect(() => {
     if (
@@ -96,8 +80,8 @@ const Letter = () => {
     )
       return;
 
-    const container = letterListRef.current; // 스크롤되는 컨테이너
-    const viewport = letterBodyRef.current; // 실제 보이는 영역 (뷰포트)
+    const container = letterListRef.current; // 스크롤 가능한 div
+    const viewport = letterBodyRef.current; // 실제 보이는 영역
     const target = selectedSectionRef.current; // 선택된 쪽지+내용
 
     // 선택된 요소의 중앙 좌표 (Letter_list 컨테이너 기준)
@@ -130,12 +114,12 @@ const Letter = () => {
                   isRead={readStatus[openedIndex]}
                   onClick={() => handleClick(openedIndex)}
                   isSelected={true}
-                  Name={openedIndex}
+                  name={messages[openedIndex]?.sender}
                 />
                 <div className={st.Letter_contentBox}>
                   <div className={st.Letter_message}>
                     <div className={st.Letter_message_text}>
-                      {messages[openedIndex]}
+                      {messages[openedIndex]?.content}
                     </div>
                   </div>
                   <Button
@@ -154,13 +138,15 @@ const Letter = () => {
                   key={i}
                   isOpen={openedIndex === i}
                   isRead={readStatus[i]}
-                  content={messages[i]}
+                  content={messages[i]?.content}
                   onClick={() => handleClick(i)}
-                  Name={i}
+                  name={messages[i]?.sender}
                 />
               );
             })}
           </div>
+
+          {/* 명함 리스트 */}
           <CardList
             cards={cards}
             onSendClick={openModal}
@@ -168,12 +154,25 @@ const Letter = () => {
           />
         </div>
       </div>
+      {/* 쪽지 작성 모달 LetterModal */}
       {modalOpen && selectedCard && (
         <div onClick={closeModal}>
           <div onClick={(e) => e.stopPropagation()}>
-            <LetterModal card={selectedCard} onClose={closeModal} />
+            <LetterModal
+              card={selectedCard}
+              onClose={closeModal}
+              onSend={handleSendLetter}
+            />
           </div>
         </div>
+      )}
+
+      {snackbarOpen && (
+        <Snackbar
+          text={"쪽지 보내기를 완료했습니다!"}
+          buttontext={"확인"}
+          buttonOnclick={handleSnackbarClose}
+        />
       )}
     </>
   );
