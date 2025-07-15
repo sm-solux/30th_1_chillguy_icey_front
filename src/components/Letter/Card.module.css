@@ -124,3 +124,18 @@
   display: flex;
   align-items: center;
 }
+
+.SelectedCard {
+  background: linear-gradient(
+    180deg,
+    rgba(182, 204, 252, 0.35) 0%,
+    rgba(182, 204, 252, 0.2) 100%
+  );
+  box-shadow: 0 0 16px 4px rgba(182, 204, 252, 0.6);
+  border: 2px solid rgba(182, 204, 252, 0.7);
+  border-radius: 20px;
+  transition:
+    background 0.4s ease-in-out,
+    box-shadow 0.4s ease-in-out,
+    border 0.4s ease-in-out;
+}

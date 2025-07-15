@@ -4,11 +4,26 @@ import modal_line_vertical from "../../assets/modal_line_vertical.svg";
 import Button from "../Button";
 import st from "./LetterModal.module.css";
 
-const LetterModal = ({ card, onClose }) => {
+// Props
+// card: 선택된 명함 정보
+// onClose: 모달 닫기 함수
+// onSend: 쪽지 내용 저장 함수
+
+const LetterModal = ({ card, onClose, onSend }) => {
+  // state: 쪽지 본문 저장
   const [message, setMessage] = useState("");
+
+  // 보내기 버튼 콜백 함수
+  const handleSendClick = () => {
+    if (!message.trim()) return; // 빈 메시지 방지
+    onSend(message);
+  };
+
   return (
     <div className={st.Overlay}>
+      {/* 모달 전체 컨테이너 */}
       <div className={st.LetterModal}>
+        {/* 타이틀 */}
         <div className={st.Title_wrapper}>
           <div className={st.Title}>
             <div className={st.Main_title}>쪽지 작성하기</div>
@@ -16,7 +31,10 @@ const LetterModal = ({ card, onClose }) => {
           </div>
           <img className={st.Line} src={modal_line} alt="modal_line" />
         </div>
+
+        {/* 명함 + 쪽지 작성 */}
         <div className={st.Letter_wrapper}>
+          {/* 수신자 명함 정보 */}
           <div className={st.Card}>
             <div className={st.Card_Name}>{card.name}</div>
             <div className={st.Card_Wrapper}>
@@ -30,7 +48,9 @@ const LetterModal = ({ card, onClose }) => {
             </div>
           </div>
 
+          {/* 쪽지 작성 */}
           <div className={st.Write_body}>
+            {/* 발신자, 수신자 정보 표시 */}
             <div className={st.Info}>
               <div className={st.Send_wrapper}>
                 <div className={st.Info_text_title}>보내는 사람</div>
@@ -52,6 +72,7 @@ const LetterModal = ({ card, onClose }) => {
               </div>
             </div>
 
+            {/* 쪽지 작성 textarea */}
             <div className={st.Write_letter}>
               <textarea
                 className={st.Write_text}
@@ -62,8 +83,10 @@ const LetterModal = ({ card, onClose }) => {
             </div>
           </div>
         </div>
+
+        {/* 하단 버튼 */}
         <div className={st.Confirm_buttons}>
-          <Button text={"보내기"} type={"midBlue"} />
+          <Button text={"보내기"} type={"midBlue"} onClick={handleSendClick} />
           <Button text={"취소"} type={"midStroke"} onClick={onClose} />
         </div>
       </div>
