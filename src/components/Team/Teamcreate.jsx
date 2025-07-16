@@ -1,6 +1,6 @@
 import st from "./Teamcreate.module.css";
 
-const Teamcreate = ({ value, onChange }) => {
+const Teamcreate = ({ value, onChange, onKeyDown }) => {
   return (
     <div className={st.team_create_content}>
       <div className={st.team_create_box}>
@@ -12,6 +12,7 @@ const Teamcreate = ({ value, onChange }) => {
           maxLength="7"
           value={value}
           onChange={onChange}
+          onKeyDown={onKeyDown}
         />
       </div>
     </div>

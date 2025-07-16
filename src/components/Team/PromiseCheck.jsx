@@ -4,7 +4,7 @@ import Promise from "./Promise.jsx";
 // import Promise_time from "./promise/Promise.jsx";
 import Button from "../Button.jsx";
 
-const PromiseCheck = ({ userType }) => {
+const PromiseCheck = ({ userType, onConfirm }) => {
   if (userType === "Leader") {
     return (
       <div className={st.Promise_check_content}>
@@ -15,7 +15,7 @@ const PromiseCheck = ({ userType }) => {
             <Button text={"시간"} />
           </div>
           <div className={st.button_section}>
-            <Button text={"약속 확정"} type={"promise-no"} />
+            <Button text={"약속 확정"} type={"promise"} onClick={onConfirm} />
             <Button text={"완료"} />
           </div>
         </div>
