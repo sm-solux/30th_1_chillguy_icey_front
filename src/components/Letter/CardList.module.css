@@ -13,13 +13,13 @@
   overflow-x: auto;
   overflow-y: hidden;
   flex-wrap: nowrap;
-  padding-bottom: 10px;
+  padding: 10px 0px;
 }
 
 /* 스크롤바 전체 영역 */
 .List::-webkit-scrollbar {
-  width: 10px;
-  height: 6px;
+  width: 6px;
+  height: 10px;
 }
 
 /* 스크롤바 막대 (thumb) */

@@ -9,7 +9,20 @@ import Dropdown from "../Dropdown";
 
 import st from "./CardModal.module.css";
 
-const CardModal = ({ onClose, mainTitle, subTitle, defaultValue = {} }) => {
+// Props
+// onClose: 모달 닫기 함수
+// onSave: 카드 정보 저장 함수
+// mainTitle: 메인 제목(큰 글자)
+// subTitle: 서브 제목(작은 글자)
+// defaultValue: 수정 시 기본 값으로 들어갈 카드 정보
+
+const CardModal = ({
+  onClose,
+  onSave,
+  mainTitle,
+  subTitle,
+  defaultValue = {},
+}) => {
   // state: 명함 추가 시 작성한 내용(CardModal)
   const [nickname, setNickname] = useState("");
   const [mbti, setMbti] = useState("");
@@ -19,7 +32,7 @@ const CardModal = ({ onClose, mainTitle, subTitle, defaultValue = {} }) => {
   const [tmi, setTmi] = useState("");
 
   useEffect(() => {
-    if (defaultValue.name) {
+    if (defaultValue && typeof defaultValue.name === "string") {
       // 동물 목록
       const animals = ["강아지", "고양이", "곰", "개구리", "돼지", "토끼"];
 
@@ -41,23 +54,22 @@ const CardModal = ({ onClose, mainTitle, subTitle, defaultValue = {} }) => {
       setAnimal("");
     }
 
-    setMbti(defaultValue.mbti || "");
-    setHobby(defaultValue.hobby || "");
-    setSecret(defaultValue.secret || "");
-    setTmi(defaultValue.tmi || "");
+    setMbti(defaultValue?.mbti || "");
+    setHobby(defaultValue?.hobby || "");
+    setSecret(defaultValue?.secret || "");
+    setTmi(defaultValue?.tmi || "");
   }, [defaultValue]);
 
   const handleSave = () => {
-    console.log({
+    const cardData = {
       nickname,
-      mbti,
       animal,
+      mbti,
       hobby,
       secret,
       tmi,
-    });
-    // 저장 후 모달 닫기
-    if (onClose) onClose();
+    };
+    if (onSave) onSave(cardData);
   };
 
   return (
