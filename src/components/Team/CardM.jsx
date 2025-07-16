@@ -1,18 +1,27 @@
 import st from "./CardM.module.css";
 import Img from "../../assets/exPig.png";
+import { useNavigate } from "react-router-dom";
 
-const CardM = () => {
+const CardM = ({ team }) => {
+  const navigate = useNavigate();
+
+  const handleCardMClick = () => {
+    navigate("/mycard");
+  };
+
+  if (!team || !team.card) return null;
+
   return (
-    <div className={st.CardM_content} onClick="">
+    <div className={st.CardM_content} onClick={handleCardMClick}>
       <div className={st.cardM_img_background}>
         <img className={st.cardM_img} src={Img} alt="" />
       </div>
       <div className={st.cardM_board}>
-        <div className={st.cardM_text}>명함이름</div>
-        <div className={st.cardM_text}>MBTI</div>
-        <div className={st.cardM_text}>취미</div>
-        <div className={st.cardM_text}>친해지는 방법</div>
-        <div className={st.cardM_text}>TMI</div>
+        <div className={st.cardM_text}>{team.card.name}</div>
+        <div className={st.cardM_text}>{team.card.mbti}</div>
+        <div className={st.cardM_text}>{team.card.hobby}</div>
+        <div className={st.cardM_text}>{team.card.secret}</div>
+        <div className={st.cardM_text}>{team.card.tmi}</div>
       </div>
     </div>
   );
