@@ -1,0 +1,21 @@
+.Delete_Button {
+  display: flex;
+  border: none;
+  cursor: pointer;
+  width: 60px;
+  height: 37.5px;
+  padding: 8.25px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border-radius: 15px;
+  background: rgba(255, 79, 73, 0.6);
+  color: var(--Netural-white, #fff);
+  text-align: center;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 21px */
+  letter-spacing: -0.3px;
+}
