@@ -7,6 +7,7 @@ import Letter from "./pages/Letter";
 import Login from "./pages/icyLogin";
 import Layout from "./components/PageLayout/Layout";
 import Layout_Login from "./components/PageLayout/Layout_login";
+import NotFound from "./pages/NotFound";
 
 function App2() {
   return (
@@ -22,13 +23,12 @@ function App2() {
         {/* 공통 레이아웃이 없는 페이지들 */}
         <Route element={<Layout_Login />}>
           <Route path="/login" element={<Login />} />
+          {/* 오류 뜰시에 해당 페이지로 가도록 -> 페이지 오류 page 만드나요? */}
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         {/* 소현이가 Home.jsx 추가하면 시작 */}
         {/* <Route path="/" element={<Home />} /> */}
-
-        {/* 오류 뜰시에 해당 페이지로 가도록 -> 페이지 오류 page 만드나요? */}
-        <Route path="*" element={<Login />} />
       </Routes>
     </Router>
   );
