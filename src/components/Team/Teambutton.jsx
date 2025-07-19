@@ -1,42 +1,32 @@
-import "./Teambutton.css";
+import st from "./Teambutton.module.css";
 import check from "../../assets/check.svg";
 import link from "../../assets/link.svg";
 
-// 팀이름, dday 이름, 현재 버튼이 눌린 상태인지 확인, 전체 리스트 버튼을 클릭, 링크 버튼을 클릭했을 때
-
 const Teambutton = ({ teamname, dday, isCheck, onClick, linkonClick }) => {
   return (
-    <div className="team-button">
+    <div className={st.team_button}>
       {/* 왼쪽: 체크박스 + 팀 이름 */}
-      <div className="team-button-section left">
+      <div className={st.left_section}>
         <button
-          className={`check-box ${isCheck ? "isCheck" : ""}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick(); // ✅ 여기만 상태 전환
-          }}
+          className={`${st.check_box} ${isCheck ? st.isCheck : ""}`}
+          onClick={onClick}
         >
-          <img className="check-img-size" src={check} alt="check" />
+          <img className={st.check_img_size} src={check} alt="check" />
         </button>
-        <div className="teamName">{teamname}</div>
+        <div className={st.team_name}>{teamname}</div>
       </div>
 
-      {/* 가운데: 링크 버튼 */}
-      <div className="team-button-section middle">
+      {/* 오른쪽: 링크 버튼 + 구분선 + D-day */}
+      <div className={st.right_section}>
         <button
-          className="link-button"
-          onClick={(e) => {
-            e.stopPropagation();
-            linkonClick(); // ✅ 여기만 팝업
-          }}
+          className={st.link_button}
+          onClick={() => linkonClick(teamname)}
         >
-          <img className="link-img-size" src={link} alt="link" />
+          <img className={st.link_img_size} src={link} alt="link" />
         </button>
-        <div className="v-line"></div>
+        <div className={st.v_line}></div>
+        <div className={st.dday}>{dday}</div>
       </div>
-
-      {/* 오른쪽: D-day */}
-      <div className="dday">{dday}</div>
     </div>
   );
 };

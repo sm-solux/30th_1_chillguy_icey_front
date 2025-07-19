@@ -1,0 +1,34 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-width: 744px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.App_background {
+  background: linear-gradient(
+    120.88deg,
+    rgba(118, 140, 240, 1) 0%,
+    rgba(148, 188, 240, 1) 23.47%,
+    rgba(181, 208, 253, 1) 57.38%,
+    rgba(222, 222, 246, 1) 86.25%
+  );
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 0px 50px;
+  min-height: 100vh;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+}
