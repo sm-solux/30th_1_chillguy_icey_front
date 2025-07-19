@@ -72,6 +72,15 @@
   background-color: rgba(102, 126, 234, 0.15);
 }
 
+.arrow:disabled {
+  opacity: 0.3;
+  cursor: unset;
+}
+
+.arrow:hover:disabled {
+  background-color: transparent !important;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -131,5 +140,9 @@
 }
 
 .inactive:hover {
-  background-color: rgba(102, 126, 234, 0);
+  background-color: transparent;
+}
+
+.selected.inactive:hover {
+  background-color: rgba(102, 126, 234, 0.35);
 }

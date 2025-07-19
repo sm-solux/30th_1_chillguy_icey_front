@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import st from "./EXPromiseCalendar.module.css";
 
-const EXPromiseCalendar = ({ goalDate }) => {
+const EXPromiseCalendar = ({ teamCreateDate, goalDate }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const today = new Date();
   const goal = goalDate ? new Date(goalDate) : null;
+  const teamCreated = teamCreateDate ? new Date(teamCreateDate) : null;
 
   const formatDate = (date) => {
     return date.toISOString().split("T")[0];
@@ -14,6 +15,35 @@ const EXPromiseCalendar = ({ goalDate }) => {
 
   const isSameDate = (date1, date2) => {
     return formatDate(date1) === formatDate(date2);
+  };
+
+  const isWithinAllowedRange = (targetDate) => {
+    if (!teamCreated) return true;
+
+    const createdYear = teamCreated.getFullYear();
+    const createdMonth = teamCreated.getMonth();
+
+    const targetYear = targetDate.getFullYear();
+    const targetMonth = targetDate.getMonth();
+
+    // 생성월 혹은 다음 월까지 허용
+    const allowedStart = new Date(createdYear, createdMonth, 1);
+    const allowedEnd = new Date(createdYear, createdMonth + 1, 1); // 다음 달 1일
+    allowedEnd.setMonth(allowedEnd.getMonth() + 1); // 그 다음 달은 불가
+
+    return targetDate >= allowedStart && targetDate < allowedEnd;
+  };
+
+  const canNavigatePrev = () => {
+    const prevDate = new Date(currentDate);
+    prevDate.setMonth(currentDate.getMonth() - 1);
+    return isWithinAllowedRange(prevDate);
+  };
+
+  const canNavigateNext = () => {
+    const nextDate = new Date(currentDate);
+    nextDate.setMonth(currentDate.getMonth() + 1);
+    return isWithinAllowedRange(nextDate);
   };
 
   const getDaysInMonth = (date) => {
@@ -60,7 +90,9 @@ const EXPromiseCalendar = ({ goalDate }) => {
   const navigateMonth = (direction) => {
     const newDate = new Date(currentDate);
     newDate.setMonth(currentDate.getMonth() + direction);
-    setCurrentDate(newDate);
+    if (isWithinAllowedRange(newDate)) {
+      setCurrentDate(newDate);
+    }
   };
 
   const monthNames = [
@@ -86,13 +118,21 @@ const EXPromiseCalendar = ({ goalDate }) => {
       <div className={st.calendar}>
         {/* 네비게이션 */}
         <div className={st.navigation}>
-          <button onClick={() => navigateMonth(-1)} className={st.navButton}>
+          <button
+            onClick={() => navigateMonth(-1)}
+            className={st.navButton}
+            disabled={!canNavigatePrev()}
+          >
             <ChevronLeft size={14} />
           </button>
           <div className={st.monthYear}>
-            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+            {monthNames[currentDate.getMonth()]}. {currentDate.getFullYear()}
           </div>
-          <button onClick={() => navigateMonth(1)} className={st.navButton}>
+          <button
+            onClick={() => navigateMonth(1)}
+            className={st.navButton}
+            disabled={!canNavigateNext()}
+          >
             <ChevronRight size={14} />
           </button>
         </div>
