@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 const Invite = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn } = location;
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     if (!isLoggedIn) {
