@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Team from "./pages/Team";
 import MyCard from "./pages/MyCard";
 import Letter from "./pages/Letter";
-import Login from "./pages/icyLogin";
+import Invite from "./pages/Invite";
+import Login from "./pages/IcyLogin";
 import Layout from "./components/PageLayout/Layout";
 import Layout_Login from "./components/PageLayout/Layout_login";
 import NotFound from "./pages/NotFound";
@@ -17,6 +18,7 @@ function App2() {
         <Route element={<Layout />}>
           <Route path="/team" element={<Team />} />
           <Route path="/mycard" element={<MyCard />} />
+          <Route path="/invite" element={<Invite />} />
           <Route path="/letter" element={<Letter />} />
         </Route>
 

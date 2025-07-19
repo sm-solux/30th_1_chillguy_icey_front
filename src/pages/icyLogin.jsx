@@ -1,9 +1,23 @@
-import "./icyLogin.css";
+import "./IcyLogin.css";
 import kakao from "../assets/kakaoLogo.svg";
 import google from "../assets/goolgeLogo.svg";
 import back from "../assets/back.svg";
 
-const icyLogin = () => {
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+const IcyLogin = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleLogin = async () => {
+    await login();
+
+    const redirectPath = location.state?.from || "/";
+    navigate(redirectPath, { replace: true });
+  };
+
   return (
     <div className="login-body">
       <div className="login-content">
@@ -34,5 +48,5 @@ const icyLogin = () => {
   );
 };
 
-export default icyLogin;
+export default IcyLogin;
 // export default Login;
