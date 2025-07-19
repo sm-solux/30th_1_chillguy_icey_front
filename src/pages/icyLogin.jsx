@@ -1,4 +1,4 @@
-import "./IcyLogin.module.css";
+import "./IcyLogin.css";
 import kakao from "../assets/kakaoLogo.svg";
 import google from "../assets/goolgeLogo.svg";
 import back from "../assets/back.svg";
