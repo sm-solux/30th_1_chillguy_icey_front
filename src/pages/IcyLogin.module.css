@@ -147,6 +147,8 @@ html {
   border-radius: 0.625rem;
   border: none;
 
+  cursor: pointer;
+
   flex-shrink: 0;
 }
 
