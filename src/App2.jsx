@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Team from "./pages/Team";
 import MyCard from "./pages/MyCard";
 import Letter from "./pages/Letter";
-import Login from "./pages/icyLogin";
+import Login from "./pages/IcyLogin";
 import Layout from "./components/PageLayout/Layout";
 import Layout_Login from "./components/PageLayout/Layout_login";
 import NotFound from "./pages/NotFound";

@@ -1,11 +1,11 @@
-import "./icyLogin.css";
+import "./IcyLogin.module.css";
 import kakao from "../assets/kakaoLogo.svg";
 import google from "../assets/goolgeLogo.svg";
 import back from "../assets/back.svg";
 
 import { useNavigate } from "react-router-dom";
 
-const icyLogin = () => {
+const IcyLogin = () => {
   const navigate = useNavigate();
 
   const kakao_REST_API_KEY = "벡엔드에서 받아오기";
@@ -60,5 +60,5 @@ const icyLogin = () => {
   );
 };
 
-export default icyLogin;
+export default IcyLogin;
 // export default Login;
