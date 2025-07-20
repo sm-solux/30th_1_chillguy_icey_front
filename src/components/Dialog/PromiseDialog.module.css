@@ -31,7 +31,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 20px;
 }
 
 .text_space {
@@ -41,7 +41,7 @@
   /* Subtitle1/Bold/36px */
   font-family: Inter;
   font-size: 36px;
-  font-style: normal;
+  font-style: bold;
   font-weight: 700;
   line-height: 140%; /* 50.4px */
   letter-spacing: -0.72px;
@@ -53,9 +53,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   padding: 30px;
-  gap: 10px;
+  gap: 20px;
 
   border-radius: 20px;
   border: 2.5px solid var(--Font-Color-50, #4b527e);
@@ -79,8 +79,17 @@
   gap: 25px;
 }
 
+.mid_size_2_space {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  width: 240px;
+  margin-left: 30px;
+}
+
 .mid_size_text {
-  width: 110px;
+  width: 100px;
 
   color: var(--Font-Color-50, #4b527e);
   font-family: Inter;
@@ -95,12 +104,35 @@
   margin-bottom: 2px;
 }
 
+.section_bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.popup_info_text {
+  color: var(--Red-Default, #ff4f49);
+  text-align: center;
+
+  /* Body3/SemiBold/16px */
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 22.4px */
+  letter-spacing: -0.32px;
+
+  padding-top: 5px;
+}
+
 .popup_button_space {
   width: 570px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 /* 세로 구분선 */
@@ -110,24 +142,4 @@
   border-radius: 50px;
   background-color: var(--Font-Color-40, #7b83b1);
   align-self: center;
-}
-
-.test_text {
-  width: 100%;
-  min-width: 230px;
-  height: 35px;
-  margin-left: 30px;
-
-  color: var(--Font-Color-50, #4b527e);
-
-  /* Body2/Bold/20px */
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 140%; /* 28px */
-  letter-spacing: -0.4px;
-
-  /* ✅ 하단 경계선만 */
-  border-bottom: 3px solid #7b83b1;
 }

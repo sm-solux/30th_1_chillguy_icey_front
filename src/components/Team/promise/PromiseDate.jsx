@@ -2,11 +2,27 @@ import React, { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import st from "./PromiseDate.module.css";
 
-const PromiseDate = ({ onDateSelect, isEditing }) => {
+
+const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState(new Set());
   const [isDragging, setIsDragging] = useState(false);
   const [dragMode, setDragMode] = useState(null);
+
+  const resetTime = (d) =>
+    d ? new Date(d.getFullYear(), d.getMonth(), d.getDate()) : null;
+
+  const teamCreated = resetTime(
+    teamCreateDate ? new Date(teamCreateDate) : null,
+  );
+  const minDate = teamCreated;
+  const maxDate = teamCreated
+    ? new Date(
+        teamCreated.getFullYear(),
+        teamCreated.getMonth() + 1,
+        teamCreated.getDate(),
+      )
+    : null;
 
   const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
   const monthNames = [
@@ -29,18 +45,19 @@ const PromiseDate = ({ onDateSelect, isEditing }) => {
     const month = date.getMonth();
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
     const startingDayOfWeek = firstDay.getDay();
+    const daysInMonth = lastDay.getDate();
+
     const days = [];
+
 
     const prevMonthLastDay = new Date(year, month, 0);
     const prevMonthDays = prevMonthLastDay.getDate();
+    
+    // 이전 달 날짜 채우기
     for (let i = startingDayOfWeek - 1; i >= 0; i--) {
-      days.push({
-        day: prevMonthDays - i,
-        isCurrentMonth: false,
-        date: new Date(year, month - 1, prevMonthDays - i),
-      });
+      const day = new Date(year, month, -i);
+      days.push({ day: day.getDate(), isCurrentMonth: false, date: day });
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
@@ -51,53 +68,89 @@ const PromiseDate = ({ onDateSelect, isEditing }) => {
       });
     }
 
+
+    // 다음 달 날짜 채우기
     const maxCells = 6 * 7;
     const remainingCells = maxCells - days.length;
-    for (let day = 1; day <= remainingCells; day++) {
-      days.push({
-        day,
-        isCurrentMonth: false,
-        date: new Date(year, month + 1, day),
-      });
+    for (let i = 1; i <= remainingCells; i++) {
+      const day = new Date(year, month + 1, i);
+      days.push({ day: day.getDate(), isCurrentMonth: false, date: day });
     }
 
     return days;
   };
 
+  const isWithinAllowedRange = (targetDate) => {
+    if (!teamCreated) return true;
+    const allowedStart = new Date(
+      teamCreated.getFullYear(),
+      teamCreated.getMonth(),
+      1,
+    );
+    const allowedEnd = new Date(
+      teamCreated.getFullYear(),
+      teamCreated.getMonth() + 2,
+      1,
+    );
+    return targetDate >= allowedStart && targetDate < allowedEnd;
+  };
+
+  const canNavigate = (offset) => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(currentDate.getMonth() + offset);
+    return isWithinAllowedRange(newDate);
+  };
+
   const formatDateKey = (date) =>
     `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
-  const handlePrevMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1),
-    );
-  };
-
-  const handleNextMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1),
-    );
+  const handleDateToggle = (date) => {
+    const dateKey = formatDateKey(date);
+    const newSet = new Set(selectedDates);
+    selectedDates.has(dateKey) ? newSet.delete(dateKey) : newSet.add(dateKey);
+    setSelectedDates(newSet);
   };
 
   const handleMouseDown = (dayObj) => {
-    if (!isEditing || !dayObj.isCurrentMonth) return;
+    const date = resetTime(dayObj.date);
+    if (!isEditing || !dayObj.isCurrentMonth || !isWithinAllowedRange(date)) return;
+    const isOutsideRange = date < minDate || date > maxDate;
+    if (isOutsideRange) return;
+
     setIsDragging(true);
-    const dateKey = formatDateKey(dayObj.date);
+    const dateKey = formatDateKey(date);
     const isSelected = selectedDates.has(dateKey);
+// <<<<<<< feature/13-promise-new-real
     const newSet = new Set(selectedDates);
     isSelected ? newSet.delete(dateKey) : newSet.add(dateKey);
     setDragMode(isSelected ? "remove" : "add");
     setSelectedDates(newSet);
+    handleDateToggle(date);
   };
 
+//   const handleMouseEnter = (dayObj) => {
+//     if (!isEditing || !isDragging || !dayObj.isCurrentMonth) return;
+//     const dateKey = formatDateKey(dayObj.date);
+// =======
+//     setDragMode(isSelected ? "remove" : "add");
+//     handleDateToggle(date);
+//   };
+
   const handleMouseEnter = (dayObj) => {
-    if (!isEditing || !isDragging || !dayObj.isCurrentMonth) return;
-    const dateKey = formatDateKey(dayObj.date);
+    const date = resetTime(dayObj.date);
+    if (!isEditing || !isDragging || !dayObj.isCurrentMonth || !isWithinAllowedRange(date))
+      return;
+    const isOutsideRange = date < minDate || date > maxDate;
+    if (isOutsideRange) return;
+    const dateKey = formatDateKey(date);
+
     const isSelected = selectedDates.has(dateKey);
-    const newSet = new Set(selectedDates);
-    if (dragMode === "add" && !isSelected) newSet.add(dateKey);
-    else if (dragMode === "remove" && isSelected) newSet.delete(dateKey);
-    setSelectedDates(newSet);
+    if (
+      (dragMode === "add" && !isSelected) ||
+      (dragMode === "remove" && isSelected)
+    ) {
+      handleDateToggle(date);
+    }
   };
 
   useEffect(() => {
@@ -119,8 +172,7 @@ const PromiseDate = ({ onDateSelect, isEditing }) => {
   }, [selectedDates]);
 
   useEffect(() => {
-    const data = getSelectedDatesData();
-    if (onDateSelect) onDateSelect(data);
+    onDateSelect?.(getSelectedDatesData());
   }, [getSelectedDatesData, onDateSelect]);
 
   const days = getDaysInMonth(currentDate);
@@ -130,13 +182,37 @@ const PromiseDate = ({ onDateSelect, isEditing }) => {
       <div className={st.wrapper}>
         <div className={st.card}>
           <div className={st.header}>
-            <button className={st.arrow} onClick={handlePrevMonth}>
+            <button
+              className={st.arrow}
+              onClick={() =>
+                setCurrentDate(
+                  new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth() - 1,
+                    1,
+                  ),
+                )
+              }
+              disabled={!canNavigate(-1)}
+            >
               <ChevronLeft size={18} />
             </button>
             <div className={st.month}>
               {monthNames[currentDate.getMonth()]}. {currentDate.getFullYear()}
             </div>
-            <button className={st.arrow} onClick={handleNextMonth}>
+            <button
+              className={st.arrow}
+              onClick={() =>
+                setCurrentDate(
+                  new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth() + 1,
+                    1,
+                  ),
+                )
+              }
+              disabled={!canNavigate(1)}
+            >
               <ChevronRight size={18} />
             </button>
           </div>
@@ -149,12 +225,19 @@ const PromiseDate = ({ onDateSelect, isEditing }) => {
             ))}
 
             {days.map((dayObj, i) => {
-              const dateKey = formatDateKey(dayObj.date);
+              const date = resetTime(dayObj.date);
+              const dateKey = formatDateKey(date);
               const isSelected = selectedDates.has(dateKey);
+              const isOutsideSelectableRange = date < minDate || date > maxDate;
+              const isDisabled =
+                !dayObj.isCurrentMonth ||
+                !isWithinAllowedRange(date) ||
+                isOutsideSelectableRange;
+
               return (
                 <div
                   key={i}
-                  className={`${st.day} ${!dayObj.isCurrentMonth ? st.inactive : ""} ${isSelected ? st.selected : ""}`}
+                  className={`${st.day} ${!dayObj.isCurrentMonth ? st.inactive : ""} ${isSelected ? st.selected : ""} ${isDisabled ? st.inactive : ""}`}
                   onMouseDown={() => handleMouseDown(dayObj)}
                   onMouseEnter={() => handleMouseEnter(dayObj)}
                 >
