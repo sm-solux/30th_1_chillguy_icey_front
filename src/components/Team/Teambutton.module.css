@@ -8,21 +8,26 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* gap: 30px; */
+  gap: 10px;
+
+  /* 최소 너비 설정으로 너무 작아지는 것 방지 */
+  min-width: 250px;
 }
 
-/* 공통 영역 */
-.team_button_section {
+/* 왼쪽 섹션: 체크박스 + 팀 이름 */
+.left_section {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   height: 45px;
-}
 
-/* 왼쪽: 체크박스 + 팀 이름 */
-/* .team_button_section.left {
-  flex-grow: 1;
-} */
+  /* 유연하게 늘어나고 줄어들되, 최소 너비 보장 */
+  flex: 1;
+  width: auto;
+
+  /* 최소 너비를 체크박스 + 팀이름 최소너비로 설정 */
+  min-width: calc(45px + 8px + 50px);
+}
 
 .check_box {
   display: flex;
@@ -31,7 +36,9 @@
 
   width: 45px;
   height: 45px;
-  aspect-ratio: 1 / 1;
+
+  /* 체크박스는 고정 크기 유지 */
+  flex-shrink: 0;
 
   border: none;
   border-radius: 15px;
@@ -50,18 +57,44 @@
   margin: auto;
 }
 
-/* 가운데: 링크 버튼 + 구분선 */
-.team_button_section.middle {
+/* 팀 이름 */
+.team_name {
+  color: #333;
+
+  /* 텍스트 줄임표시를 위한 설정 */
+  flex: 1;
+  width: 50px; /* 최소 너비 85px */
+  max-width: 100%; /* 최대 너비 제한 */
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: -0.4px;
+}
+
+/* 오른쪽 섹션: 링크 버튼 + 구분선 + D-day */
+.right_section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   height: 45px;
+
+  /* 고정 크기 유지 */
+  flex-shrink: 0;
 }
 
 .link_button {
   width: 45px;
   height: 45px;
-  aspect-ratio: 1 / 1;
+
+  /* 링크 버튼도 고정 크기 유지 */
+  flex-shrink: 0;
 
   background: none;
   border: none;
@@ -85,14 +118,19 @@
   height: 25px;
   border-radius: 50px;
   background-color: var(--Font-Color-40, #7b83b1);
-  align-self: center;
+
+  /* 구분선도 고정 크기 유지 */
+  flex-shrink: 0;
 }
 
-/* 오른쪽: D-day */
+/* D-day */
 .dday {
-  min-width: 60px;
+  min-width: 65px;
   text-align: right;
   padding-right: 5px;
+
+  /* D-day도 고정 크기 유지 */
+  flex-shrink: 0;
 
   color: #ff4f49;
 
@@ -100,20 +138,5 @@
   font-size: 20px;
   font-weight: 700;
   line-height: 140%;
-  letter-spacing: -0.4px;
-}
-
-/* 팀 이름 */
-.teamName {
-  color: #333;
-
-  width: 150px;
-  /* background-color: aqua; */
-
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 140%;
-  letter-spacing: -0.4px;
+  letter-spacing: -1px;
 }

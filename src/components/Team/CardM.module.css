@@ -2,9 +2,10 @@
   gap: 20px;
   display: flex;
   flex-direction: row;
-  padding: 10px;
+  /* padding: 10px; */
   border: 20px;
   width: 100%;
+  min-width: 110px;
   height: 100%;
   position: relative;
   align-items: center;
@@ -30,7 +31,10 @@
   font-weight: 700;
   line-height: 140%;
   letter-spacing: -0.32px;
-  width: 100px;
+  width: 105px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   /* background-color: aqua; */
 }
 
@@ -38,7 +42,7 @@
   background-color: #fff;
   border-radius: 20px;
   width: 130px;
-  min-width: 130px;
+  min-width: 110px;
   aspect-ratio: 1/1;
   padding: 10px;
   display: flex;
@@ -67,4 +71,12 @@
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+/* 미디어 쿼리: 화면 너비가 400px 이하일 때 */
+@media (max-width: 1185px) {
+  /* 숨기고 싶은 div에 display: none을 적용 */
+  .cardM_board {
+    display: none;
+  }
 }
