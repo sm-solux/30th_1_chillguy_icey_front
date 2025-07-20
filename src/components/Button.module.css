@@ -56,7 +56,7 @@
 }
 
 /* 110x50 흰색 배경 진한 테두리 버튼 */
-.Button-stroke {
+.Button_stroke {
   border: 2px solid #4b527e;
 }
 
@@ -99,7 +99,7 @@
 
 /* 흰색 버튼 hover */
 .Button:hover,
-.Button-promise:hover,
+.Button_promise:hover,
 .Button_mid:hover,
 .Button_midStroke:hover,
 .Button_long:hover {
@@ -116,4 +116,14 @@
 /* 빨간색 버튼 hover */
 .Button_midRed:hover {
   background-color: #e46a73;
+}
+
+.Button_promise_no:hover .Button_no:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+
+  background-color: transparent !important;
 }

@@ -52,7 +52,7 @@ const PromiseCheck2 = ({
         </div>
 
         <div className={st.button_section}>
-          {isLeader && <Button text="약속 확정" type="promise-no" />}
+          {isLeader && <Button text="약속 확정" type="promise_no" />}
           <Button
             text="완료"
             disabled={view === "time" ? !isTimeEditing : isDateSaved}

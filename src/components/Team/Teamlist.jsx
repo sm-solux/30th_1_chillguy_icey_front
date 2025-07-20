@@ -63,11 +63,11 @@ const Teamlist = ({ teams, onLinkClick, onTeamCheckClick, onTeamAdd }) => {
           <>
             {teams.map((team, index) => (
               <Teambutton
-                teamname={team.name}
-                dday={team.dday ? "D - " + team.dday : ""}
+                teamname={team.teamName}
+                dday={team.dday ? team.dday : ""}
                 isCheck={team.check}
-                onClick={() => onTeamCheckClick(team.name)}
-                linkonClick={() => onLinkClick(team.name)}
+                onClick={() => onTeamCheckClick(team.teamId)}
+                linkonClick={() => onLinkClick(team.teamId)}
               />
             ))}
             {/* <Teambutton

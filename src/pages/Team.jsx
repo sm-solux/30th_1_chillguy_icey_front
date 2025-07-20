@@ -1,4 +1,3 @@
-// @ -1,39 +1,286 @@
 import { useState, useRef } from "react";
 import st from "./Team.module.css";
 import Board from "../components/Team/Board";
@@ -10,114 +9,7 @@ import PromiseCheck2 from "../components/Team/PromiseCheck2";
 import Teamlist from "../components/Team/Teamlist";
 import PromiseDialog from "../components/Dialog/PromiseDialog";
 import LinkSnackbar from "../components/Snackbar/LinkSnackbar";
-
-const teams = [
-  {
-    name: "초코칩조아",
-    num: 6,
-    link: "https://www.when2meet.com/team1",
-    dday: 3,
-    card: {
-      name: "초코 우유",
-      mbti: "INFP",
-      hobby: "그림 그리기",
-      secret: "혼자 콘서트 다님",
-      tmi: "쿠키 반죽 먹어봄",
-    },
-    memo: {
-      name: "초코 우유",
-      mbti: "INFP",
-      hobby: "그림 그리기",
-      secret: "혼자 콘서트 다님",
-      tmi: "쿠키 반죽 먹어봄",
-    },
-    check: true,
-  },
-  {
-    name: "감성어택단",
-    num: 4,
-    link: "https://www.when2meet.com/team2",
-    dday: 7,
-    card: {
-      name: "감자꽃",
-      mbti: "ISFP",
-      hobby: "사진 찍기",
-      secret: "노래방 마이크 있음",
-      tmi: "창밖 비 올 때 우는 편",
-    },
-    memo: {
-      name: "감자꽃",
-      mbti: "ISFP",
-      hobby: "사진 찍기",
-      secret: "노래방 마이크 있음",
-      tmi: "창밖 비 올 때 우는 편",
-    },
-    check: false,
-  },
-  {
-    name: "불꽃연합",
-    num: 8,
-    link: "https://www.when2meet.com/team3",
-    dday: 15,
-    card: {
-      name: "파이어볼",
-      mbti: "ENTJ",
-      hobby: "등산",
-      secret: "사실 고소공포증 있음",
-      tmi: "라면 끓일 때 타이머 씀",
-    },
-    memo: {
-      name: "파이어볼",
-      mbti: "ENTJ",
-      hobby: "등산",
-      secret: "사실 고소공포증 있음",
-      tmi: "라면 끓일 때 타이머 씀",
-    },
-    check: false,
-  },
-  {
-    name: "무지개포유류",
-    num: 5,
-    link: "https://www.when2meet.com/team4",
-    dday: 22,
-    card: {
-      name: "몽실몽실",
-      mbti: "ENFP",
-      hobby: "우쿨렐레",
-      secret: "중학생 때 밴드부",
-      tmi: "무지개 양말 컬렉터",
-    },
-    memo: {
-      name: "몽실몽실",
-      mbti: "ENFP",
-      hobby: "우쿨렐레",
-      secret: "중학생 때 밴드부",
-      tmi: "무지개 양말 컬렉터",
-    },
-    check: false,
-  },
-  {
-    name: "코딩조아조",
-    num: 2,
-    link: "https://www.when2meet.com/team5",
-    dday: 35,
-    card: {
-      name: "버그헌터",
-      mbti: "ISTJ",
-      hobby: "디버깅",
-      secret: "어릴 때 C언어 책 읽음",
-      tmi: "git commit 메시지 시 짧은 시 씀",
-    },
-    memo: {
-      name: "버그헌터",
-      mbti: "ISTJ",
-      hobby: "디버깅",
-      secret: "어릴 때 C언어 책 읽음",
-      tmi: "git commit 메시지 시 짧은 시 씀",
-    },
-    check: false,
-  },
-];
+import { teams as teams, links, cards } from "../util/teams";
 
 // 날짜 및 시간 슬롯 설정
 const allDates = [
@@ -166,11 +58,11 @@ const Team = () => {
 
   const timeoutRef = useRef(null);
 
-  const handleTeamSelect = (teamName) => {
+  const handleTeamSelect = (teamId) => {
     // 팀 선택이 바뀌는지 확인하는 함수
     const updatedTeams = Teams.map((team) => ({
       ...team,
-      check: team.name === teamName,
+      check: team.teamId === teamId,
     }));
 
     const newSelectedTeam = updatedTeams.find((team) => team.check);
@@ -180,16 +72,20 @@ const Team = () => {
   };
 
   // 링크 버튼 클릭 -> 링크 팝업창 open
-  const handleLinkSnackbar = (teamName) => {
-    const targetTeam = Teams.find((team) => team.name === teamName);
+  const handleLinkSnackbar = (teamId) => {
+    const targetTeam = Teams.find((team) => team.teamId === teamId);
     if (!targetTeam) return;
+
+    // team id에 맞는 링크 가지고 오기
+    const linkObj = links.find((link) => link.teamId === teamId);
+    const teamWithLink = { ...targetTeam, link: linkObj?.link || "" };
 
     // 기존 타이머 제거
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
-    setTargetTeam(targetTeam);
+    setTargetTeam(teamWithLink);
     setIsLinkSnackbarOpen(true);
 
     // 새 타이머 설정
@@ -267,7 +163,11 @@ const Team = () => {
           </div>
           <div>
             <div className={`${st.box} ${st.team_card_box}`}>
-              <CardM team={selectedTeam} />
+              <CardM
+                card={
+                  cards.find((c) => c.teamId === selectedTeam.teamId).card || {}
+                }
+              />
             </div>
             <div className={`${st.box} ${st.team_message_box}`}>
               <Massage />

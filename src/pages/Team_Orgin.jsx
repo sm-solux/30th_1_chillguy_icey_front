@@ -1,14 +1,15 @@
-// @ -1,126 +1,350 @@
 import { useState, useRef } from "react";
 import st from "./Team.module.css";
 import Board from "../components/Team/Board";
 import CardM from "../components/Team/CardM";
 import Massage from "../components/Team/Massage";
 import Promise from "../components/Team/Promise";
+import PromiseCheck from "../components/Team/PromiseCheck";
 import PromiseCheck2 from "../components/Team/PromiseCheck2";
 import Teamlist from "../components/Team/Teamlist";
 import PromiseDialog from "../components/Dialog/PromiseDialog";
 import LinkSnackbar from "../components/Snackbar/LinkSnackbar";
+// import { teams } from "../util/teams";
 
 const teams = [
   {
@@ -151,10 +152,12 @@ const Team = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showPromiseCheck, setShowPromiseCheck] = useState(false);
 
+  const [fadeState, setFadeState] = useState("hidden"); // 'visible', 'hiding', 'hidden'
+
   // 👉 여기서 선택 데이터 상태 관리
   const [mySelections, setMySelections] = useState(fakeMyVotes);
   const [savedSelections, setSavedSelections] = useState(fakeMyVotes);
-  const [fadeState, setFadeState] = useState("hidden"); // 'visible', 'hiding', 'hidden'
+
   const [isPromiseDialogOpen, setIsPromiseDialogOpen] = useState(false);
   const [isLinkSnackbarOpen, setIsLinkSnackbarOpen] = useState(false);
   const [Teams, setTeams] = useState(teams);
@@ -230,27 +233,28 @@ const Team = () => {
     setIsPromiseDialogOpen(false);
   };
 
+  // Promise 클릭 시 (확장 + PromiseCheck 표시)
   const handlePromiseClick = () => {
     if (fadeState === "visible") return;
-    setIsExpanded(true);
+    setIsExpanded(true); // 박스 확장 먼저
     setShowPromiseCheck(true);
     setFadeState("visible");
   };
 
+  // List 클릭 시 (fade out 시작)
   const handleListClick = () => {
     if (fadeState !== "visible") return;
-    setFadeState("hiding");
+    setFadeState("hiding"); // PromiseCheck fade out 시작
   };
 
+  // fadeWrap의 opacity transition 끝나면 호출
   const onFadeTransitionEnd = (e) => {
     if (e.propertyName !== "opacity") return;
 
     if (fadeState === "hiding") {
-      setIsExpanded(false);
+      setIsExpanded(false); // fade out 완료 후 박스 축소
+      // setShowPromiseCheck(false); // DOM에서 제거
       setFadeState("hidden");
-
-      // ✅ 이제 이걸 제거하지 않아야 상태 유지됨
-      // setShowPromiseCheck(false);  ❌ 제거하지 마세요!
     }
   };
 
@@ -261,10 +265,14 @@ const Team = () => {
           <div className={`${st.box} ${st.team_borad_box}`}>
             <Board team={selectedTeam} />
           </div>
-          <div className={`${st.box} ${st.team_message_box}`}>
-            <Massage />
+          <div>
+            <div className={`${st.box} ${st.team_card_box}`}>
+              <CardM team={selectedTeam} />
+            </div>
+            <div className={`${st.box} ${st.team_message_box}`}>
+              <Massage />
+            </div>
           </div>
-          {/* </div> */}
         </section>
 
         <section className={st.Team_section2}>
@@ -282,7 +290,7 @@ const Team = () => {
               onTransitionEnd={onFadeTransitionEnd}
             >
               <PromiseCheck2
-                userType="Leader"
+                userType="LEADER"
                 allDates={allDates}
                 othersVotes={fakeVotes}
                 mySelections={mySelections}
@@ -291,31 +299,6 @@ const Team = () => {
                 setSavedSelections={setSavedSelections}
               />
             </div>
-          </div>
-          <div>
-            <div className={`${st.box} ${st.team_card_box}`}>
-              <CardM team={selectedTeam} />
-            </div>
-            <div className={`${st.box} ${st.team_message_box}`}>
-              <Massage />
-            </div>
-          </div>
-        </section>
-
-        {/* <section className={st.Team_section2}>
-          <div
-            className={`${st.box} ${st.team_promise_box} ${isExpanded ? st.promExpanded : ""}`}
-            onClick={handlePromiseClick}
-          >
-            <Promise />
-            {showPromiseCheck && (
-              <div
-                className={`${st.fadeWrap} ${fadeState === "visible" ? st.show : st.hide}`}
-                onTransitionEnd={onFadeTransitionEnd}
-              >
-                <PromiseCheck userType="Leader" onConfirm={openPromiseDialog} />
-              </div>
-            )}
           </div>
 
           <div
@@ -329,7 +312,7 @@ const Team = () => {
               onTeamCheckClick={handleTeamSelect}
             />
           </div>
-        </section> */}
+        </section>
       </div>
 
       {isLinkSnackbarOpen && <LinkSnackbar link={targetTeam.link} />}
