@@ -19,6 +19,13 @@
   backdrop-filter: blur(22.5px);
 }
 
+.CardName_wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .Card_Name {
   color: #4b527e;
   text-align: left;
@@ -27,7 +34,6 @@
   line-height: 140%;
   letter-spacing: -0.02em;
   font-weight: 600;
-  width: 100%;
   height: 45px;
   position: relative;
   align-self: stretch;
@@ -35,6 +41,12 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+.Card_Select {
+  width: 30px;
+  height: 30px;
+  margin-top: 5px;
 }
 
 .Card_Wrapper {
@@ -138,4 +150,26 @@
     background 0.4s ease-in-out,
     box-shadow 0.4s ease-in-out,
     border 0.4s ease-in-out;
+}
+
+.CardTool_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 323px;
+}
+
+.SelectButtonWrapper {
+  height: 50px;
+  transition: opacity 0.2s ease;
+}
+
+.Show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.Hide {
+  visibility: hidden;
+  opacity: 0;
 }

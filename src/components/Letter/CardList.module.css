@@ -39,9 +39,19 @@
   background: none;
   border: none;
   cursor: pointer;
+  padding: 0;
+  width: 357px;
+  height: 507px;
+  border-radius: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.Add_card_button:hover {
+  background-color: rgba(164, 171, 213, 0.5);
 }
 
 .Add_card_img {
   width: 357px;
   height: 507px;
+  transition: filter 0.2s ease;
 }

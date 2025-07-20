@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import CardList from "../components/Letter/CardList";
 import CardModal from "../components/Modal/CardModal";
@@ -132,6 +132,45 @@ const MyCard = () => {
   const selectedCard =
     selectedCardIndex !== null ? cardList[selectedCardIndex] : null;
 
+  // 현재 팀 이름
+  const currentTeamName = "칠가이";
+
+  // 팀 선택 핸들러를 useCallback으로 메모이제이션 처리
+  const handleSelectTeam = useCallback(
+    (newCardIndex, teamName) => {
+      const newTeamList = [...teamList];
+
+      // 1. 현재 팀이 사용 중인 명함 인덱스를 찾는다
+      const prevCardIndex = newTeamList.findIndex((teams) =>
+        teams.includes(teamName),
+      );
+
+      // 2. 기존 명함에서 팀 이름 제거
+      if (prevCardIndex !== -1) {
+        newTeamList[prevCardIndex] = newTeamList[prevCardIndex].filter(
+          (team) => team !== teamName,
+        );
+      }
+
+      // 3. 새로 선택한 명함에 팀 이름 추가
+      if (!newTeamList[newCardIndex].includes(teamName)) {
+        newTeamList[newCardIndex].push(teamName);
+      }
+
+      // 4. 상태 업데이트
+      setTeamList(newTeamList);
+    },
+    [teamList, setTeamList], // teamList 상태가 바뀔 때마다 새로 생성됨
+  );
+
+  // 현재 팀이 사용 중인 명함 index 찾기
+  const usedCardIndex = teamList.findIndex((teamArr) =>
+    teamArr.includes(currentTeamName),
+  );
+
+  // 실제 사용 중인 명함
+  const usedCard = usedCardIndex !== -1 ? cardList[usedCardIndex] : null;
+
   return (
     <>
       <div className={st.Card_body}>
@@ -158,6 +197,8 @@ const MyCard = () => {
               setSelectedCardIndex(index); // 아니면 선택
             }
           }}
+          currentTeamName={currentTeamName}
+          onSelectTeam={handleSelectTeam}
         />
       </div>
 
