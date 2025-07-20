@@ -290,7 +290,7 @@ const Team = () => {
               onTransitionEnd={onFadeTransitionEnd}
             >
               <PromiseCheck2
-                userType="Leader"
+                userType="LEADER"
                 allDates={allDates}
                 othersVotes={fakeVotes}
                 mySelections={mySelections}

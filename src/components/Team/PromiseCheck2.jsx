@@ -14,7 +14,7 @@ const PromiseCheck2 = ({
   savedSelections,
   setSavedSelections,
 }) => {
-  const isLeader = userType === "Leader";
+  const isLeader = userType === "LEADER";
   const [view, setView] = useState(isLeader ? "date" : "time");
 
   const [isTimeEditing, setIsTimeEditing] = useState(false);
@@ -69,7 +69,7 @@ const PromiseCheck2 = ({
 
       <div className={st.promise_check_box}>
         {view === "date" && isLeader && (
-          <PromiseDate isEditing={!isDateSaved} />
+          <PromiseDate isEditing={!isDateSaved} teamCreateDate="2025-07-15" />
         )}
         {view === "time" && (
           <>

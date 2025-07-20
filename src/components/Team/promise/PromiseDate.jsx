@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import st from "./PromiseDate.module.css";
 
-
 const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState(new Set());
@@ -50,10 +49,9 @@ const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
 
     const days = [];
 
-
     const prevMonthLastDay = new Date(year, month, 0);
     const prevMonthDays = prevMonthLastDay.getDate();
-    
+
     // 이전 달 날짜 채우기
     for (let i = startingDayOfWeek - 1; i >= 0; i--) {
       const day = new Date(year, month, -i);
@@ -67,7 +65,6 @@ const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
         date: new Date(year, month, day),
       });
     }
-
 
     // 다음 달 날짜 채우기
     const maxCells = 6 * 7;
@@ -113,14 +110,15 @@ const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
 
   const handleMouseDown = (dayObj) => {
     const date = resetTime(dayObj.date);
-    if (!isEditing || !dayObj.isCurrentMonth || !isWithinAllowedRange(date)) return;
+    if (!isEditing || !dayObj.isCurrentMonth || !isWithinAllowedRange(date))
+      return;
     const isOutsideRange = date < minDate || date > maxDate;
     if (isOutsideRange) return;
 
     setIsDragging(true);
     const dateKey = formatDateKey(date);
     const isSelected = selectedDates.has(dateKey);
-// <<<<<<< feature/13-promise-new-real
+    // <<<<<<< feature/13-promise-new-real
     const newSet = new Set(selectedDates);
     isSelected ? newSet.delete(dateKey) : newSet.add(dateKey);
     setDragMode(isSelected ? "remove" : "add");
@@ -128,17 +126,22 @@ const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
     handleDateToggle(date);
   };
 
-//   const handleMouseEnter = (dayObj) => {
-//     if (!isEditing || !isDragging || !dayObj.isCurrentMonth) return;
-//     const dateKey = formatDateKey(dayObj.date);
-// =======
-//     setDragMode(isSelected ? "remove" : "add");
-//     handleDateToggle(date);
-//   };
+  //   const handleMouseEnter = (dayObj) => {
+  //     if (!isEditing || !isDragging || !dayObj.isCurrentMonth) return;
+  //     const dateKey = formatDateKey(dayObj.date);
+  // =======
+  //     setDragMode(isSelected ? "remove" : "add");
+  //     handleDateToggle(date);
+  //   };
 
   const handleMouseEnter = (dayObj) => {
     const date = resetTime(dayObj.date);
-    if (!isEditing || !isDragging || !dayObj.isCurrentMonth || !isWithinAllowedRange(date))
+    if (
+      !isEditing ||
+      !isDragging ||
+      !dayObj.isCurrentMonth ||
+      !isWithinAllowedRange(date)
+    )
       return;
     const isOutsideRange = date < minDate || date > maxDate;
     if (isOutsideRange) return;
