@@ -53,22 +53,26 @@ const Team = () => {
   const [isPromiseDialogOpen, setIsPromiseDialogOpen] = useState(false);
   const [isLinkSnackbarOpen, setIsLinkSnackbarOpen] = useState(false);
   const [Teams, setTeams] = useState(teams);
-  const [selectedTeam, setSelectedTeam] = useState(Teams[0]);
+  // const [selectedTeam, setSelectedTeam] = useState(Teams[0]); // 레거시 - check가 js에 함께 포함된 경우
+  const [selectedTeamId, setSelectedTeamId] = useState(Number(Teams[0].teamId));
   const [targetTeam, setTargetTeam] = useState(null);
 
   const timeoutRef = useRef(null);
+  const selectedTeam = Teams.find((team) => team.teamId === selectedTeamId);
 
   const handleTeamSelect = (teamId) => {
-    // 팀 선택이 바뀌는지 확인하는 함수
-    const updatedTeams = Teams.map((team) => ({
-      ...team,
-      check: team.teamId === teamId,
-    }));
+    // // 팀 선택이 바뀌는지 확인하는 함수
+    // const updatedTeams = Teams.map((team) => ({
+    //   ...team,
+    //   check: team.teamId === teamId,
+    // }));
 
-    const newSelectedTeam = updatedTeams.find((team) => team.check);
+    // const newSelectedTeam = updatedTeams.find((team) => team.check);
 
-    setTeams(updatedTeams);
-    setSelectedTeam(newSelectedTeam);
+    // setTeams(updatedTeams);
+    // setSelectedTeam(newSelectedTeam);
+
+    setSelectedTeamId(teamId);
   };
 
   // 링크 버튼 클릭 -> 링크 팝업창 open
@@ -210,6 +214,7 @@ const Team = () => {
               onTeamAdd={handleTeamAdd}
               onLinkClick={handleLinkSnackbar}
               onTeamCheckClick={handleTeamSelect}
+              selectedTeamId={selectedTeamId}
             />
           </div>
         </section>

@@ -4,7 +4,13 @@ import Button from "../Button";
 import Teambutton from "./Teambutton";
 import Teamcreate from "./Teamcreate";
 
-const Teamlist = ({ teams, onLinkClick, onTeamCheckClick, onTeamAdd }) => {
+const Teamlist = ({
+  teams,
+  onLinkClick,
+  onTeamCheckClick,
+  onTeamAdd,
+  selectedTeamId,
+}) => {
   const [showCreate, setShowCreate] = useState(false);
   const [teamName, setTeamName] = useState(""); // 입력값 상태
   const contentRef = useRef(null);
@@ -65,7 +71,7 @@ const Teamlist = ({ teams, onLinkClick, onTeamCheckClick, onTeamAdd }) => {
               <Teambutton
                 teamname={team.teamName}
                 dday={team.dday ? team.dday : ""}
-                isCheck={team.check}
+                isCheck={team.teamId === selectedTeamId}
                 onClick={() => onTeamCheckClick(team.teamId)}
                 linkonClick={() => onLinkClick(team.teamId)}
               />
