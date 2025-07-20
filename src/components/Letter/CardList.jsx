@@ -23,6 +23,8 @@ const CardList = ({
   selectable = false,
   selectedCardIndex,
   onCardClick = () => {},
+  currentTeamName,
+  onSelectTeam,
 }) => {
   return (
     <div className={st.List}>
@@ -36,6 +38,8 @@ const CardList = ({
           selectable={selectable}
           isSelected={selectedCardIndex === index}
           onClick={() => onCardClick?.(index)}
+          currentTeamName={currentTeamName}
+          onSelectTeam={(teamName) => onSelectTeam(index, teamName)}
         />
       ))}
 

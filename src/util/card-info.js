@@ -43,3 +43,8 @@ export const teamsData = [
   ["팀Y", "팀Z"],
   [],
 ];
+
+// 현재 팀페이지에서 사용 중인 명함 index 반환
+export function findCardIndexByTeam(teamName) {
+  return teamsData.findIndex((teamList) => teamList.includes(teamName));
+}

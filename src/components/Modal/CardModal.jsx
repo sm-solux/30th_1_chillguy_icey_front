@@ -31,6 +31,9 @@ const CardModal = ({
   const [secret, setSecret] = useState("");
   const [tmi, setTmi] = useState("");
 
+  // state: 입력이 모두 채워지지 않았을 경우 에러창
+  const [errorMsg, setErrorMsg] = useState("");
+
   useEffect(() => {
     if (defaultValue && typeof defaultValue.name === "string") {
       // 동물 목록
@@ -61,16 +64,35 @@ const CardModal = ({
   }, [defaultValue]);
 
   const handleSave = () => {
-    const cardData = {
-      nickname,
-      animal,
-      mbti,
-      hobby,
-      secret,
-      tmi,
-    };
+    // 필수 항목 체크
+    if (
+      !nickname.trim() ||
+      !mbti.trim() ||
+      !animal.trim() ||
+      !hobby.trim() ||
+      !secret.trim() ||
+      !tmi.trim()
+    ) {
+      setErrorMsg("모든 항목을 반드시 입력해주세요.");
+      return; // 저장 중단
+    }
+
+    // 에러 메시지 초기화
+    setErrorMsg("");
+
+    const cardData = { nickname, animal, mbti, hobby, secret, tmi };
     if (onSave) onSave(cardData);
   };
+
+  // 3초 후 에러 메시지 사라지기
+  useEffect(() => {
+    if (errorMsg) {
+      const timer = setTimeout(() => {
+        setErrorMsg("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMsg]);
 
   return (
     <div className={st.Overlay}>
@@ -180,9 +202,13 @@ const CardModal = ({
             </div>
           </div>
         </div>
-        <div className={st.Confirm_buttons}>
-          <Button text={"저장"} type={"midBlue"} onClick={handleSave} />
-          <Button text={"취소"} type={"midStroke"} onClick={onClose} />
+        <div className={st.ErrorMessageWrapper}>
+          {/* 에러 메시지 보여주기 */}
+          {errorMsg && <div className={st.ErrorMessage}>{errorMsg}</div>}
+          <div className={st.Confirm_buttons}>
+            <Button text={"저장"} type={"midBlue"} onClick={handleSave} />
+            <Button text={"취소"} type={"midStroke"} onClick={onClose} />
+          </div>
         </div>
       </div>
     </div>
