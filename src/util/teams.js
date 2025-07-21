@@ -4,6 +4,8 @@ export const links = [
   { teamId: 3, name: "불꽃연합", link: "https://www.when2meet.com/team3" },
   { teamId: 4, name: "무지개포유류", link: "https://www.when2meet.com/team4" },
   { teamId: 5, name: "코딩조아조", link: "https://www.when2meet.com/team5" },
+  { teamId: 6, name: "날짜탭테스트", link: "https://www.when2meet.com/team6" },
+  { teamId: 7, name: "시간탭테스트", link: "https://www.when2meet.com/team7" },
 ];
 
 export const teams = [
@@ -14,7 +16,7 @@ export const teams = [
     currentDate: "2025-07-18",
     role: "MEMBER",
     dday: "D-3",
-    hasSchedule: true,
+    hasSchedule: false,
     confirmedDate: null,
   },
   {
@@ -35,17 +37,17 @@ export const teams = [
     role: "MEMBER",
     dday: "D-15",
     hasSchedule: true,
-    confirmedDate: null,
+    confirmedDate: "2025-07-29",
   },
   {
     teamId: 4,
     teamName: "무지개포유류",
     memberCount: 5,
-    currentDate: "2025-07-03",
+    currentDate: "2025-08-03",
     role: "MEMBER",
     dday: "D-22",
     hasSchedule: true,
-    confirmedDate: null,
+    confirmedDate: "2025-08-24",
   },
   {
     teamId: 5,
@@ -56,6 +58,26 @@ export const teams = [
     dday: "D-29",
     hasSchedule: true,
     confirmedDate: null,
+  },
+  {
+    teamId: 6,
+    teamName: "날짜탭테스트",
+    memberCount: 2,
+    currentDate: "2025-07-03",
+    role: "LEADER",
+    dday: "D-29",
+    hasSchedule: false,
+    confirmedDate: null,
+  },
+  {
+    teamId: 7,
+    teamName: "시간탭테스트",
+    memberCount: 2,
+    currentDate: "2025-07-03",
+    role: "LEADER",
+    dday: "D-29",
+    hasSchedule: true,
+    confirmedDate: "2025-07-29",
   },
 ];
 
@@ -102,6 +124,26 @@ export const cards = [
   },
   {
     teamId: 5,
+    card: {
+      name: "버그헌터",
+      mbti: "ISTJ",
+      hobby: "디버깅",
+      secret: "어릴 때 C언어 책 읽음",
+      tmi: "git commit 메시지 시 짧은 시 씀",
+    },
+  },
+  {
+    teamId: 6,
+    card: {
+      name: "버그헌터",
+      mbti: "ISTJ",
+      hobby: "디버깅",
+      secret: "어릴 때 C언어 책 읽음",
+      tmi: "git commit 메시지 시 짧은 시 씀",
+    },
+  },
+  {
+    teamId: 7,
     card: {
       name: "버그헌터",
       mbti: "ISTJ",

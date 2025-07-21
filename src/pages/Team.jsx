@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import st from "./Team.module.css";
 import Board from "../components/Team/Board";
 import CardM from "../components/Team/CardM";
@@ -53,26 +53,25 @@ const Team = () => {
   const [isPromiseDialogOpen, setIsPromiseDialogOpen] = useState(false);
   const [isLinkSnackbarOpen, setIsLinkSnackbarOpen] = useState(false);
   const [Teams, setTeams] = useState(teams);
+  const [Links, setLinks] = useState(links);
+  const [Cards, setCards] = useState(cards);
   // const [selectedTeam, setSelectedTeam] = useState(Teams[0]); // 레거시 - check가 js에 함께 포함된 경우
   const [selectedTeamId, setSelectedTeamId] = useState(Number(Teams[0].teamId));
   const [targetTeam, setTargetTeam] = useState(null);
+  const [pendingTeamId, setPendingTeamId] = useState(null);
 
   const timeoutRef = useRef(null);
   const selectedTeam = Teams.find((team) => team.teamId === selectedTeamId);
 
+  // 팀 클릭 시: Promise 줄이고 -> 이후에 팀 변경
   const handleTeamSelect = (teamId) => {
-    // // 팀 선택이 바뀌는지 확인하는 함수
-    // const updatedTeams = Teams.map((team) => ({
-    //   ...team,
-    //   check: team.teamId === teamId,
-    // }));
-
-    // const newSelectedTeam = updatedTeams.find((team) => team.check);
-
-    // setTeams(updatedTeams);
-    // setSelectedTeam(newSelectedTeam);
-
-    setSelectedTeamId(teamId);
+    if (fadeState === "visible") {
+      // Promise 패널이 열려있으면 먼저 닫는다
+      setFadeState("hiding");
+      setPendingTeamId(teamId); // 이후 팀 교체를 예약
+    } else {
+      setSelectedTeamId(teamId); // 바로 교체
+    }
   };
 
   // 링크 버튼 클릭 -> 링크 팝업창 open
@@ -81,7 +80,7 @@ const Team = () => {
     if (!targetTeam) return;
 
     // team id에 맞는 링크 가지고 오기
-    const linkObj = links.find((link) => link.teamId === teamId);
+    const linkObj = Links.find((link) => link.teamId === teamId);
     const teamWithLink = { ...targetTeam, link: linkObj?.link || "" };
 
     // 기존 타이머 제거
@@ -100,30 +99,48 @@ const Team = () => {
   };
 
   const handleTeamAdd = (teamname) => {
+    // 1. 현재 Teams 상태에서 id 계산
+    const newId = Teams.length > 0 ? Teams[Teams.length - 1].teamId + 1 : 1;
+
+    // 2. 새로운 팀 객체 생성
     const newTeam = {
-      name: teamname,
-      num: 1,
-      link: "https://new-link.com",
-      dday: null,
-      card: {
-        name: "새 멤버",
-        mbti: "INTP",
-        hobby: "코딩",
-        secret: "비밀 없음",
-        tmi: "생각 많음",
-      },
-      memo: {
-        name: "새 멤버",
-        mbti: "INTP",
-        hobby: "코딩",
-        secret: "비밀 없음",
-        tmi: "생각 많음",
-      },
-      check: false,
+      teamId: newId,
+      teamName: teamname,
+      memberCount: 1,
+      currentDate: "2025-07-03",
+      role: "LEADER",
+      dday: "D-29",
+      hasSchedule: false,
+      confirmedDate: null,
     };
 
+    const newLink = {
+      teamId: newId,
+      name: teamname,
+      link: `https://www.when2meet.com/team${newId}`,
+    };
+
+    const newCard = {
+      teamId: newId,
+      card: {
+        name: "새로운카드",
+        mbti: "INTP",
+        hobby: "코딩",
+        secret: "비밀 없음",
+        tmi: "생각 많음",
+      },
+    };
+
+    // 3. 상태 동기적으로 업데이트
     setTeams((prev) => [...prev, newTeam]);
+    setLinks((prev) => [...prev, newLink]);
+    setCards((prev) => [...prev, newCard]);
   };
+
+  // 팀 상태가 변경되면, 바로바로 console 알림
+  useEffect(() => {
+    console.log("Teams 상태 변경됨:", Teams);
+  }, [Teams]);
 
   // 약속 확정 클릭 -> 약속 확정 팝업창 open
   const openPromiseDialog = () => {
@@ -136,6 +153,7 @@ const Team = () => {
   // Promise 클릭 시 (확장 + PromiseCheck 표시)
   const handlePromiseClick = () => {
     if (fadeState === "visible") return;
+    if (selectedTeam.confirmedDate !== null) return;
     setIsExpanded(true); // 박스 확장 먼저
     setShowPromiseCheck(true);
     setFadeState("visible");
@@ -144,17 +162,24 @@ const Team = () => {
   // List 클릭 시 (fade out 시작)
   const handleListClick = () => {
     if (fadeState !== "visible") return;
+    if (selectedTeam.confirmedDate !== null) return;
+
     setFadeState("hiding"); // PromiseCheck fade out 시작
   };
 
-  // fadeWrap의 opacity transition 끝나면 호출
+  // 트랜지션 끝나고 팀을 변경
   const onFadeTransitionEnd = (e) => {
     if (e.propertyName !== "opacity") return;
 
     if (fadeState === "hiding") {
-      setIsExpanded(false); // fade out 완료 후 박스 축소
-      // setShowPromiseCheck(false); // DOM에서 제거
+      setIsExpanded(false);
       setFadeState("hidden");
+
+      // ⭐️ fade 닫힘이 끝났을 때 팀 변경
+      if (pendingTeamId !== null) {
+        setSelectedTeamId(pendingTeamId);
+        setPendingTeamId(null);
+      }
     }
   };
 
@@ -169,7 +194,7 @@ const Team = () => {
             <div className={`${st.box} ${st.team_card_box}`}>
               <CardM
                 card={
-                  cards.find((c) => c.teamId === selectedTeam.teamId).card || {}
+                  Cards.find((c) => c.teamId === selectedTeam.teamId).card || {}
                 }
               />
             </div>
@@ -181,10 +206,13 @@ const Team = () => {
 
         <section className={st.Team_section2}>
           <div
-            className={`${st.box} ${st.team_promise_box} ${isExpanded ? st.promExpanded : ""}`}
+            className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam.confirmedDate === null ? st.promExpanded : ""}`}
             onClick={handlePromiseClick}
           >
-            <Promise />
+            <Promise
+              teamCreateDate={selectedTeam.currentDate}
+              goalDate={selectedTeam.confirmedDate}
+            />
 
             <div
               className={`${st.fadeWrap} ${
@@ -194,7 +222,7 @@ const Team = () => {
               onTransitionEnd={onFadeTransitionEnd}
             >
               <PromiseCheck2
-                userType="LEADER"
+                team={selectedTeam}
                 allDates={allDates}
                 othersVotes={fakeVotes}
                 mySelections={mySelections}
