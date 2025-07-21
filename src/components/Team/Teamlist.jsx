@@ -76,41 +76,6 @@ const Teamlist = ({
                 linkonClick={() => onLinkClick(team.teamId)}
               />
             ))}
-            {/* <Teambutton
-              teamname="우리팀"
-              dday="D-2"
-              isCheck={true}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            />
-            <Teambutton
-              teamname="칠가이"
-              dday="D-14"
-              isCheck={false}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            />
-            <Teambutton
-              teamname="안녕"
-              dday="D-9"
-              isCheck={false}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            />
-            <Teambutton
-              teamname="안녕"
-              dday="D-9"
-              isCheck={false}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            />
-            <Teambutton
-              teamname="안녕"
-              dday="D-9"
-              isCheck={false}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            /> */}
           </>
         )}
       </div>
