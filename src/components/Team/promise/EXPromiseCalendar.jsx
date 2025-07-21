@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import st from "./EXPromiseCalendar.module.css";
 
 const EXPromiseCalendar = ({ teamCreateDate, goalDate }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    if (teamCreateDate) {
+      setCurrentDate(new Date(teamCreateDate));
+    }
+  }, [teamCreateDate]);
 
   const today = new Date();
   const goal = goalDate ? new Date(goalDate) : null;
@@ -14,7 +20,11 @@ const EXPromiseCalendar = ({ teamCreateDate, goalDate }) => {
   };
 
   const isSameDate = (date1, date2) => {
-    return formatDate(date1) === formatDate(date2);
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   };
 
   const isWithinAllowedRange = (targetDate) => {

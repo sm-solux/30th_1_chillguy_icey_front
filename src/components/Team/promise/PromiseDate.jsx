@@ -39,43 +39,8 @@ const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
     "Dec",
   ];
 
-  const getDaysInMonth = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const startingDayOfWeek = firstDay.getDay();
-    const daysInMonth = lastDay.getDate();
-
-    const days = [];
-
-    const prevMonthLastDay = new Date(year, month, 0);
-    const prevMonthDays = prevMonthLastDay.getDate();
-
-    // 이전 달 날짜 채우기
-    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
-      const day = new Date(year, month, -i);
-      days.push({ day: day.getDate(), isCurrentMonth: false, date: day });
-    }
-
-    for (let day = 1; day <= daysInMonth; day++) {
-      days.push({
-        day,
-        isCurrentMonth: true,
-        date: new Date(year, month, day),
-      });
-    }
-
-    // 다음 달 날짜 채우기
-    const maxCells = 6 * 7;
-    const remainingCells = maxCells - days.length;
-    for (let i = 1; i <= remainingCells; i++) {
-      const day = new Date(year, month + 1, i);
-      days.push({ day: day.getDate(), isCurrentMonth: false, date: day });
-    }
-
-    return days;
-  };
+  const formatDateKey = (date) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
   const isWithinAllowedRange = (targetDate) => {
     if (!teamCreated) return true;
@@ -98,41 +63,67 @@ const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
     return isWithinAllowedRange(newDate);
   };
 
-  const formatDateKey = (date) =>
-    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startingDayOfWeek = firstDay.getDay();
+    const daysInMonth = lastDay.getDate();
 
-  const handleDateToggle = (date) => {
+    const days = [];
+
+    // 이전 달 날짜 채우기
+    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+      const day = new Date(year, month, -i);
+      days.push({ day: day.getDate(), isCurrentMonth: false, date: day });
+    }
+
+    // 이번 달 날짜 채우기
+    for (let day = 1; day <= daysInMonth; day++) {
+      days.push({
+        day,
+        isCurrentMonth: true,
+        date: new Date(year, month, day),
+      });
+    }
+
+    // 다음 달 날짜 채우기 (6주 보장)
+    const maxCells = 6 * 7;
+    const remainingCells = maxCells - days.length;
+    for (let i = 1; i <= remainingCells; i++) {
+      const day = new Date(year, month + 1, i);
+      days.push({ day: day.getDate(), isCurrentMonth: false, date: day });
+    }
+
+    return days;
+  };
+
+  const toggleDate = (date) => {
     const dateKey = formatDateKey(date);
     const newSet = new Set(selectedDates);
-    selectedDates.has(dateKey) ? newSet.delete(dateKey) : newSet.add(dateKey);
-    setSelectedDates(newSet);
+    if (newSet.has(dateKey)) {
+      newSet.delete(dateKey);
+    } else {
+      newSet.add(dateKey);
+    }
+    setSelectedDates(newSet); // ✅ 선택한 날짜 상태 업데이트
   };
 
   const handleMouseDown = (dayObj) => {
     const date = resetTime(dayObj.date);
     if (!isEditing || !dayObj.isCurrentMonth || !isWithinAllowedRange(date))
       return;
-    const isOutsideRange = date < minDate || date > maxDate;
-    if (isOutsideRange) return;
+    if (date < minDate || date > maxDate) return;
 
-    setIsDragging(true);
     const dateKey = formatDateKey(date);
     const isSelected = selectedDates.has(dateKey);
-    // <<<<<<< feature/13-promise-new-real
-    const newSet = new Set(selectedDates);
-    isSelected ? newSet.delete(dateKey) : newSet.add(dateKey);
-    setDragMode(isSelected ? "remove" : "add");
-    setSelectedDates(newSet);
-    handleDateToggle(date);
-  };
 
-  //   const handleMouseEnter = (dayObj) => {
-  //     if (!isEditing || !isDragging || !dayObj.isCurrentMonth) return;
-  //     const dateKey = formatDateKey(dayObj.date);
-  // =======
-  //     setDragMode(isSelected ? "remove" : "add");
-  //     handleDateToggle(date);
-  //   };
+    setDragMode(isSelected ? "remove" : "add");
+    setIsDragging(true);
+
+    toggleDate(date); // ✅ 드래그 시작 시 날짜 토글
+  };
 
   const handleMouseEnter = (dayObj) => {
     const date = resetTime(dayObj.date);
@@ -143,16 +134,16 @@ const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
       !isWithinAllowedRange(date)
     )
       return;
-    const isOutsideRange = date < minDate || date > maxDate;
-    if (isOutsideRange) return;
-    const dateKey = formatDateKey(date);
+    if (date < minDate || date > maxDate) return;
 
+    const dateKey = formatDateKey(date);
     const isSelected = selectedDates.has(dateKey);
+
     if (
       (dragMode === "add" && !isSelected) ||
       (dragMode === "remove" && isSelected)
     ) {
-      handleDateToggle(date);
+      toggleDate(date); // ✅ 드래그 중에도 토글 작동
     }
   };
 
@@ -169,12 +160,13 @@ const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
     return Array.from(selectedDates)
       .map((key) => {
         const [y, m, d] = key.split("-");
-        return { year: +y, month: +m, day: +d, dateKey: key };
+        return { dateKey: key };
       })
       .sort((a, b) => a.dateKey.localeCompare(b.dateKey));
   }, [selectedDates]);
 
   useEffect(() => {
+    // ✅ 외부로 선택한 날짜 목록 전달 (이걸 이용해서 저장 가능!)
     onDateSelect?.(getSelectedDatesData());
   }, [getSelectedDatesData, onDateSelect]);
 
