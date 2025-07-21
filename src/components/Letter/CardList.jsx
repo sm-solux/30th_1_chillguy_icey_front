@@ -21,27 +21,31 @@ const CardList = ({
   showSendButton = true,
   showAddButton = false,
   selectable = false,
-  selectedCardIndex,
+  selectedCardId,
   onCardClick = () => {},
   currentTeamName,
   onSelectTeam,
 }) => {
   return (
     <div className={st.List}>
-      {cards.map((card, index) => (
-        <Card
-          data={card}
-          teams={teamsData?.[index] || []}
-          onLetterModal={showSendButton ? () => onSendClick(card) : null}
-          key={index}
-          showSendButton={showSendButton}
-          selectable={selectable}
-          isSelected={selectedCardIndex === index}
-          onClick={() => onCardClick?.(index)}
-          currentTeamName={currentTeamName}
-          onSelectTeam={(teamName) => onSelectTeam(index, teamName)}
-        />
-      ))}
+      {cards.map((card) => {
+        return (
+          <Card
+            data={card}
+            teams={
+              teamsData[cards.findIndex((c) => c.cardId === card.cardId)] || []
+            }
+            onLetterModal={showSendButton ? () => onSendClick(card) : null}
+            key={card.cardId}
+            showSendButton={showSendButton}
+            selectable={selectable}
+            isSelected={selectedCardId === card.cardId}
+            onClick={() => onCardClick?.(card.cardId)}
+            currentTeamName={currentTeamName}
+            onSelectTeam={(teamName) => onSelectTeam(card.cardId, teamName)}
+          />
+        );
+      })}
 
       {/* 명함 추가 버튼 */}
       {showAddButton && (

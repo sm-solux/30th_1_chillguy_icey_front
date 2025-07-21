@@ -3,6 +3,8 @@ import modal_line from "../../assets/modal_line.svg";
 import modal_line_vertical from "../../assets/modal_line_vertical.svg";
 import Button from "../Button";
 import st from "./LetterModal.module.css";
+import { getAnimalImage } from "../../util/get-animal-image";
+import exPig from "../../assets/exPig.png";
 
 // Props
 // card: 선택된 명함 정보
@@ -18,6 +20,23 @@ const LetterModal = ({ card, onClose, onSend }) => {
     if (!message.trim()) return; // 빈 메시지 방지
     onSend(message);
   };
+
+  // 동물 이미지 매핑
+  const animalMap = {
+    강아지: "dog",
+    고양이: "cat",
+    곰: "bear",
+    개구리: "frog",
+    돼지: "pig",
+    토끼: "rabbit",
+  };
+
+  // 명함 이미지
+  const animalKey = animalMap[card.animal] || null;
+  const imageSrc =
+    animalKey && card.profileColor
+      ? getAnimalImage(animalKey, card.profileColor)
+      : exPig;
 
   return (
     <div className={st.Overlay}>
@@ -36,13 +55,25 @@ const LetterModal = ({ card, onClose, onSend }) => {
         <div className={st.Letter_wrapper}>
           {/* 수신자 명함 정보 */}
           <div className={st.Card}>
-            <div className={st.Card_Name}>{card.name}</div>
+            <div className={st.Card_Name}>
+              {card.nickname} {card.animal}
+            </div>
             <div className={st.Card_Wrapper}>
-              <div className={st.Card_image}></div>
+              <div className={st.Card_image}>
+                <img
+                  src={imageSrc}
+                  alt={`${card.animal} image`}
+                  onError={(e) => {
+                    e.currentTarget.src = exPig; // 로딩 실패 시 예시 이미지 나중에 수정
+                  }}
+                />
+              </div>
               <div className={st.Card_info}>
                 <div className={st.InfoLabel}>MBTI: {card.mbti}</div>
                 <div className={st.InfoLabel}>취미: {card.hobby}</div>
-                <div className={st.InfoLabel}>친해지는 비법: {card.secret}</div>
+                <div className={st.InfoLabel}>
+                  친해지는 비법: {card.secretTip}
+                </div>
                 <div className={st.InfoLabel}>TMI: {card.tmi}</div>
               </div>
             </div>
@@ -68,7 +99,9 @@ const LetterModal = ({ card, onClose, onSend }) => {
                   src={modal_line_vertical}
                   alt="modal_line_vertical"
                 />
-                <div className={st.Info_text}>{card.name}</div>
+                <div className={st.Info_text}>
+                  {card.nickname} {card.animal}
+                </div>
               </div>
             </div>
 
