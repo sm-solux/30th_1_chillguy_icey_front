@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import CardList from "../components/Letter/CardList";
 import CardModal from "../components/Modal/CardModal";
@@ -14,7 +14,7 @@ const MyCard = () => {
   // state: 명함 수정 모달 열림 상태
   const [isEditMode, setIsEditMode] = useState(false);
   // state: 수정할 카드 선택
-  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [selectedCardId, setSelectedCardId] = useState(null);
 
   // state: 삭제 경고 알림
   const [alertOpen, setAlertOpen] = useState(false);
@@ -41,46 +41,52 @@ const MyCard = () => {
   // "명함 추가하기" 모달
   const openAddModal = () => {
     setIsEditMode(false);
-    setSelectedCardIndex(null);
+    setSelectedCardId(null);
     setModalOpen(true);
   };
 
   // "명함 수정하기" 모달
-  const openEditModal = (card) => {
+  const openEditModal = (cardId) => {
+    setSelectedCardId(cardId);
     setIsEditMode(true);
     setModalOpen(true);
   };
 
   // 명함 저장 함수
   const handleSaveCard = (newCardData) => {
-    // 새 카드의 이름: 수식어 + 동물
-    const newName = `${newCardData.nickname} ${newCardData.animal}`;
-
-    const newCard = {
-      name: newName,
-      mbti: newCardData.mbti,
-      hobby: newCardData.hobby,
-      secret: newCardData.secret,
-      tmi: newCardData.tmi,
-    };
-
-    if (isEditMode && selectedCardIndex !== null) {
+    if (isEditMode && selectedCardId !== null) {
       // 수정 모드: 기존 카드 수정
       const updated = [...cardList];
-      updated[selectedCardIndex] = newCard;
+      updated[selectedCardId] = {
+        ...updated[selectedCardId], // 기존 카드 유지
+        ...newCardData, // 입력값 덮어쓰기 (cardId는 유지됨)
+      };
       setCardList(updated);
     } else {
       // 추가 모드: 새 카드 추가
+      const newCard = {
+        ...newCardData,
+        cardId: Date.now(), // 고유한 ID 부여
+        profileColor: 1, // 우선 1로 부여
+        templateId: 0,
+        userId: 0,
+        accessory: "",
+      };
       setCardList([...cardList, newCard]);
       setTeamList([...teamList, []]); // teamList도 같이 추가 (빈 팀)
     }
-
+    setSelectedCardId(null);
     closeModal();
   };
 
   // 삭제 경고 dialog
   const openAlert = () => {
-    const selectedTeams = teamsData[selectedCardIndex] || [];
+    if (selectedCardId === null) return;
+
+    const cardIndex = cardList.findIndex(
+      (card) => card.cardId === selectedCardId,
+    );
+    const selectedTeams = teamList[cardIndex] || [];
 
     if (selectedTeams.length > 0) {
       // 사용 중인 명함인 경우
@@ -111,26 +117,74 @@ const MyCard = () => {
 
   // 명함 삭제 함수
   const handleDeleteCard = () => {
-    if (selectedCardIndex === null) return;
+    if (selectedCardId === null) return;
 
-    const newCards = [...cardList];
+    const newCards = cardList.filter((card) => card.cardId !== selectedCardId);
+    const cardIndexToDelete = cardList.findIndex(
+      (card) => card.cardId === selectedCardId,
+    );
+
     const newTeams = [...teamList];
-
-    newCards.splice(selectedCardIndex, 1);
-    newTeams.splice(selectedCardIndex, 1);
+    if (cardIndexToDelete !== -1) {
+      newTeams.splice(cardIndexToDelete, 1);
+    }
 
     // 명함 data 업데이트
     setCardList(newCards);
     setTeamList(newTeams);
     // 선택 명함 초기화
-    setSelectedCardIndex(null);
+    setSelectedCardId(null);
     // dialog 닫기
     setAlertOpen(false);
   };
 
   // 현재 선택된 명함 정보를 가져온다.
   const selectedCard =
-    selectedCardIndex !== null ? cardList[selectedCardIndex] : null;
+    cardList.find((card) => card.cardId === selectedCardId) || null;
+
+  // 현재 팀 이름
+  const currentTeamName = "칠가이";
+
+  // 팀 선택 핸들러를 useCallback으로 메모이제이션 처리
+  const handleSelectTeam = useCallback(
+    (selectedCardId, teamName) => {
+      const cardIndex = cardList.findIndex(
+        (card) => card.cardId === selectedCardId,
+      );
+      if (cardIndex === -1) return;
+
+      const newTeamList = [...teamList];
+
+      // 1. 현재 팀이 사용 중인 명함 인덱스를 찾는다
+      const prevCardIndex = newTeamList.findIndex((teams) =>
+        teams.includes(teamName),
+      );
+
+      // 2. 기존 명함에서 팀 이름 제거
+      if (prevCardIndex !== -1) {
+        newTeamList[prevCardIndex] = newTeamList[prevCardIndex].filter(
+          (team) => team !== teamName,
+        );
+      }
+
+      // 3. 새로 선택한 명함에 팀 이름 추가
+      if (!newTeamList[cardIndex].includes(teamName)) {
+        newTeamList[cardIndex].push(teamName);
+      }
+
+      // 4. 상태 업데이트
+      setTeamList(newTeamList);
+    },
+    [teamList, cardList, setTeamList], // teamList 상태가 바뀔 때마다 새로 생성됨
+  );
+
+  // 현재 팀이 사용 중인 명함 index 찾기
+  const usedCardIndex = teamList.findIndex((teamArr) =>
+    teamArr.includes(currentTeamName),
+  );
+
+  // 실제 사용 중인 명함
+  const usedCard = usedCardIndex !== -1 ? cardList[usedCardIndex] : null;
 
   return (
     <>
@@ -150,22 +204,28 @@ const MyCard = () => {
           showSendButton={false}
           showAddButton={true}
           selectable={true}
-          selectedCardIndex={selectedCardIndex}
-          onCardClick={(index) => {
-            if (selectedCardIndex === index) {
-              setSelectedCardIndex(null); // 이미 선택된 카드면 해제
+          selectedCardId={selectedCardId}
+          onCardClick={(id) => {
+            if (selectedCardId === id) {
+              setSelectedCardId(null); // 이미 선택된 카드면 해제
             } else {
-              setSelectedCardIndex(index); // 아니면 선택
+              setSelectedCardId(id); // 아니면 선택
             }
           }}
+          currentTeamName={currentTeamName}
+          onSelectTeam={handleSelectTeam}
         />
       </div>
 
       {/* 하단 버튼 영역 */}
       <div className={st.Fix_buttons_body}>
-        {selectedCardIndex !== null && (
+        {selectedCardId !== null && (
           <div className={st.Fix_buttons}>
-            <Button text={"수정하기"} type={"mid"} onClick={openEditModal} />
+            <Button
+              text={"수정하기"}
+              type={"mid"}
+              onClick={() => openEditModal(selectedCardId)}
+            />
             <Button text={"삭제하기"} type={"mid"} onClick={openAlert} />
           </div>
         )}

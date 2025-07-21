@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import modal_line from "../../assets/modal_line.svg";
 import cardmodal_left from "../../assets/cardmodal_left.svg";
 import cardmodal_right from "../../assets/cardmodal_right.svg";
+import { getAnimalImage } from "../../util/get-animal-image";
 import exPig from "../../assets/exPig.png";
 
 import Button from "../Button";
@@ -25,52 +26,71 @@ const CardModal = ({
 }) => {
   // state: 명함 추가 시 작성한 내용(CardModal)
   const [nickname, setNickname] = useState("");
-  const [mbti, setMbti] = useState("");
   const [animal, setAnimal] = useState("");
+  const [profileColor, setProfileColor] = useState("1"); // 나중에 삭제
+  const [mbti, setMbti] = useState("");
   const [hobby, setHobby] = useState("");
-  const [secret, setSecret] = useState("");
+  const [secretTip, setSecretTip] = useState("");
   const [tmi, setTmi] = useState("");
 
+  // state: 입력이 모두 채워지지 않았을 경우 에러창
+  const [errorMsg, setErrorMsg] = useState("");
+
   useEffect(() => {
-    if (defaultValue && typeof defaultValue.name === "string") {
-      // 동물 목록
-      const animals = ["강아지", "고양이", "곰", "개구리", "돼지", "토끼"];
-
-      let foundAnimal = "";
-      let foundNickname = defaultValue.name;
-
-      for (const a of animals) {
-        if (defaultValue.name.includes(a)) {
-          foundAnimal = a;
-          foundNickname = defaultValue.name.replace(a, "").trim();
-          break;
-        }
-      }
-
-      setNickname(foundNickname);
-      setAnimal(foundAnimal);
-    } else {
-      setNickname("");
-      setAnimal("");
-    }
-
+    setNickname(defaultValue?.nickname || "");
+    setAnimal(defaultValue?.animal || "");
     setMbti(defaultValue?.mbti || "");
+    setProfileColor(defaultValue?.profileColor || "1"); // 나중에 디폴트 값으로 변경
     setHobby(defaultValue?.hobby || "");
-    setSecret(defaultValue?.secret || "");
+    setSecretTip(defaultValue?.secretTip || "");
     setTmi(defaultValue?.tmi || "");
   }, [defaultValue]);
 
   const handleSave = () => {
-    const cardData = {
-      nickname,
-      animal,
-      mbti,
-      hobby,
-      secret,
-      tmi,
-    };
+    // 필수 항목 체크
+    if (
+      !nickname.trim() ||
+      !animal.trim() ||
+      !mbti.trim() ||
+      !hobby.trim() ||
+      !secretTip.trim() ||
+      !tmi.trim()
+    ) {
+      setErrorMsg("모든 항목을 반드시 입력해주세요.");
+      return; // 저장 중단
+    }
+
+    // 에러 메시지 초기화
+    setErrorMsg("");
+
+    const cardData = { nickname, animal, mbti, hobby, secretTip, tmi };
     if (onSave) onSave(cardData);
   };
+
+  // 3초 후 에러 메시지 사라지기
+  useEffect(() => {
+    if (errorMsg) {
+      const timer = setTimeout(() => {
+        setErrorMsg("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMsg]);
+
+  // 동물 이름 매핑
+  const animalMap = {
+    강아지: "dog",
+    고양이: "cat",
+    곰: "bear",
+    개구리: "frog",
+    돼지: "pig",
+    토끼: "rabbit",
+  };
+
+  // 이미지 경로 받아오기
+  const animalKey = animalMap[animal] || null;
+  const animalImageSrc =
+    animalKey && profileColor ? getAnimalImage(animalKey, profileColor) : exPig;
 
   return (
     <div className={st.Overlay}>
@@ -97,7 +117,14 @@ const CardModal = ({
                     alt="cardmodal_left"
                   />
                 </button>
-                <img className={st.Card_image} src={exPig} alt="exPig" />
+                <img
+                  className={st.Card_image}
+                  src={animalImageSrc}
+                  alt={`${animal} image`}
+                  onError={(e) => {
+                    e.currentTarget.src = exPig; // 디폴트 이미지 나중에 변경
+                  }}
+                />
                 <button className={st.Arrow_button}>
                   <img
                     className={st.left_right}
@@ -164,8 +191,8 @@ const CardModal = ({
                 className={st.InputUnderline}
                 type="text"
                 placeholder="직접 작성.."
-                value={secret}
-                onChange={(e) => setSecret(e.target.value)}
+                value={secretTip}
+                onChange={(e) => setSecretTip(e.target.value)}
               />
             </div>
             <div className={st.Row2}>
@@ -180,9 +207,13 @@ const CardModal = ({
             </div>
           </div>
         </div>
-        <div className={st.Confirm_buttons}>
-          <Button text={"저장"} type={"midBlue"} onClick={handleSave} />
-          <Button text={"취소"} type={"midStroke"} onClick={onClose} />
+        <div className={st.ErrorMessageWrapper}>
+          {/* 에러 메시지 보여주기 */}
+          {errorMsg && <div className={st.ErrorMessage}>{errorMsg}</div>}
+          <div className={st.Confirm_buttons}>
+            <Button text={"저장"} type={"midBlue"} onClick={handleSave} />
+            <Button text={"취소"} type={"midStroke"} onClick={onClose} />
+          </div>
         </div>
       </div>
     </div>
