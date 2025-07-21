@@ -118,12 +118,7 @@
   background-color: #e46a73;
 }
 
-.Button_promise_no:hover .Button_no:hover {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.6) 0%,
-    rgba(255, 255, 255, 0.6) 100%
-  );
-
+.Button_promise_no:hover:disabled,
+.Button_no:hover:disabled {
   background-color: transparent !important;
 }
