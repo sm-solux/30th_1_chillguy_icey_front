@@ -72,6 +72,15 @@
   background-color: rgba(102, 126, 234, 0.15);
 }
 
+.arrow:disabled {
+  opacity: 0.3;
+  cursor: unset;
+}
+
+.arrow:hover:disabled {
+  background-color: transparent !important;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -111,6 +120,12 @@
   background-color: rgba(102, 126, 234, 0.15);
 }
 
+.locked {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6; /* 비활성화된 듯한 시각적 표현 */
+}
+
 .selected {
   background-color: rgba(102, 126, 234, 0.35);
 }
@@ -131,5 +146,9 @@
 }
 
 .inactive:hover {
-  background-color: rgba(102, 126, 234, 0);
+  background-color: transparent;
+}
+
+.selected.inactive:hover {
+  background-color: rgba(102, 126, 234, 0.35);
 }

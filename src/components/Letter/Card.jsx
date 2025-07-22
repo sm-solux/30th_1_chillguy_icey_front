@@ -1,6 +1,7 @@
 import st from "./Card.module.css";
 import card_select from "../../assets/card_select.svg";
 import Button from "../Button";
+import { getAnimalImage } from "../../util/get-animal-image";
 
 // Props
 // data: 명함 정보
@@ -22,6 +23,18 @@ const Card = ({
   currentTeamName,
   onSelectTeam,
 }) => {
+  // 동물 이름 매핑
+  const animalMap = {
+    강아지: "dog",
+    고양이: "cat",
+    곰: "bear",
+    개구리: "frog",
+    돼지: "pig",
+    토끼: "rabbit",
+  };
+  const animalKey = animalMap[data.animal] || "default";
+  const animalImageSrc = getAnimalImage(animalKey, data.profileColor);
+
   // 해당 명함을 사용 중인 팀 목록
   // "칠가이 외 3" 형식으로 표시
   const renderTeams = () => {
@@ -33,7 +46,7 @@ const Card = ({
   const handleSelect = (e) => {
     e.stopPropagation(); // 카드 클릭 방지
     if (!teams.includes(currentTeamName)) {
-      onSelectTeam(currentTeamName);
+      onSelectTeam(data.cardId);
     }
   };
 
@@ -44,7 +57,9 @@ const Card = ({
     >
       {/* 명함 이름 */}
       <div className={st.CardName_wrapper}>
-        <div className={st.Card_Name}>{data.name}</div>
+        <div className={st.Card_Name}>
+          {data.nickname} {data.animal}
+        </div>
         {/* 현재 팀페이지에서 사용 중인 명함에 배지 표시 */}
         {teams.includes(currentTeamName) && (
           <img className={st.Card_Select} src={card_select} alt="card_select" />
@@ -52,12 +67,18 @@ const Card = ({
       </div>
       <div className={st.Card_Wrapper}>
         {/* 명함 이미지 */}
-        <div className={st.Card_image}></div>
+        <div className={st.Card_image}>
+          <img
+            className={st.Animal_image}
+            src={animalImageSrc}
+            alt={`${data.animal} image`}
+          />
+        </div>
         {/* 명함 상세 정보 */}
         <div className={st.Card_info}>
           <div className={st.InfoLabel}>MBTI: {data.mbti}</div>
           <div className={st.InfoLabel}>취미: {data.hobby}</div>
-          <div className={st.InfoLabel}>친해지는 비법: {data.secret}</div>
+          <div className={st.InfoLabel}>친해지는 비법: {data.secretTip}</div>
           <div className={st.InfoLabel}>TMI: {data.tmi}</div>
         </div>
       </div>

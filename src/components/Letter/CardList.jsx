@@ -15,33 +15,34 @@ import st from "./CardList.module.css";
 
 const CardList = ({
   cards,
-  teamsData = [],
   onSendClick,
   onAddClick,
   showSendButton = true,
   showAddButton = false,
   selectable = false,
-  selectedCardIndex,
+  selectedCardId,
   onCardClick = () => {},
   currentTeamName,
   onSelectTeam,
 }) => {
   return (
     <div className={st.List}>
-      {cards.map((card, index) => (
-        <Card
-          data={card}
-          teams={teamsData?.[index] || []}
-          onLetterModal={showSendButton ? () => onSendClick(card) : null}
-          key={index}
-          showSendButton={showSendButton}
-          selectable={selectable}
-          isSelected={selectedCardIndex === index}
-          onClick={() => onCardClick?.(index)}
-          currentTeamName={currentTeamName}
-          onSelectTeam={(teamName) => onSelectTeam(index, teamName)}
-        />
-      ))}
+      {cards.map((card) => {
+        return (
+          <Card
+            key={card.cardId}
+            data={card}
+            teams={card.teams || []}
+            showSendButton={showSendButton}
+            onLetterModal={showSendButton ? () => onSendClick(card) : null}
+            selectable={selectable}
+            isSelected={selectedCardId === card.cardId}
+            onClick={() => onCardClick?.(card.cardId)}
+            currentTeamName={currentTeamName}
+            onSelectTeam={(teamName) => onSelectTeam(card.cardId, teamName)}
+          />
+        );
+      })}
 
       {/* 명함 추가 버튼 */}
       {showAddButton && (

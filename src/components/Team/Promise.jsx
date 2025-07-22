@@ -2,21 +2,43 @@ import st from "./Promise.module.css";
 import PromiseCalendar from "./promise/PromiseCalendar.jsx";
 import EXPromiseCalendar from "./promise/EXPromiseCalendar.jsx";
 
-const Promise = () => {
+const Promise = ({ teamCreateDate, goalDate }) => {
+  const goals = goalDate ? goalDate.split("-") : [];
+  // goalDate가 존재하면 D-day 계산
+  let dday = null;
+  if (goalDate) {
+    const today = new Date(); // 오늘 날짜
+    const goal = new Date(goalDate); // 목표 날짜
+    // 시간 차이를 밀리초 단위로 계산 후 일 수로 환산
+    const diffTime = goal.getTime() - today.getTime();
+    dday = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1; // 남은 일 수
+    {
+      dday === 0 ? (dday = "DAY") : dday;
+    }
+  }
   return (
     <div className={st.Promise_content}>
       <div className={st.promise_calendar_box}>
-        {/* 여기에 calendar 컴포넌트 (예: react-calendar) 삽입해도 좋아요 */}
-        {/* <PromiseCalendar goalDate={"2025-07-22"} /> */}
-        <EXPromiseCalendar goalDate="2025-07-25" />
+        <EXPromiseCalendar
+          teamCreateDate={teamCreateDate}
+          goalDate={goalDate}
+        />
       </div>
 
       <div className={st.promise_text_box}>
-        <div className={st.promise_text}>
-          약속 잡기 전입니다. 우리 팀 약속 시간을 정해보세요.
-        </div>
-        {/* <div className={st.promise_date}>06.27</div>
-        <div className={st.promise_dday}>D-15</div> */}
+        {goalDate === null ? (
+          <div className={st.promise_text}>
+            약속 잡기 전입니다. 우리 팀 약속 시간을 정해보세요.
+          </div>
+        ) : (
+          <>
+            <div className={st.promise_dday}>D - {dday}</div>
+            <div className={st.promise_date}>
+              {goals[1]}.{goals[2]}
+            </div>
+            <div className={st.promise_time}>AM 09:00</div>
+          </>
+        )}
       </div>
     </div>
   );
