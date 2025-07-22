@@ -46,7 +46,7 @@ const Card = ({
   const handleSelect = (e) => {
     e.stopPropagation(); // 카드 클릭 방지
     if (!teams.includes(currentTeamName)) {
-      onSelectTeam(currentTeamName);
+      onSelectTeam(data.cardId);
     }
   };
 

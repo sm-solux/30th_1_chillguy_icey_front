@@ -11,6 +11,7 @@ import LinkSnackbar from "../components/Snackbar/LinkSnackbar";
 
 const teams = [
   {
+    id: 1,
     name: "초코칩조아",
     num: 6,
     link: "https://www.when2meet.com/team1",

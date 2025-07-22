@@ -6,7 +6,7 @@ const CardM = ({ team }) => {
   const navigate = useNavigate();
 
   const handleCardMClick = () => {
-    navigate("/mycard");
+    navigate("/mycard", { state: team });
   };
 
   if (!team || !team.card) return null;
