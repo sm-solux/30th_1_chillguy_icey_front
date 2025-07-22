@@ -54,6 +54,15 @@
   background-color: #f0f0f0;
 }
 
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: unset;
+}
+
+.navButton:hover:disabled {
+  background-color: transparent !important;
+}
+
 .monthYear {
   color: var(--Font-Color-50, #4b527e);
   text-align: center;

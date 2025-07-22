@@ -17,7 +17,7 @@ const PromiseDialog = ({ onConfirm, onCancel }) => {
             <div className={st.mid_size_text}>시간</div>
           </div>
           <div className={st.popup_v_line}></div>
-          <div className={`${st.mid_size_text_space} ${st.select_drop_box}`}>
+          <div className={st.mid_size_2_space}>
             {/* <div className={st.test_text}>2025.06.27</div>
             <div className={st.test_text}>AM 9:00</div> */}
             <Dropdown
@@ -46,7 +46,9 @@ const PromiseDialog = ({ onConfirm, onCancel }) => {
             </Dropdown>
           </div>
         </div>
-
+        <div className={st.popup_info_text}>
+          약속 확정 후에는 더이상 수정 및 재생성이 불가합니다.
+        </div>
         <div className={st.popup_button_space}>
           <Button text={"확정"} type={"midBlue"} onClick={onConfirm} />
           <Button text={"취소"} type={"midStroke"} onClick={onCancel} />
