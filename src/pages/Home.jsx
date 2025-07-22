@@ -2,6 +2,7 @@ import { useState } from "react";
 import st from "./Home.module.css";
 import line from "../assets/line.svg";
 import AlertLoginDialog from "../components/Home/AlertLoginDialog";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
 
@@ -13,6 +14,13 @@ const Home = () => {
     setShowPopup(false);
   };
 
+  const navigate = useNavigate();
+
+  const onClickLogin = (e) => {
+    e.stopPropagation(); // 팝업 닫힘 방지
+    navigate("/login"); // 로그인 페이지로 이동
+  };
+
   return (
     <div className={st.home}>
       <div className={st.header}>
@@ -20,7 +28,7 @@ const Home = () => {
           <div className={st.logo}>
             <div className={st.icey}>ICEY</div>
           </div>
-          <div className={st.sign_in_button}>
+          <div className={st.sign_in_button} onClick={onClickLogin}>
             <div className={st.sign_in}>sign in</div>
           </div>
         </div>
