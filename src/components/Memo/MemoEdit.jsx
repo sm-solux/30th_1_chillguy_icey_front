@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
+
 import st from "./MemoEdit.module.css";
 import memo_save from "../../assets/memo_save.svg";
 
@@ -9,14 +11,14 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
   // 기존 메모 내용 불러오기
   useEffect(() => {
     const fetchMemoContent = async () => {
-      if (!editingMemo) return;
-
+      if (!editingMemo) {
+        setText("");
+        return;
+      }
       try {
-        const res = await fetch(
+        const { data } = await axios.get(
           `/api/teams/${teamId}/memos/${editingMemo.memoId}`,
         );
-        if (!res.ok) throw new Error("메모 불러오기 실패");
-        const data = await res.json();
         setText(data.content);
       } catch (err) {
         console.error("메모 내용 불러오기 실패", err);
@@ -53,19 +55,18 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
 
       const method = editingMemo ? "PUT" : "POST";
 
-      const response = await fetch(url, {
+      const { data } = await axios({
         method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: text }),
+        url,
+        data: { content: text },
       });
 
-      if (!response.ok) throw new Error("저장 실패");
-
-      const result = await response.json();
-      onSave(result);
+      onSave(data);
       setText("");
+      onClose();
     } catch (err) {
       alert("저장 실패");
+      console.error(err);
     }
   };
 
@@ -80,12 +81,13 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
         ></textarea>
         <div className={st.Memo_tools}>
           <div className={st.Counter}>{text.length} / 130</div>
-          <img
-            className={st.Memo_save_img}
-            src={memo_save}
-            alt="memo_save"
+          <button
+            className={st.Memo_save_btn}
+            aria-label="메모 저장"
             onClick={handleSave}
-          />
+          >
+            <img className={st.Memo_save_img} src={memo_save} alt="memo_save" />
+          </button>
         </div>
       </div>
     </div>
