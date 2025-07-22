@@ -200,7 +200,7 @@ const Team = () => {
               />
             </div>
             <div className={`${st.box} ${st.team_message_box}`}>
-              <Massage />
+              <Massage team={selectedTeam} />
             </div>
           </div>
         </section>

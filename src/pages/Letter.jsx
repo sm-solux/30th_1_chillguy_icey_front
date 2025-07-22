@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 import ReceivedLetter from "../components/Letter/ReceivedLetter";
@@ -11,7 +12,11 @@ import st from "./Letter.module.css";
 
 import { cards } from "../util/card-info";
 
-const Letter = ({ team = { id: 0, name: "테스트팀" } }) => {
+const Letter = () => {
+  // location : 현재 사용 중인 팀 데이터 받아오기
+  const location = useLocation();
+  const team = location.state || { id: 0, name: "테스트팀" };
+
   // state: 열려있는 쪽지
   const [openedId, setOpenedId] = useState(null);
   // state: 쪽지 내용
