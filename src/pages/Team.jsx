@@ -11,7 +11,6 @@ import PromiseDialog from "../components/Dialog/PromiseDialog";
 import LinkSnackbar from "../components/Snackbar/LinkSnackbar";
 import { teams as teams, links, cards } from "../util/teams";
 
-
 // 날짜 및 시간 슬롯 설정
 const allDates = [
   { date: "2025-06-15" },
@@ -197,6 +196,7 @@ const Team = () => {
                 card={
                   Cards.find((c) => c.teamId === selectedTeam.teamId).card || {}
                 }
+                team={selectedTeam}
               />
             </div>
             <div className={`${st.box} ${st.team_message_box}`}>

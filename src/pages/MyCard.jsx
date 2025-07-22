@@ -59,7 +59,7 @@ const MyCard = () => {
     };
 
     fetchCards();
-  }, [currentTeamId]);
+  }, [currentTeamId, currentTeamName]);
 
   // 모달 열기/닫기 함수
   const openModal = () => setModalOpen(true);
