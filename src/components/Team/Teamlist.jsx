@@ -4,7 +4,13 @@ import Button from "../Button";
 import Teambutton from "./Teambutton";
 import Teamcreate from "./Teamcreate";
 
-const Teamlist = ({ teams, onLinkClick, onTeamCheckClick, onTeamAdd }) => {
+const Teamlist = ({
+  teams,
+  onLinkClick,
+  onTeamCheckClick,
+  onTeamAdd,
+  selectedTeamId,
+}) => {
   const [showCreate, setShowCreate] = useState(false);
   const [teamName, setTeamName] = useState(""); // 입력값 상태
   const contentRef = useRef(null);
@@ -63,48 +69,13 @@ const Teamlist = ({ teams, onLinkClick, onTeamCheckClick, onTeamAdd }) => {
           <>
             {teams.map((team, index) => (
               <Teambutton
-                teamname={team.name}
-                dday={team.dday ? "D - " + team.dday : ""}
-                isCheck={team.check}
-                onClick={() => onTeamCheckClick(team.name)}
-                linkonClick={() => onLinkClick(team.name)}
+                teamname={team.teamName}
+                dday={team.dday ? team.dday : ""}
+                isCheck={team.teamId === selectedTeamId}
+                onClick={() => onTeamCheckClick(team.teamId)}
+                linkonClick={() => onLinkClick(team.teamId)}
               />
             ))}
-            {/* <Teambutton
-              teamname="우리팀"
-              dday="D-2"
-              isCheck={true}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            />
-            <Teambutton
-              teamname="칠가이"
-              dday="D-14"
-              isCheck={false}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            />
-            <Teambutton
-              teamname="안녕"
-              dday="D-9"
-              isCheck={false}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            />
-            <Teambutton
-              teamname="안녕"
-              dday="D-9"
-              isCheck={false}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            />
-            <Teambutton
-              teamname="안녕"
-              dday="D-9"
-              isCheck={false}
-              // onClick={handleTeamClick}
-              linkonClick={onLinkClick}
-            /> */}
           </>
         )}
       </div>
