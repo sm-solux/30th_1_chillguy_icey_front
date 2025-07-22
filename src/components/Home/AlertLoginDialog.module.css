@@ -1,8 +1,8 @@
-.div,
-.div * {
+.alert,
+.alert * {
   box-sizing: border-box;
 }
-.div {
+.alert {
   background: #ffffff;
   border-radius: 20px;
   display: flex;
@@ -28,7 +28,7 @@
   align-items: center;
   z-index: 1000; /* 페이지보다 위에 */
 }
-.frame_299 {
+.button_body {
   background: #fee102;
   border-radius: 93px;
   padding: 46px 84px 46px 84px;
@@ -43,13 +43,13 @@
   position: relative;
 }
 
-.group_321 {
+.mark {
   flex-shrink: 0;
   width: 18px;
   height: 92px;
   position: static;
 }
-.rectangle_162 {
+.q_1 {
   background: var(--netural-white, #ffffff);
   width: 18px;
   height: 57px;
@@ -57,7 +57,7 @@
   left: 84px;
   top: 47px;
 }
-.rectangle_163 {
+.q_2 {
   background: var(--netural-white, #ffffff);
   width: 18px;
   height: 18px;
@@ -65,7 +65,7 @@
   left: 84px;
   top: 121px;
 }
-.frame_324 {
+.have_to {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -74,7 +74,7 @@
   flex-shrink: 0;
   position: relative;
 }
-.div2 {
+.button_text {
   color: var(--font-color-70, #252b5a);
   text-align: center;
   font-family: var(--subtitle1-bold-36px-font-family, "Inter-Bold", sans-serif);
@@ -87,7 +87,7 @@
   align-items: center;
   justify-content: center;
 }
-.frame_325 {
+.login_button {
   display: flex;
   flex-direction: row;
   gap: 15px;
