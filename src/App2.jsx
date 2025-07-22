@@ -9,6 +9,7 @@ import Login from "./pages/IcyLogin";
 import Layout from "./components/PageLayout/Layout";
 import Layout_Login from "./components/PageLayout/Layout_login";
 import NotFound from "./pages/NotFound";
+import Home from "./pages/Home";
 
 function App2() {
   return (
@@ -30,7 +31,7 @@ function App2() {
         </Route>
 
         {/* 소현이가 Home.jsx 추가하면 시작 */}
-        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
   );
