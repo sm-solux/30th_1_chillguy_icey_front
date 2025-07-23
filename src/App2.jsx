@@ -11,6 +11,7 @@ import Layout_Login from "./components/PageLayout/Layout_login";
 import NotFound from "./pages/NotFound";
 import Callback from "./pages/Callback";
 import Home from "./pages/Home";
+import TeamsTest from "./util/TeamsTest";
 
 function App2() {
   return (
@@ -34,6 +35,7 @@ function App2() {
 
         {/* 소현이가 Home.jsx 추가하면 시작 */}
         <Route path="/" element={<Home />} />
+        <Route path="/test" element={<TeamsTest />} />
       </Routes>
     </Router>
   );
