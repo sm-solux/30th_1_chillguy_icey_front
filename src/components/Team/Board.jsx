@@ -123,7 +123,7 @@ const Board = ({ team }) => {
   const handleBalanceVote = async (gameId, option) => {
     try {
       await axios.post(`/api/teams/${team.id}/balance-game/${gameId}/vote`, {
-        option, // 'option1' 또는 'option2' 형태로 전달
+        option,
       });
       // 투표 후 최신 목록 다시 불러오기
       const res = await axios.get(`/api/teams/${team.id}/balance-game`);
@@ -131,7 +131,19 @@ const Board = ({ team }) => {
       setBalanceGames(data);
     } catch (error) {
       console.error("밸런스 게임 투표 실패", error);
-      alert("투표에 실패했습니다.");
+
+      // 중복 투표 에러 메시지 분기
+      if (
+        error.response?.status === 400 &&
+        error.response.data?.message === "투표는 1회만 가능합니다."
+      ) {
+        // 중복 투표인 경우
+        throw new Error("이미 투표하셨습니다!");
+      } else {
+        // 그 외 에러는 alert
+        alert("투표에 실패했습니다.");
+        throw error;
+      }
     }
   };
 

@@ -29,7 +29,7 @@ const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
     setError(null);
 
     try {
-      await axios.post(`/api/teams/${teamId}/cards/${card.id}/letters`, {
+      await axios.post(`/api/teams/${teamId}/cards/${card.cardId}/letters`, {
         content: message,
       });
       onSend(message);

@@ -10,8 +10,6 @@ import Snackbar from "../components/Snackbar/Snackbar";
 
 import st from "./Letter.module.css";
 
-import { cards } from "../util/card-info";
-
 const Letter = () => {
   // location : 현재 사용 중인 팀 데이터 받아오기
   const location = useLocation();
@@ -27,6 +25,8 @@ const Letter = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   // state: 쪽지 전송 완료 snackbar 상태
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  // state: 명함 추가
+  const [cards, setCards] = useState([]);
 
   // ref: 실제 스크롤되는 영역(Letter_list)
   const letterListRef = useRef(null);
@@ -36,16 +36,23 @@ const Letter = () => {
   const selectedSectionRef = useRef(null);
 
   useEffect(() => {
-    // 쪽지 목록 불러오기
-    const fetchLetters = async () => {
+    const fetchData = async () => {
       try {
-        const res = await axios.get(`/api/teams/${team.id}/letters/received`);
-        setLetters(res.data?.data || []);
+        // 쪽지 목록 불러오기
+        const lettersRes = await axios.get(
+          `/api/teams/${team.id}/letters/received`,
+        );
+        setLetters(lettersRes.data?.data || []);
+
+        // 팀 명함 목록 불러오기
+        const cardsRes = await axios.get(`/api/cards/teams/${team.id}/cards`);
+        setCards(cardsRes.data || []); // 필요 시 cardsRes.data.data로 수정
       } catch (err) {
-        console.error("쪽지 목록 불러오기 실패", err);
+        console.error("데이터 불러오기 실패", err);
       }
     };
-    fetchLetters();
+
+    fetchData();
   }, [team.id]);
 
   // 쪽지 클릭 시 내용 불러오기

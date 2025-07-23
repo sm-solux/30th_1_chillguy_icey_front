@@ -22,11 +22,16 @@ const Balance = ({
   const [hasVoted, setHasVoted] = useState(false);
 
   // 투표 버튼 클릭 시 호출
-  const handleVote = (option) => {
-    if (hasVoted) return; // 중복 투표 방지
-    if (onVote) {
-      onVote(gameId, option); // option: 'option1' 또는 'option2'
-      setHasVoted(true);
+  const handleVote = async (option) => {
+    if (hasVoted) return;
+
+    try {
+      if (onVote) {
+        await onVote(gameId, option);
+        setHasVoted(true);
+      }
+    } catch (err) {
+      alert(err.message || "투표 중 오류가 발생했습니다.");
     }
   };
 
@@ -55,7 +60,7 @@ const Balance = ({
       <div className={st.Button_wrapper}>
         {/* 첫 번째 선택지 */}
         <button
-          className={st.Blance_button}
+          className={st.Balance_button}
           onClick={() => handleVote("option1")}
           disabled={hasVoted}
         >
