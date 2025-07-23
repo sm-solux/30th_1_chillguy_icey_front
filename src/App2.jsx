@@ -5,10 +5,11 @@ import Team from "./pages/Team";
 import MyCard from "./pages/MyCard";
 import Letter from "./pages/Letter";
 import Invite from "./pages/Invite";
-import Login from "./pages/IcyLogin";
+import Login from "./pages/IceyLogin";
 import Layout from "./components/PageLayout/Layout";
 import Layout_Login from "./components/PageLayout/Layout_login";
 import NotFound from "./pages/NotFound";
+import Callback from "./pages/Callback";
 import Home from "./pages/Home";
 
 function App2() {
@@ -21,6 +22,7 @@ function App2() {
           <Route path="/mycard" element={<MyCard />} />
           <Route path="/invite" element={<Invite />} />
           <Route path="/letter" element={<Letter />} />
+          <Route path="/oauth/callback" element={<Callback />} />
         </Route>
 
         {/* 공통 레이아웃이 없는 페이지들 */}
