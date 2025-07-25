@@ -81,6 +81,8 @@
 
 .mid_size_2_space {
   display: flex;
+  overflow: visible; /* 꼭 확인 */
+  position: relative; /* 필요시 */
   flex-direction: column;
   gap: 25px;
 

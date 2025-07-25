@@ -2,7 +2,7 @@ import st from "./Promise.module.css";
 import PromiseCalendar from "./promise/PromiseCalendar.jsx";
 import EXPromiseCalendar from "./promise/EXPromiseCalendar.jsx";
 
-const Promise = ({ teamCreateDate, goalDate }) => {
+const Promise = ({ team, teamCreateDate, goalDate }) => {
   const goals = goalDate ? goalDate.split("-") : [];
   // goalDate가 존재하면 D-day 계산
   let dday = null;
@@ -30,6 +30,8 @@ const Promise = ({ teamCreateDate, goalDate }) => {
           <div className={st.promise_text}>
             약속 잡기 전입니다. 우리 팀 약속 시간을 정해보세요.
           </div>
+        ) : dday < 0 ? (
+          <div className={st.promise_text}>이미 만났습니다.</div>
         ) : (
           <>
             <div className={st.promise_dday}>D - {dday}</div>

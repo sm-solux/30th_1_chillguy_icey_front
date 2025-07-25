@@ -5,12 +5,17 @@ const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
 // 팀 날짜 투표 저장
 export const fetchTeamVoteCreate = async (token, teamId, candidateDates) => {
   try {
-    const response = await axios.get(
+    console.log("candidateDates : ", candidateDates);
+    const response = await axios.post(
       `${backLink}/api/teams/${teamId}/schedule`,
       { candidateDates: candidateDates },
-      { headers: { Authroization: `Bearer ${token}` } },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        "Content-Type": "application/json",
+      },
     );
     console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error("약속 잡기 생성 실패:", error);
     throw error;
@@ -99,10 +104,15 @@ export const fetchMaxCandidates = async (token, teamId) => {
 // Candidates 확정
 export const fetchScheduleConfirm = async (token, teamId, schedule) => {
   try {
+    console.log(`${schedule.date}`, Number(schedule.hour));
     const response = await axios.post(
       `${backLink}/api/teams/${teamId}/schedule/confirm`,
-      { schedule },
-      { headers: { Authorization: `Bearer ${token}` } },
+      { date: `${schedule.date}`, hour: Number(schedule.hour) },
+      // { schedule },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        "Content-Type": "application/json",
+      },
     );
     console.log("약속 잡기 스케줄 확정 성공:", response.data);
   } catch (error) {

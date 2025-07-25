@@ -41,9 +41,6 @@ const Team = () => {
   const [isLinkSnackbarOpen, setIsLinkSnackbarOpen] = useState(false);
   const [isPromiseDialogOpen, setIsPromiseDialogOpen] = useState(false);
 
-  // const [mySelections, setMySelections] = useState([]);
-  // const [savedSelections, setSavedSelections] = useState([]);
-
   const [pendingTeamId, setPendingTeamId] = useState(null);
   const timeoutRef = useRef(null);
 
@@ -53,6 +50,13 @@ const Team = () => {
   const [summary, setSummary] = useState([]);
   const [maxVoteCount, setMaxVoteCount] = useState(0);
   const [bestCandidates, setBestCandidates] = useState([]);
+
+  // 팀 날짜 생성을 위한 추가 변수 코드
+  const [selectedDates, setSelectedDates] = useState([]); // 날짜 선택
+  const [isDateSaved, setIsDateSaved] = useState(false); // 저장 여부
+
+  // 팀 투표 확정을 위한 추가 변수 코드
+  const [confirmVoteData, setConfirmVoteData] = useState([]);
 
   // 🔁 팀 리스트 로드
   useEffect(() => {
@@ -113,7 +117,6 @@ const Team = () => {
         console.error("투표 정보 불러오기 실패", err);
       }
     };
-
     loadVoteData();
   }, [selectedTeamId, selectedTeam, token]);
 
@@ -191,8 +194,28 @@ const Team = () => {
     setIsPromiseDialogOpen(true);
   };
   const closePromiseDialog = () => setIsPromiseDialogOpen(false);
-  const confirmPromiseDialog = () => {
+
+  // 확정했을 때의 코드
+  const confirmPromiseDialog = async (data) => {
+    console.log(data);
+    await fetchScheduleConfirm(token, selectedTeamId, data);
+    // 🔁 확정 후 팀 상세 정보 다시 불러오기
+    const res = await fetchTeamDetail(token, selectedTeamId);
+    setSelectedTeam(res.data);
+
+    setFadeState("hidden");
+    setIsExpanded(false);
+
     setIsPromiseDialogOpen(false);
+  };
+
+  const handleSaveDate = async () => {
+    const res = await fetchTeamVoteCreate(token, selectedTeamId, selectedDates);
+
+    setSummary(res.data.summary);
+    setMyVotes(res.data.myVotes);
+
+    setIsDateSaved(false);
   };
 
   return (
@@ -222,6 +245,7 @@ const Team = () => {
           >
             {selectedTeam && (
               <Promise
+                team={selectedTeam}
                 teamCreateDate={selectedTeam.createdAt}
                 goalDate={selectedTeam.confirmedDate}
               />
@@ -233,15 +257,6 @@ const Team = () => {
               onTransitionEnd={onFadeTransitionEnd}
             >
               {selectedTeam && (
-                // <PromiseCheck2
-                //   team={selectedTeam}
-                //   allDates={[]} // TODO: allDates API 연동 필요 시 추가
-                //   othersVotes={[]} // TODO: votes API 연동 필요 시 추가
-                //   mySelections={mySelections}
-                //   setMySelections={setMySelections}
-                //   savedSelections={savedSelections}
-                //   setSavedSelections={setSavedSelections}
-                // />
                 <PromiseCheck2
                   team={selectedTeam}
                   summary={summary}
@@ -253,6 +268,10 @@ const Team = () => {
                   maxVoteCount={maxVoteCount}
                   setMaxVoteCount={setMaxVoteCount}
                   openPromiseDialog={openPromiseDialog}
+                  selectedDates={selectedDates}
+                  setSelectedDates={setSelectedDates}
+                  isDateSaved={isDateSaved}
+                  onSaveDate={handleSaveDate}
                 />
               )}
             </div>
@@ -277,10 +296,10 @@ const Team = () => {
 
       {isPromiseDialogOpen && (
         <PromiseDialog
-          teamId={selectedTeamId}
           bestCandidates={bestCandidates}
-          onConfirm={closePromiseDialog}
+          onConfirm={confirmPromiseDialog}
           onCancel={closePromiseDialog}
+          setConfirmVoteData={setConfirmVoteData}
         />
       )}
 

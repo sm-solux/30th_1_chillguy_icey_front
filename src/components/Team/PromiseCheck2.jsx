@@ -9,6 +9,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import {
   fetchTeamMyVotes,
   fetchTeamVotesSummary,
+  fetchTeamVoteCreate,
 } from "../../util/TeamVoteAPI.js";
 
 const PromiseCheck2 = ({
@@ -22,13 +23,24 @@ const PromiseCheck2 = ({
   maxVoteCount,
   setMaxVoteCount,
   openPromiseDialog,
+  selectedDates,
+  setSelectedDates,
+  isDateSaved,
+  onSaveDate,
 }) => {
   const isLeader = team.role === "LEADER";
   const [view, setView] = useState(isLeader ? "date" : "time");
 
   const [isTimeEditing, setIsTimeEditing] = useState(false);
   const [myVotesLocal, setMyVotesLocal] = useState(myVotes);
-  const [isDateSaved, setIsDateSaved] = useState(false);
+  // 👇 추가
+  const [teamDate, setTeamDate] = useState(team.hasSchedule);
+  const [tabLocked, setTabLocked] = useState(false); // 날짜탭 비활성화 여부 제어
+
+  useEffect(() => {
+    setTeamDate(team.hasSchedule);
+    setTabLocked(false); // 팀이 바뀔 때 탭 다시 활성화 가능하게
+  }, [team]);
 
   const { token } = useAuth();
 
@@ -39,13 +51,18 @@ const PromiseCheck2 = ({
 
   useEffect(() => {
     setIsTimeEditing(false);
+    // setIsDateSaved(false);
+    setTabLocked(false);
   }, [team]);
 
   // const [mySelectionsLocal, setMySelectionsLocal] = useState(mySelections); // 레거시 코드
 
   const enableEdit = () => setIsTimeEditing(true);
   // 더미 데이터를 위한 변수
-  const [teamDate, isTeamDate] = useState(team.hasSchedule);
+
+  useEffect(() => {
+    setTeamDate(team.hasSchedule);
+  }, [team.hasSchedule]);
 
   const saveTime = async () => {
     try {
@@ -68,8 +85,8 @@ const PromiseCheck2 = ({
     setView(
       team.role === "LEADER" ? (team.hasSchedule ? "time" : "date") : "time",
     );
-    isTeamDate(team.hasSchedule);
-    setIsDateSaved(team.hasSchedule); // 날짜 저장되었는지 여부도 초기화
+    setTeamDate(team.hasSchedule);
+    // setIsDateSaved(team.hasSchedule); // 날짜 저장되었는지 여부도 초기화
   }, [team]);
 
   return (
@@ -80,15 +97,23 @@ const PromiseCheck2 = ({
             <>
               <Button
                 text="날짜"
-                type={teamDate ? "no" : view === "date" ? "stroke" : ""}
-                disabled={teamDate}
-                // type={view === "date" ? "stroke" : ""}
+                type={
+                  teamDate || tabLocked ? "no" : view === "date" ? "stroke" : ""
+                }
+                disabled={teamDate || tabLocked}
                 onClick={() => setView("date")}
               />
+
               <Button
                 text="시간"
-                type={teamDate ? (view === "time" ? "stroke" : "") : "no"}
-                disabled={!teamDate}
+                type={
+                  teamDate || tabLocked
+                    ? view === "time"
+                      ? "stroke"
+                      : ""
+                    : "no"
+                }
+                disabled={!(teamDate || tabLocked)}
                 onClick={() => setView("time")}
               />
             </>
@@ -114,13 +139,14 @@ const PromiseCheck2 = ({
             // type={team.hasSchedule ? "" : "no"}
             type={view === "time" ? (isTimeEditing ? "" : "no") : ""}
             disabled={view === "time" ? !isTimeEditing : isDateSaved}
+            // 완료 버튼 클릭 로직 수정
             onClick={() => {
               if (view === "time") {
                 saveTime();
               } else if (view === "date") {
-                setIsDateSaved(true); // 더 이상 수정 불가
-                isTeamDate(true); // 여기서도 true로 바꿔줘야 버튼 비활성화됨
+                onSaveDate();
                 setView("time");
+                setTabLocked(true); // 날짜 탭은 이 시점 이후 비활성화
               }
             }}
           />
@@ -130,13 +156,9 @@ const PromiseCheck2 = ({
       <div className={st.promise_check_box}>
         {view === "date" && isLeader && (
           <PromiseDate
-            isEditing={!isDateSaved}
+            isEditing={!isDateSaved && !tabLocked}
             teamCreateDate={team.createdAt}
-            onDateSelect={(selectedDates) => {
-              // ✅ 여기서 받은 selectedDates를 저장하거나 API로 전송할 수 있습니다.
-              // console.log("선택된 날짜들:", selectedDates);
-              // 예: await fetch('/api/save-dates', { method: 'POST', body: JSON.stringify(selectedDates) });
-            }}
+            onDateSelect={setSelectedDates}
           />
         )}
         {view === "time" && (

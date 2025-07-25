@@ -11,7 +11,7 @@ import st from "./PromiseTime.module.css";
 // 옆에 표시하는 시간 표현식
 const TIME_SLOTS = Array.from({ length: 16 }, (_, i) => {
   const hour = i + 9;
-  const suffix = hour >= 12 ? "PM" : "AM";
+  const suffix = hour >= 12 ? (hour === 24 ? "AM" : "PM") : "AM";
   const displayHour = hour > 12 ? hour - 12 : hour;
   return `${suffix} ${displayHour.toString().padStart(2, "0")}:00`;
 });
