@@ -149,3 +149,9 @@
   width: 100%;
   max-width: 320px;
 }
+
+.Disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: auto !important;
+}

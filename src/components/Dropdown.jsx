@@ -23,24 +23,65 @@ import dropdown_button from "../assets/dropdown_button.svg";
 </Dropdown>; */
 }
 
-const Dropdown = ({ type, children, selected, onChange }) => {
+const Dropdown = ({
+  type,
+  children,
+  selected,
+  onChange,
+  name,
+  openName,
+  setOpenName,
+  dateSelected,
+}) => {
   // state: 드롭다운 열림/닫힘 상태 (드롭다운 토글용)
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  // 드롭다운 열림/닫힘 토글
-  const toggleDropdown = () => setIsOpen(!isOpen);
+  // // 드롭다운 열림/닫힘 토글
+  // const toggleDropdown = () => setIsOpen(!isOpen);
 
-  // 옵션 클릭 시 선택 처리
-  const handleSelect = (value) => {
-    // 부모로 값 전달
-    if (onChange) onChange(value);
+  // // 옵션 클릭 시 선택 처리
+  // const handleSelect = (value) => {
+  //   // 부모로 값 전달
+  //   if (onChange) onChange(value);
 
-    // 드롭다운 닫기
-    setIsOpen(false);
+  //   // 드롭다운 닫기
+  //   setIsOpen(false);
+  // };
+
+  const isExternallyCtrl =
+    name !== undefined && openName !== undefined && setOpenName !== undefined;
+  const isOpen = isExternallyCtrl ? openName === name : internalOpen;
+
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    if (isDisabled) return;
+    if (isExternallyCtrl) {
+      setOpenName(openName === name ? null : name);
+    } else {
+      setInternalOpen(!internalOpen);
+    }
   };
 
+  const handleSelect = (value) => {
+    if (onChange) onChange(value);
+
+    if (isExternallyCtrl) {
+      setOpenName(null);
+    } else {
+      setInternalOpen(false);
+    }
+  };
+
+  // ✅ 'time'인데 'date'가 아직 선택되지 않았으면 disable
+  const isDisabled = name === "time" && !dateSelected;
+
   return (
-    <div className={`${styles.Dropdown} ${styles[`Dropdown_${type}`]}`}>
+    <div
+      className={`${styles.Dropdown} ${styles[`Dropdown_${type}`]} ${
+        isDisabled ? styles.Disabled : ""
+      }`}
+    >
       {/* 선택 영역 (placeholder 또는 선택된 텍스트 + 버튼) */}
       <div className={styles.Input} onClick={toggleDropdown}>
         <span className={selected ? styles.SelectedText : styles.Placeholder}>
