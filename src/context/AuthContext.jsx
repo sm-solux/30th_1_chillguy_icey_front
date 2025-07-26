@@ -8,6 +8,10 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
 
+  useEffect(() => {
+    console.log("isLoggedIn:", !!token); // ✅ 항상 최신값
+  }, [token]);
+
   // 로컬스토리지에서 초기화
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
@@ -38,6 +42,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("loginType");
       setToken(null);
+      console.log("isLoggedIn :", isLoggedIn);
     }
   };
 
