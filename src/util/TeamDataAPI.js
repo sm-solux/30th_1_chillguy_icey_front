@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useAuth } from "../context/AuthContext";
 
 const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
 
