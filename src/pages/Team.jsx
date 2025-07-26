@@ -105,6 +105,8 @@ const Team = () => {
 
   // 🔁 팀 상세 정보 로드
   useEffect(() => {
+    if (teams === 401) return;
+
     const loadTeamDetail = async () => {
       if (!selectedTeamId) return;
       try {
@@ -123,6 +125,7 @@ const Team = () => {
     const loadVoteData = async () => {
       if (!selectedTeamId || !selectedTeam) return;
       if (!selectedTeam.hasSchedule) return;
+      if (teams === 401) return;
 
       try {
         const resSum = await fetchTeamVotesSummary(token, selectedTeamId);
@@ -242,17 +245,27 @@ const Team = () => {
       <div className={st.Team_container}>
         <section className={st.Team_section1}>
           <div className={`${st.box} ${st.team_borad_box}`}>
-            {selectedTeam && <Board team={selectedTeam} />}
+            {selectedTeam && teams !== 401 ? (
+              <Board team={selectedTeam} />
+            ) : (
+              <div></div>
+            )}
           </div>
           <div>
             <div className={`${st.box} ${st.team_card_box}`}>
-              {selectedTeam && (
+              {selectedTeam && teams !== 401 ? (
                 <CardM card={{}} team={selectedTeam} />
+              ) : (
                 // TODO: card 데이터 별도 조회 필요 시 fetchTeamCard 추가 필요
+                <div></div>
               )}
             </div>
             <div className={`${st.box} ${st.team_message_box}`}>
-              {selectedTeam && <Massage team={selectedTeam} />}
+              {selectedTeam && teams !== 401 ? (
+                <Massage team={selectedTeam} />
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
         </section>
@@ -262,12 +275,14 @@ const Team = () => {
             className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam?.confirmedDate === null ? st.promExpanded : ""}`}
             onClick={handlePromiseClick}
           >
-            {selectedTeam && (
+            {selectedTeam && teams !== 401 ? (
               <Promise
                 team={selectedTeam}
                 teamCreateDate={selectedTeam.createdAt}
                 goalDate={selectedTeam.confirmedDate}
               />
+            ) : (
+              <div></div>
             )}
 
             <div
@@ -275,7 +290,7 @@ const Team = () => {
               style={{ display: fadeState === "hidden" ? "none" : "block" }}
               onTransitionEnd={onFadeTransitionEnd}
             >
-              {selectedTeam && (
+              {selectedTeam && teams !== 401 ? (
                 <PromiseCheck2
                   team={selectedTeam}
                   summary={summary}
@@ -293,6 +308,8 @@ const Team = () => {
                   isDateSaved={isDateSaved}
                   onSaveDate={handleSaveDate}
                 />
+              ) : (
+                <div></div>
               )}
             </div>
           </div>
@@ -322,14 +339,6 @@ const Team = () => {
           setConfirmVoteData={setConfirmVoteData}
         />
       )}
-
-      {/* 🧪 레거시 코드 */}
-      {/* 
-      const [Teams, setTeams] = useState(teams);
-      const [Links, setLinks] = useState(links);
-      const [Cards, setCards] = useState(cards);
-      const [selectedTeam, setSelectedTeam] = useState(Teams[0]);
-      */}
     </>
   );
 };
