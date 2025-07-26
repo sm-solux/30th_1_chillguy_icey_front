@@ -187,6 +187,8 @@ const Team = () => {
   const handlePromiseClick = () => {
     if (fadeState === "visible") return;
     if (selectedTeam?.confirmedDate !== null) return;
+    if (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule) return;
+
     setIsExpanded(true);
     setShowPromiseCheck(true);
     setFadeState("visible");
@@ -195,6 +197,8 @@ const Team = () => {
   const handleListClick = () => {
     if (fadeState !== "visible") return;
     if (selectedTeam?.confirmedDate !== null) return;
+    if (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule) return;
+
     setFadeState("hiding");
   };
 
@@ -272,7 +276,7 @@ const Team = () => {
 
         <section className={st.Team_section2}>
           <div
-            className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam?.confirmedDate === null ? st.promExpanded : ""}`}
+            className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam?.confirmedDate === null ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : st.promExpanded) : ""}`}
             onClick={handlePromiseClick}
           >
             {selectedTeam && teams !== 401 ? (
@@ -286,8 +290,16 @@ const Team = () => {
             )}
 
             <div
-              className={`${st.fadeWrap} ${fadeState === "visible" ? st.show : st.hide}`}
-              style={{ display: fadeState === "hidden" ? "none" : "block" }}
+              className={`${st.fadeWrap} ${fadeState === "visible" ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? st.hide : st.show) : st.hide}`}
+              style={{
+                display:
+                  fadeState === "hidden"
+                    ? "none"
+                    : selectedTeam.role === "MEMBER" &&
+                        !selectedTeam.hasSchedule
+                      ? "none"
+                      : "block",
+              }}
               onTransitionEnd={onFadeTransitionEnd}
             >
               {selectedTeam && teams !== 401 ? (
@@ -315,7 +327,7 @@ const Team = () => {
           </div>
 
           <div
-            className={`${st.box} ${st.team_list_box} ${isExpanded ? st.listShrinked : ""}`}
+            className={`${st.box} ${st.team_list_box} ${isExpanded ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : st.listShrinked) : ""}`}
             onClick={handleListClick}
           >
             <Teamlist
