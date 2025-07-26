@@ -21,7 +21,7 @@ function App2() {
         <Route element={<Layout />}>
           <Route path="/team" element={<Team />} />
           <Route path="/mycard" element={<MyCard />} />
-          <Route path="/invite" element={<Invite />} />
+          <Route path="/invitation/:invitationToken" element={<Invite />} />
           <Route path="/letter" element={<Letter />} />
           <Route path="/oauth/callback" element={<Callback />} />
         </Route>
