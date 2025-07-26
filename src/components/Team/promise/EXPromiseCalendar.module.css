@@ -4,6 +4,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: 170px;
+  max-height: 170px;
   height: 100%;
   background-color: white;
   border-radius: 20px;
@@ -19,7 +21,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: 12px;
   overflow: hidden;
 }
 
