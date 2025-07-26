@@ -25,11 +25,19 @@ const IcyLogin = () => {
 
   const handleKakaoLogin = async () => {
     localStorage.setItem("loginType", "kakao");
+
+    const currentFrom = location.state?.from || "/";
+    sessionStorage.getItem("loginRedirectPath", currentFrom);
+
     window.location.href = kakaolink;
   };
 
   const handleGoogleLogin = () => {
     localStorage.setItem("loginType", "google");
+
+    const currentFrom = location.state?.from || "/";
+    sessionStorage.getItem("loginRedirectPath", currentFrom);
+
     window.location.href = googlelink;
   };
 

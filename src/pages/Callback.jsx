@@ -10,18 +10,21 @@ const KakaoCallback = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const accessToken =
-      params.get("accessToken") || localStorage.getItem("accessToken") || null;
-    const from = location.state?.from?.pathname || "/";
+      params.get("accessToken") || localStorage.getItem("accessToken");
+
+    const redirectPath = sessionStorage.getItem("loginRedirectPath") || "/";
 
     if (accessToken) {
-      login(accessToken); // AuthContext에 전달
-      console.log("✅ 토큰 가져오기 성공:", accessToken);
-      navigate(from, { replace: true }); // 내가 원하는 위치로 이동
+      login(accessToken);
+      console.log("✅ 로그인 성공. 이동 경로:", redirectPath);
+
+      // sessionStorage.removeItem("loginRedirectPath"); // → 나중에 원하면 주석 해제
+      navigate(redirectPath, { replace: true });
     } else {
-      console.error("❌ 토큰 가져오기 실패: accessToken 없음");
+      console.error("❌ 로그인 실패: 토큰 없음");
       navigate("/login");
     }
-  }, [login, location, navigate]);
+  }, [login, navigate]);
 
   return <div>로그인 처리 중입니다...</div>;
 };
