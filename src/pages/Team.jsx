@@ -71,7 +71,18 @@ const Team = () => {
           setSelectedTeamId(teamList[0].id);
         }
       } catch (error) {
-        console.error("팀 목록 불러오기 실패", error);
+        if (error.response) {
+          const status = error.response.status;
+          console.error("에러 상태 코드:", status);
+
+          if (status === 401) {
+            // 🔐 인증 실패 처리 (예: 로그아웃 또는 로그인 페이지로 리다이렉트)
+            console.warn("토큰 만료 또는 인증 실패. 로그인 필요.");
+            setTeams(status);
+          }
+        } else {
+          console.error("네트워크 에러 또는 서버 응답 없음:", error.message);
+        }
       }
     };
     if (token) loadTeams();

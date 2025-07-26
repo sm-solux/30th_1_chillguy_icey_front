@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import st from "./Teamlist.module.css";
 import Button from "../Button";
 import Teambutton from "./Teambutton";
 import Teamcreate from "./Teamcreate";
+import { useAuth } from "../../context/AuthContext";
 
 const Teamlist = ({
   teams,
@@ -12,26 +14,30 @@ const Teamlist = ({
   selectedTeamId,
 }) => {
   const [showCreate, setShowCreate] = useState(false);
-  const [teamName, setTeamName] = useState(""); // 입력값 상태
+  const [teamName, setTeamName] = useState("");
   const contentRef = useRef(null);
+  const { isLoggedIn, loading } = useAuth();
+  const navigate = useNavigate();
 
-  // 엔터키를 눌렀을 때 입력 받기
-  // const [inputText, setInputTest] = useState("");
+  const handleLoginClick = () => {
+    const pathToSave = location.pathname + location.search;
+    console.log("🔒 로그인 필요. 이동 전 path 저장:", pathToSave);
+    sessionStorage.setItem("loginRedirectPath", pathToSave);
+
+    navigate("/login");
+  };
+
   const activeEnter = (e) => {
-    if (e.key === "Enter") {
-      handleCreateClick();
-    }
+    if (e.key === "Enter") handleCreateClick();
   };
 
   const handleCreateClick = () => {
     if (showCreate && teamName.trim()) {
-      console.log("입력된 팀 이름:", teamName); // ✅ 프론트에서 확인용 출력
-
       onTeamAdd(teamName);
-      setShowCreate(false); // 입력 폼 닫기
-      setTeamName(""); // 입력 초기화
+      setShowCreate(false);
+      setTeamName("");
     } else {
-      setShowCreate(true); // 처음 클릭 시 폼만 열기
+      setShowCreate(true);
     }
   };
 
@@ -42,44 +48,61 @@ const Teamlist = ({
         setTeamName("");
       }
     };
-
     window.addEventListener("mousedown", handleOutsideClick);
-    return () => {
-      window.removeEventListener("mousedown", handleOutsideClick);
-    };
+    return () => window.removeEventListener("mousedown", handleOutsideClick);
   }, []);
+
+  const renderContent = () => {
+    if (showCreate) {
+      return (
+        <Teamcreate
+          value={teamName}
+          onChange={(e) => setTeamName(e.target.value)}
+          onKeyDown={activeEnter}
+        />
+      );
+    }
+
+    if (teams === 401 || !isLoggedIn) {
+      return <div className={st.teamlist_null_text}>연결이 끊겼습니다.</div>;
+    }
+
+    if (teams && teams.length === 0) {
+      return <div className={st.teamlist_null_text}>생성된 팀이 없습니다.</div>;
+    }
+
+    if (teams && teams.length > 0) {
+      return (
+        <>
+          {teams.map((team) => (
+            <Teambutton
+              key={team.id}
+              teamname={team.teamName}
+              dday={team.dday || ""}
+              isCheck={team.id === selectedTeamId}
+              onClick={() => onTeamCheckClick(team.id)}
+              linkonClick={() => onLinkClick(team.id)}
+            />
+          ))}
+        </>
+      );
+    }
+
+    return null;
+  };
+
+  const renderButton = () => {
+    if (teams === 401 || !isLoggedIn) {
+      return <Button text="로그인" type="mid" onClick={handleLoginClick} />; // 로그인 버튼, onClick은 사용자 삽입 예정
+    }
+
+    return <Button text="팀 생성" type="mid" onClick={handleCreateClick} />;
+  };
 
   return (
     <div className={st.Teamlist_content} ref={contentRef}>
-      <div className={st.Teamlist_space}>
-        {showCreate ? (
-          <Teamcreate
-            value={teamName}
-            onChange={(e) => setTeamName(e.target.value)}
-            onKeyDown={(e) => activeEnter(e)}
-          />
-        ) : !teams || teams.length === 0 ? (
-          <>
-            <div>현재 생성된 팀이 없습니다.</div>
-          </>
-        ) : (
-          <>
-            {teams.map((team) => (
-              <Teambutton
-                teamname={team.teamName}
-                dday={team.dday ? team.dday : ""}
-                isCheck={team.id === selectedTeamId}
-                onClick={() => onTeamCheckClick(team.id)}
-                linkonClick={() => onLinkClick(team.id)}
-              />
-            ))}
-          </>
-        )}
-      </div>
-
-      <div className={st.Teamlist_button_space}>
-        <Button text="팀 생성" type="mid" onClick={handleCreateClick} />
-      </div>
+      <div className={st.Teamlist_space}>{renderContent()}</div>
+      <div className={st.Teamlist_button_space}>{renderButton()}</div>
     </div>
   );
 };
