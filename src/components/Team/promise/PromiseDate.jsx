@@ -157,16 +157,10 @@ const PromiseDate = ({ teamCreateDate, onDateSelect, isEditing }) => {
   }, []);
 
   const getSelectedDatesData = useCallback(() => {
-    return Array.from(selectedDates)
-      .map((key) => {
-        const [y, m, d] = key.split("-");
-        return { dateKey: key };
-      })
-      .sort((a, b) => a.dateKey.localeCompare(b.dateKey));
+    return Array.from(selectedDates).sort((a, b) => a.localeCompare(b)); // 그냥 문자열이니까 정렬만 하면 됨
   }, [selectedDates]);
 
   useEffect(() => {
-    // ✅ 외부로 선택한 날짜 목록 전달 (이걸 이용해서 저장 가능!)
     onDateSelect?.(getSelectedDatesData());
   }, [getSelectedDatesData, onDateSelect]);
 

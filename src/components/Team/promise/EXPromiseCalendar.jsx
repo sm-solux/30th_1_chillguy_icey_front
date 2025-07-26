@@ -162,6 +162,7 @@ const EXPromiseCalendar = ({ teamCreateDate, goalDate }) => {
             const { date, isCurrentMonth } = dayObj;
             const isToday = isSameDate(date, today);
             const isGoal = goal && isSameDate(date, goal);
+            const isCreate = teamCreated && isSameDate(date, teamCreated);
 
             return (
               <div
@@ -170,6 +171,7 @@ const EXPromiseCalendar = ({ teamCreateDate, goalDate }) => {
                   ${st.dayCell}
                   ${isToday ? st.today : ""}
                   ${isGoal ? st.goal : ""}
+                  ${isCreate ? st.create : ""}
                   ${!isCurrentMonth ? st.neighboringMonth : ""}
                 `}
               >

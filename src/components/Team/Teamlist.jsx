@@ -27,13 +27,6 @@ const Teamlist = ({
     if (showCreate && teamName.trim()) {
       console.log("입력된 팀 이름:", teamName); // ✅ 프론트에서 확인용 출력
 
-      // TODO: 백엔드 연동 시 사용
-      // fetch("/api/teams", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ name: teamName }),
-      // });
-
       onTeamAdd(teamName);
       setShowCreate(false); // 입력 폼 닫기
       setTeamName(""); // 입력 초기화
@@ -65,15 +58,19 @@ const Teamlist = ({
             onChange={(e) => setTeamName(e.target.value)}
             onKeyDown={(e) => activeEnter(e)}
           />
+        ) : !teams || teams.length === 0 ? (
+          <>
+            <div>현재 생성된 팀이 없습니다.</div>
+          </>
         ) : (
           <>
-            {teams.map((team, index) => (
+            {teams.map((team) => (
               <Teambutton
                 teamname={team.teamName}
                 dday={team.dday ? team.dday : ""}
-                isCheck={team.teamId === selectedTeamId}
-                onClick={() => onTeamCheckClick(team.teamId)}
-                linkonClick={() => onLinkClick(team.teamId)}
+                isCheck={team.id === selectedTeamId}
+                onClick={() => onTeamCheckClick(team.id)}
+                linkonClick={() => onLinkClick(team.id)}
               />
             ))}
           </>

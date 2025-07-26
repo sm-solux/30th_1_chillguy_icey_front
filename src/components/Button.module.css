@@ -72,6 +72,15 @@
   color: #ffffff;
 }
 
+/* 200x50 파란색 비활성화 버튼 */
+.Button_midBlue_no {
+  width: 200px;
+  cursor: auto;
+
+  background-color: rgba(89, 126, 219, 0.8);
+  color: #ffffff;
+}
+
 /* 200x50 빨간색 버튼 */
 .Button_midRed {
   width: 200px;
@@ -121,4 +130,9 @@
 .Button_promise_no:hover:disabled,
 .Button_no:hover:disabled {
   background-color: transparent !important;
+}
+
+/* 200x50 파란색 버튼 */
+.Button_midBlue_no:hover:disabled {
+  background-color: rgba(89, 126, 219, 0.8);
 }

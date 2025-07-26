@@ -140,6 +140,14 @@
   background-color: #fdd835 !important;
 }
 
+.create {
+  background-color: rgb(173, 244, 221);
+}
+
+.create:hover {
+  background-color: rgb(169, 223, 206) !important;
+}
+
 /* 이전/다음 달 날짜 */
 .neighboringMonth {
   color: #7b83b1 !important;

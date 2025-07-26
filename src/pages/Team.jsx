@@ -1,184 +1,186 @@
-// 날짜 및 시간 슬롯 설정
-const allDates = [
-  { date: "2025-06-15" },
-  { date: "2025-06-16" },
-  { date: "2025-06-17" },
-  { date: "2025-06-18" },
-  { date: "2025-06-19" },
-  { date: "2025-06-20" },
-];
-
-const fakeVotes = {
-  "2025-06-15": {
-    "22:00": ["user1"],
-    "23:00": ["user1", "user2"],
-  },
-  "2025-06-16": {
-    "10:00": ["user3"],
-  },
-  "2025-06-18": {
-    "14:00": ["user2", "user3"],
-    "15:00": ["user1"],
-  },
-};
-
-const fakeMyVotes = {
-  "2025-06-15": ["22:00", "23:00"],
-  "2025-06-18": ["10:00", "11:00", "12:00", "13:00"],
-};
-
 import { useState, useRef, useEffect } from "react";
 import st from "./Team.module.css";
 import Board from "../components/Team/Board";
 import CardM from "../components/Team/CardM";
 import Massage from "../components/Team/Massage";
 import Promise from "../components/Team/Promise";
-import PromiseCheck from "../components/Team/PromiseCheck";
 import PromiseCheck2 from "../components/Team/PromiseCheck2";
 import Teamlist from "../components/Team/Teamlist";
 import PromiseDialog from "../components/Dialog/PromiseDialog";
 import LinkSnackbar from "../components/Snackbar/LinkSnackbar";
-import { teams as teams, links, cards } from "../util/teams";
 import { useAuth } from "../context/AuthContext";
+import {
+  fetchTeamList,
+  fetchTeamDetail,
+  createTeam,
+  fetchTeamLink,
+} from "../util/TeamDataAPI";
+
+import {
+  fetchTeamVoteCreate,
+  fetchTeamVoteOnlySummery,
+  fetchTeamVotesSummary,
+  fetchTeamMyVotes,
+  fetchTeamVoteSave,
+  fetchMaxCandidates,
+  fetchScheduleConfirm,
+} from "../util/TeamVoteAPI";
 
 const Team = () => {
-  const { token, login, logout, isLoggedIn } = useAuth();
+  const { token } = useAuth();
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [showPromiseCheck, setShowPromiseCheck] = useState(false);
+  const [fadeState, setFadeState] = useState("hidden");
 
-  const [fadeState, setFadeState] = useState("hidden"); // 'visible', 'hiding', 'hidden'
+  const [teams, setTeams] = useState([]);
+  const [selectedTeamId, setSelectedTeamId] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [invitationLink, setInvitationLink] = useState("");
 
-  // 👉 여기서 선택 데이터 상태 관리
-  const [mySelections, setMySelections] = useState(fakeMyVotes);
-  const [savedSelections, setSavedSelections] = useState(fakeMyVotes);
-
-  const [isPromiseDialogOpen, setIsPromiseDialogOpen] = useState(false);
   const [isLinkSnackbarOpen, setIsLinkSnackbarOpen] = useState(false);
-  const [Teams, setTeams] = useState(teams);
-  const [Links, setLinks] = useState(links);
-  const [Cards, setCards] = useState(cards);
-  // const [selectedTeam, setSelectedTeam] = useState(Teams[0]); // 레거시 - check가 js에 함께 포함된 경우
-  const [selectedTeamId, setSelectedTeamId] = useState(Number(Teams[0].teamId));
-  const [targetTeam, setTargetTeam] = useState(null);
+  const [isPromiseDialogOpen, setIsPromiseDialogOpen] = useState(false);
+
   const [pendingTeamId, setPendingTeamId] = useState(null);
-
   const timeoutRef = useRef(null);
-  const selectedTeam = Teams.find((team) => team.teamId === selectedTeamId);
 
-  // 팀 클릭 시: Promise 줄이고 -> 이후에 팀 변경
+  // 팀 투표를 위한 추가 변수 코드
+  const [myVotes, setMyVotes] = useState([]);
+  const [savedVotes, setSavedVotes] = useState([]);
+  const [summary, setSummary] = useState([]);
+  const [maxVoteCount, setMaxVoteCount] = useState(0);
+  const [bestCandidates, setBestCandidates] = useState([]);
+
+  // 팀 날짜 생성을 위한 추가 변수 코드
+  const [selectedDates, setSelectedDates] = useState([]); // 날짜 선택
+  const [isDateSaved, setIsDateSaved] = useState(false); // 저장 여부
+
+  // 팀 투표 확정을 위한 추가 변수 코드
+  const [confirmVoteData, setConfirmVoteData] = useState([]);
+
+  // 🔁 팀 리스트 로드
+  useEffect(() => {
+    const loadTeams = async () => {
+      try {
+        const res = await fetchTeamList(token);
+        const teamList = res.data;
+        setTeams(teamList);
+        console.log(teamList[3].id);
+        if (teamList.length > 0) {
+          setSelectedTeamId(teamList[0].id);
+        }
+      } catch (error) {
+        console.error("팀 목록 불러오기 실패", error);
+      }
+    };
+    if (token) loadTeams();
+  }, [token]);
+
+  // 새 팀 선택 시 데이터 초기화
+  useEffect(() => {
+    setMaxVoteCount(0);
+    setSummary([]);
+    setMyVotes([]);
+    setSavedVotes([]);
+  }, [selectedTeamId]);
+
+  // 🔁 팀 상세 정보 로드
+  useEffect(() => {
+    const loadTeamDetail = async () => {
+      if (!selectedTeamId) return;
+      try {
+        const res = await fetchTeamDetail(token, selectedTeamId);
+
+        setSelectedTeam(res.data);
+        console.log(res.data);
+      } catch (error) {
+        console.error("팀 상세 정보 불러오기 실패", error);
+      }
+    };
+    loadTeamDetail();
+  }, [selectedTeamId, token]);
+
+  useEffect(() => {
+    const loadVoteData = async () => {
+      if (!selectedTeamId || !selectedTeam) return;
+      if (!selectedTeam.hasSchedule) return;
+
+      try {
+        const resSum = await fetchTeamVotesSummary(token, selectedTeamId);
+        const resVotes = await fetchTeamMyVotes(token, selectedTeamId);
+        const maxCount = resSum.data.maxVoteCount;
+        setMaxVoteCount(maxCount);
+        setSummary(resSum.data.summary);
+        setMyVotes(resVotes.data.myVotes);
+        setSavedVotes(resVotes.data.myVotes); // 저장용도도 초기화
+      } catch (err) {
+        console.error("투표 정보 불러오기 실패", err);
+      }
+    };
+    loadVoteData();
+  }, [selectedTeamId, selectedTeam, token]);
+
+  // ✅ 팀 선택 핸들링
   const handleTeamSelect = (teamId) => {
     if (fadeState === "visible") {
-      // Promise 패널이 열려있으면 먼저 닫는다
       setFadeState("hiding");
-      setPendingTeamId(teamId); // 이후 팀 교체를 예약
+      setPendingTeamId(teamId);
     } else {
-      setSelectedTeamId(teamId); // 바로 교체
+      setSelectedTeamId(teamId);
     }
   };
 
-  // 링크 버튼 클릭 -> 링크 팝업창 open
-  const handleLinkSnackbar = (teamId) => {
-    const targetTeam = Teams.find((team) => team.teamId === teamId);
-    if (!targetTeam) return;
+  // ✅ 초대 링크 클릭 시
+  const handleLinkSnackbar = async (teamId) => {
+    try {
+      const res = await fetchTeamLink(token, teamId);
+      setInvitationLink(res.data.invitationLink || "");
+      setIsLinkSnackbarOpen(true);
 
-    // team id에 맞는 링크 가지고 오기
-    const linkObj = Links.find((link) => link.teamId === teamId);
-    const teamWithLink = { ...targetTeam, link: linkObj?.link || "" };
-
-    // 기존 타이머 제거
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
+        setIsLinkSnackbarOpen(false);
+        timeoutRef.current = null;
+      }, 3000);
+    } catch (error) {
+      console.error("초대 링크 가져오기 실패", error);
     }
-
-    setTargetTeam(teamWithLink);
-    setIsLinkSnackbarOpen(true);
-
-    // 새 타이머 설정
-    timeoutRef.current = setTimeout(() => {
-      setIsLinkSnackbarOpen(false);
-      timeoutRef.current = null; // 정리
-    }, 3000);
   };
 
-  const handleTeamAdd = (teamname) => {
-    // 1. 현재 Teams 상태에서 id 계산
-    const newId = Teams.length > 0 ? Teams[Teams.length - 1].teamId + 1 : 1;
-
-    // 2. 새로운 팀 객체 생성
-    const newTeam = {
-      teamId: newId,
-      teamName: teamname,
-      memberCount: 1,
-      currentDate: "2025-07-03",
-      role: "LEADER",
-      dday: "D-29",
-      hasSchedule: false,
-      confirmedDate: null,
-    };
-
-    const newLink = {
-      teamId: newId,
-      name: teamname,
-      link: `https://www.when2meet.com/team${newId}`,
-    };
-
-    const newCard = {
-      teamId: newId,
-      card: {
-        name: "새로운카드",
-        mbti: "INTP",
-        hobby: "코딩",
-        secret: "비밀 없음",
-        tmi: "생각 많음",
-      },
-    };
-
-    // 3. 상태 동기적으로 업데이트
-    setTeams((prev) => [...prev, newTeam]);
-    setLinks((prev) => [...prev, newLink]);
-    setCards((prev) => [...prev, newCard]);
+  // ✅ 팀 생성
+  const handleTeamAdd = async (teamName) => {
+    try {
+      const res = await createTeam(token, teamName);
+      const newTeam = res.data;
+      const newres = await fetchTeamList(token);
+      const newTeamList = newres.data;
+      console.log(newTeamList);
+      setTeams(newTeamList);
+      setSelectedTeamId(newTeam.teamId);
+    } catch (error) {
+      console.error("팀 생성 실패", error);
+    }
   };
 
-  // 팀 상태가 변경되면, 바로바로 console 알림
-  useEffect(() => {
-    console.log("Teams 상태 변경됨:", Teams);
-  }, [Teams]);
-
-  // 약속 확정 클릭 -> 약속 확정 팝업창 open
-  const openPromiseDialog = () => {
-    setIsPromiseDialogOpen(true);
-  };
-  const closePromiseDialog = () => {
-    setIsPromiseDialogOpen(false);
-  };
-
-  // Promise 클릭 시 (확장 + PromiseCheck 표시)
   const handlePromiseClick = () => {
     if (fadeState === "visible") return;
-    if (selectedTeam.confirmedDate !== null) return;
-    setIsExpanded(true); // 박스 확장 먼저
+    if (selectedTeam?.confirmedDate !== null) return;
+    setIsExpanded(true);
     setShowPromiseCheck(true);
     setFadeState("visible");
   };
 
-  // List 클릭 시 (fade out 시작)
   const handleListClick = () => {
     if (fadeState !== "visible") return;
-    if (selectedTeam.confirmedDate !== null) return;
-
-    setFadeState("hiding"); // PromiseCheck fade out 시작
+    if (selectedTeam?.confirmedDate !== null) return;
+    setFadeState("hiding");
   };
 
-  // 트랜지션 끝나고 팀을 변경
   const onFadeTransitionEnd = (e) => {
     if (e.propertyName !== "opacity") return;
-
     if (fadeState === "hiding") {
       setIsExpanded(false);
       setFadeState("hidden");
-
-      // ⭐️ fade 닫힘이 끝났을 때 팀 변경
       if (pendingTeamId !== null) {
         setSelectedTeamId(pendingTeamId);
         setPendingTeamId(null);
@@ -186,54 +188,92 @@ const Team = () => {
     }
   };
 
+  const openPromiseDialog = async () => {
+    const bestCandidates = await fetchMaxCandidates(token, selectedTeamId);
+    setBestCandidates(bestCandidates.data.results);
+    setIsPromiseDialogOpen(true);
+  };
+  const closePromiseDialog = () => setIsPromiseDialogOpen(false);
+
+  // 확정했을 때의 코드
+  const confirmPromiseDialog = async (data) => {
+    console.log(data);
+    await fetchScheduleConfirm(token, selectedTeamId, data);
+    // 🔁 확정 후 팀 상세 정보 다시 불러오기
+    const res = await fetchTeamDetail(token, selectedTeamId);
+    setSelectedTeam(res.data);
+
+    setFadeState("hidden");
+    setIsExpanded(false);
+
+    setIsPromiseDialogOpen(false);
+  };
+
+  const handleSaveDate = async () => {
+    const res = await fetchTeamVoteCreate(token, selectedTeamId, selectedDates);
+
+    setSummary(res.data.summary);
+    setMyVotes(res.data.myVotes);
+
+    setIsDateSaved(false);
+  };
+
   return (
     <>
       <div className={st.Team_container}>
         <section className={st.Team_section1}>
           <div className={`${st.box} ${st.team_borad_box}`}>
-            <Board team={selectedTeam} />
+            {selectedTeam && <Board team={selectedTeam} />}
           </div>
           <div>
             <div className={`${st.box} ${st.team_card_box}`}>
-              <CardM
-                card={
-                  Cards.find((c) => c.teamId === selectedTeam.teamId).card || {}
-                }
-                team={selectedTeam}
-              />
+              {selectedTeam && (
+                <CardM card={{}} team={selectedTeam} />
+                // TODO: card 데이터 별도 조회 필요 시 fetchTeamCard 추가 필요
+              )}
             </div>
             <div className={`${st.box} ${st.team_message_box}`}>
-              <Massage team={selectedTeam} />
+              {selectedTeam && <Massage team={selectedTeam} />}
             </div>
           </div>
         </section>
 
         <section className={st.Team_section2}>
           <div
-            className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam.confirmedDate === null ? st.promExpanded : ""}`}
+            className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam?.confirmedDate === null ? st.promExpanded : ""}`}
             onClick={handlePromiseClick}
           >
-            <Promise
-              teamCreateDate={selectedTeam.currentDate}
-              goalDate={selectedTeam.confirmedDate}
-            />
+            {selectedTeam && (
+              <Promise
+                team={selectedTeam}
+                teamCreateDate={selectedTeam.createdAt}
+                goalDate={selectedTeam.confirmedDate}
+              />
+            )}
 
             <div
-              className={`${st.fadeWrap} ${
-                fadeState === "visible" ? st.show : st.hide
-              }`}
+              className={`${st.fadeWrap} ${fadeState === "visible" ? st.show : st.hide}`}
               style={{ display: fadeState === "hidden" ? "none" : "block" }}
               onTransitionEnd={onFadeTransitionEnd}
             >
-              <PromiseCheck2
-                team={selectedTeam}
-                allDates={allDates}
-                othersVotes={fakeVotes}
-                mySelections={mySelections}
-                setMySelections={setMySelections}
-                savedSelections={savedSelections}
-                setSavedSelections={setSavedSelections}
-              />
+              {selectedTeam && (
+                <PromiseCheck2
+                  team={selectedTeam}
+                  summary={summary}
+                  myVotes={myVotes}
+                  setMyVotes={setMyVotes}
+                  savedVotes={savedVotes}
+                  setSavedVotes={setSavedVotes}
+                  setSummary={setSummary}
+                  maxVoteCount={maxVoteCount}
+                  setMaxVoteCount={setMaxVoteCount}
+                  openPromiseDialog={openPromiseDialog}
+                  selectedDates={selectedDates}
+                  setSelectedDates={setSelectedDates}
+                  isDateSaved={isDateSaved}
+                  onSaveDate={handleSaveDate}
+                />
+              )}
             </div>
           </div>
 
@@ -242,7 +282,7 @@ const Team = () => {
             onClick={handleListClick}
           >
             <Teamlist
-              teams={Teams}
+              teams={teams}
               onTeamAdd={handleTeamAdd}
               onLinkClick={handleLinkSnackbar}
               onTeamCheckClick={handleTeamSelect}
@@ -252,17 +292,24 @@ const Team = () => {
         </section>
       </div>
 
-      {isLinkSnackbarOpen && <LinkSnackbar link={targetTeam.link} />}
+      {isLinkSnackbarOpen && <LinkSnackbar link={invitationLink} />}
 
       {isPromiseDialogOpen && (
         <PromiseDialog
-          onConfirm={() => {
-            // 확인 버튼 눌렀을 때 실행할 로직
-            closePromiseDialog();
-          }}
+          bestCandidates={bestCandidates}
+          onConfirm={confirmPromiseDialog}
           onCancel={closePromiseDialog}
+          setConfirmVoteData={setConfirmVoteData}
         />
       )}
+
+      {/* 🧪 레거시 코드 */}
+      {/* 
+      const [Teams, setTeams] = useState(teams);
+      const [Links, setLinks] = useState(links);
+      const [Cards, setCards] = useState(cards);
+      const [selectedTeam, setSelectedTeam] = useState(Teams[0]);
+      */}
     </>
   );
 };
