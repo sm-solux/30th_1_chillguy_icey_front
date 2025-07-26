@@ -1,12 +1,23 @@
 import st from "./InfoDialog.module.css";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
+import { fetchAcceptTeamLink } from "../../util/TeamDataAPI";
+import { useAuth } from "../../context/AuthContext";
 
-const InfoDialog = () => {
+const InfoDialog = ({ linkTeam, invitationToken }) => {
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   const handleConfirm = () => {
+    console.log("📌 보낼 token: ", token);
+
+    acceptInvitation();
     navigate("/team");
+  };
+
+  const acceptInvitation = async () => {
+    const res = fetchAcceptTeamLink(token, invitationToken);
+    console.log("초대 수락 반응 확인 : ", res);
   };
 
   const handleCancel = () => {
@@ -25,8 +36,10 @@ const InfoDialog = () => {
           </div>
           <div className={st.info_popup_v_line}></div>
           <div className={st.info_mid_size_text_space}>
-            <div className={st.info_test_text}>칠가이</div>
-            <div className={st.info_test_text}>발랄한 개구리</div>
+            {/* <div className={st.info_test_text}>칠가이</div> */}
+            {/* <div className={st.info_test_text}>발랄한 개구리</div> */}
+            <div className={st.info_test_text}>{linkTeam.teamName}</div>
+            <div className={st.info_test_text}>{linkTeam.leaderName}</div>
           </div>
         </div>
 
