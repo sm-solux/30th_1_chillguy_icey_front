@@ -79,6 +79,7 @@ const Team = () => {
             // 🔐 인증 실패 처리 (예: 로그아웃 또는 로그인 페이지로 리다이렉트)
             console.warn("토큰 만료 또는 인증 실패. 로그인 필요.");
             setTeams(status);
+            setSelectedTeam(status);
           }
         } else {
           console.error("네트워크 에러 또는 서버 응답 없음:", error.message);
@@ -106,6 +107,7 @@ const Team = () => {
   // 🔁 팀 상세 정보 로드
   useEffect(() => {
     if (teams === 401) return;
+    if (selectedTeam === 401) return;
 
     const loadTeamDetail = async () => {
       if (!selectedTeamId) return;
@@ -125,6 +127,7 @@ const Team = () => {
     const loadVoteData = async () => {
       if (!selectedTeamId || !selectedTeam) return;
       if (!selectedTeam.hasSchedule) return;
+      if (selectedTeam === 401) return;
       if (teams === 401) return;
 
       try {
