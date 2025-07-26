@@ -46,6 +46,7 @@ const Team = () => {
 
   // 팀 투표를 위한 추가 변수 코드
   const [myVotes, setMyVotes] = useState([]);
+  const [hasDateVotes, setHasDateVotes] = useState(false);
   const [savedVotes, setSavedVotes] = useState([]);
   const [summary, setSummary] = useState([]);
   const [maxVoteCount, setMaxVoteCount] = useState(0);
@@ -65,7 +66,7 @@ const Team = () => {
         const res = await fetchTeamList(token);
         const teamList = res.data;
         setTeams(teamList);
-        console.log(teamList[3].id);
+        // console.log(teamList[3].id);
         if (teamList.length > 0) {
           setSelectedTeamId(teamList[0].id);
         }
@@ -83,6 +84,13 @@ const Team = () => {
     setMyVotes([]);
     setSavedVotes([]);
   }, [selectedTeamId]);
+
+  useEffect(() => {
+    // 하나라도 선택된 항목이 있으면 true
+    const result = selectedDates.some((d) => d.length > 0);
+    console.log("선택되었는가? : ", result);
+    setHasDateVotes(result);
+  }, [selectedDates]);
 
   // 🔁 팀 상세 정보 로드
   useEffect(() => {
@@ -262,6 +270,7 @@ const Team = () => {
                   summary={summary}
                   myVotes={myVotes}
                   setMyVotes={setMyVotes}
+                  hasDateVotes={hasDateVotes}
                   savedVotes={savedVotes}
                   setSavedVotes={setSavedVotes}
                   setSummary={setSummary}
