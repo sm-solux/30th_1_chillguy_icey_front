@@ -11,7 +11,7 @@ const Promise = ({ team, teamCreateDate, goalDate }) => {
     const goal = new Date(goalDate); // 목표 날짜
     // 시간 차이를 밀리초 단위로 계산 후 일 수로 환산
     const diffTime = goal.getTime() - today.getTime();
-    dday = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1; // 남은 일 수
+    dday = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // 남은 일 수
     {
       dday === 0 ? (dday = "DAY") : dday;
     }
