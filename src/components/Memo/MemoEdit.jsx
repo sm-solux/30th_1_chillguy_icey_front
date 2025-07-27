@@ -15,6 +15,8 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
 
   // 기존 메모 내용 불러오기
   useEffect(() => {
+    if (!teamId || !editingMemo?.memoId) return;
+
     const fetchMemoContent = async () => {
       if (!editingMemo) {
         setText("");

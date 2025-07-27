@@ -18,11 +18,17 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
   // state: 메모 내용 불러오기
   const [content, setContent] = useState(memo?.content || "");
   // 좋아요 상태 (내가 좋아요 눌렀는지)
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(memo?.liked || false);
   // 좋아요 누른 사람 명함 리스트
-  const [likeUsers, setLikeUsers] = useState([]);
+  const [likeUsers, setLikeUsers] = useState(memo?.likeUsers || []);
+  // state: 중복 호출 방지
+  const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
+    if (!teamId || !memoId || !token || isFetched) {
+      return;
+    }
+
     const fetchMemoContent = async () => {
       try {
         const response = await axios.get(
@@ -35,12 +41,20 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
         );
         const memoData = response.data;
         setContent(memoData.content);
+        setLiked(memoData.liked || false);
+        setLikeUsers(memoData.likeUsers || []);
+        setIsFetched(true);
 
         // 좋아요 관련 초기값 세팅
         if (memoData.liked !== undefined) setLiked(memoData.liked);
         if (Array.isArray(memoData.likeUsers)) setLikeUsers(memoData.likeUsers);
       } catch (error) {
-        console.error("메모 내용 불러오기 실패", error);
+        if (error.response && error.response.status === 400) {
+          // do nothing
+        } else {
+          // 400 에러가 아닌 다른 종류의 에러는 콘솔에 출력
+          console.error("메모 내용 불러오기 실패", error);
+        }
         setContent("[불러오기 실패]");
       }
     };
