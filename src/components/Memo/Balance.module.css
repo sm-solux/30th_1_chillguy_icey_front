@@ -52,6 +52,7 @@
 .Button_wrapper {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 0px;
   align-items: center;
   justify-content: center;
@@ -60,11 +61,12 @@
   overflow: hidden;
 }
 
-.Blance_button {
+.Balance_button {
   background: transparent;
   border: none;
-  width: 150px;
+  width: 160px;
   height: 70px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,7 +76,7 @@
 }
 
 .Balance_button_img {
-  width: 150px;
+  width: 100%;
   height: 70px;
 }
 

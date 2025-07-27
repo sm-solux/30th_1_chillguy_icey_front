@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 
 import Button from "../Button";
@@ -15,6 +16,9 @@ import exPig from "../../assets/exPig.png";
 // onSend: 쪽지 내용 저장 함수
 
 const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
+  // 토큰 불러오기
+  const { token } = useAuth();
+  const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
   // state: 쪽지 본문 저장
   const [message, setMessage] = useState("");
   // state: 전송 중 상태 처리
@@ -29,9 +33,17 @@ const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
     setError(null);
 
     try {
-      await axios.post(`/api/teams/${teamId}/cards/${card.cardId}/letters`, {
-        content: message,
-      });
+      await axios.post(
+        `${backLink}/api/teams/${teamId}/cards/${card.cardId}/letters`,
+        {
+          content: message,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       onSend(message);
     } catch (e) {
       console.error("쪽지 전송 실패", e);
@@ -109,9 +121,7 @@ const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
                   src={modal_line_vertical}
                   alt="modal_line_vertical"
                 />
-                <div className={st.Info_text}>
-                  {sender.nickname} {sender.animal}
-                </div>
+                <div className={st.Info_text}>{sender}</div>
               </div>
               <div className={st.Receive_wrapper}>
                 <div className={st.Info_text_title}>받는 사람</div>

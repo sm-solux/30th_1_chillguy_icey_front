@@ -44,6 +44,25 @@ const CardModal = ({
     setHobby(defaultValue?.hobby || "");
     setSecretTip(defaultValue?.secretTip || "");
     setTmi(defaultValue?.tmi || "");
+
+    // nickname에서 adjective 추출
+    if (defaultValue?.nickname) {
+      const nickname = defaultValue.nickname.trim();
+      const knownAnimals = ["강아지", "고양이", "곰", "개구리", "돼지", "토끼"];
+      const matchedAnimal = knownAnimals.find((animal) =>
+        nickname.endsWith(animal),
+      );
+
+      if (matchedAnimal) {
+        setAnimal(matchedAnimal);
+        setAdjective(nickname.replace(matchedAnimal, "").trim());
+      } else {
+        // fallback: nickname 전체를 adjective로 간주
+        setAdjective(nickname);
+      }
+    } else {
+      setAdjective(defaultValue?.adjective || "");
+    }
   }, [defaultValue]);
 
   const handleSave = () => {
@@ -156,7 +175,14 @@ const CardModal = ({
                   type="text"
                   placeholder="직접 작성.."
                   value={mbti}
-                  onChange={(e) => setMbti(e.target.value)}
+                  onChange={(e) => {
+                    const input = e.target.value;
+                    // 영문자만 필터링하고 대문자로 변환
+                    const onlyAlphabets = input
+                      .replace(/[^a-zA-Z]/g, "")
+                      .toUpperCase();
+                    setMbti(onlyAlphabets);
+                  }}
                 />
               </div>
             </div>

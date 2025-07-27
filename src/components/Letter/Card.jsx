@@ -2,6 +2,7 @@ import st from "./Card.module.css";
 import card_select from "../../assets/card_select.svg";
 import Button from "../Button";
 import { getAnimalImage } from "../../util/get-animal-image";
+import { useEffect } from "react";
 
 // Props
 // data: 명함 정보
@@ -32,8 +33,22 @@ const Card = ({
     돼지: "pig",
     토끼: "rabbit",
   };
+
+  const colorMap = {
+    빨강: 1,
+    주황: 2,
+    노랑: 3,
+    초록: 4,
+    파랑: 5,
+    남색: 6,
+    보라: 7,
+    검정: 8,
+    흰색: 9,
+    회색: 10,
+  };
   const animalKey = animalMap[data.animal] || "default";
-  const animalImageSrc = getAnimalImage(animalKey, data.profileColor);
+  const colorKey = colorMap[data.profileColor] || "default";
+  const animalImageSrc = getAnimalImage(animalKey, colorKey);
 
   // 해당 명함을 사용 중인 팀 목록
   // "칠가이 외 3" 형식으로 표시
@@ -49,6 +64,10 @@ const Card = ({
       onSelectTeam(data.cardId);
     }
   };
+
+  useEffect(() => {
+    console.log("카드 정보:", data);
+  }, [data]);
 
   return (
     <div
