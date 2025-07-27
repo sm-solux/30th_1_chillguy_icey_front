@@ -18,10 +18,10 @@ const CardM = ({ card, team }) => {
         <img className={st.cardM_img} src={Img} alt="" />
       </div>
       <div className={st.cardM_board}>
-        <div className={st.cardM_text}>{card.name}</div>
+        <div className={st.cardM_text}>{card.nickname}</div>
         <div className={st.cardM_text}>{card.mbti}</div>
         <div className={st.cardM_text}>{card.hobby}</div>
-        <div className={st.cardM_text}>{card.secret}</div>
+        <div className={st.cardM_text}>{card.secretTip}</div>
         <div className={st.cardM_text}>{card.tmi}</div>
       </div>
     </div>

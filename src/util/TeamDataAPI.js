@@ -101,3 +101,19 @@ export const fetchAcceptTeamLink = async (token, invitationToken) => {
     }
   }
 };
+
+export const fetchTeamCardM = async (token, teamId) => {
+  try {
+    const response = await axios.get(
+      `${backLink}/api/cards/teams/${teamId}/cards`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+    console.log("팀 명함 전체 목록 조회 성공:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("팀 명함 전체 목록 조회 실패:", error);
+    throw error;
+  }
+};

@@ -16,6 +16,7 @@ import {
   fetchTeamDetail,
   createTeam,
   fetchTeamLink,
+  fetchTeamCardM,
 } from "../util/TeamDataAPI";
 
 import {
@@ -67,6 +68,9 @@ const Team = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { linkMessage, linkStatus, linkTeamId } = location.state || {};
+
+  // 팀 카드 미리보기를 위한 추가 변수 코드
+  const [selectedCardM, setSelectedCardM] = useState([]);
 
   // 🔁 팀 리스트 로드
   useEffect(() => {
@@ -128,9 +132,16 @@ const Team = () => {
       if (!selectedTeamId) return;
       try {
         const res = await fetchTeamDetail(token, selectedTeamId);
+        const res_card = await fetchTeamCardM(token, selectedTeamId);
+
+        console.log(
+          `🐳${selectedTeamId} 팀 카드 미리보기 조회 성공 :`,
+          res_card,
+        );
 
         setSelectedTeam(res.data);
-        console.log(res.data);
+        setSelectedCardM(res_card);
+        // console.log(res.data);
       } catch (error) {
         console.error("팀 상세 정보 불러오기 실패", error);
       }
@@ -309,7 +320,7 @@ const Team = () => {
           <div>
             <div className={`${st.box} ${st.team_card_box}`}>
               {selectedTeam && teams !== 401 ? (
-                <CardM card={{}} team={selectedTeam} />
+                <CardM card={selectedCardM[0]} team={selectedTeam} />
               ) : (
                 // TODO: card 데이터 별도 조회 필요 시 fetchTeamCard 추가 필요
                 <div></div>
