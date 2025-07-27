@@ -48,11 +48,10 @@ const Dropdown = ({
   //   setIsOpen(false);
   // };
 
+  const [internalOpen, setInternalOpen] = useState(false);
   const isExternallyCtrl =
     name !== undefined && openName !== undefined && setOpenName !== undefined;
   const isOpen = isExternallyCtrl ? openName === name : internalOpen;
-
-  const [internalOpen, setInternalOpen] = useState(false);
 
   const toggleDropdown = () => {
     if (isDisabled) return;

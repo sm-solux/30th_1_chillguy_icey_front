@@ -25,9 +25,11 @@ const Balance = ({
   const handleVote = async (option) => {
     if (hasVoted) return;
 
+    const selectedOption = option === "option1" ? 1 : 2;
+
     try {
       if (onVote) {
-        await onVote(gameId, option);
+        await onVote(gameId, selectedOption);
         setHasVoted(true);
       }
     } catch (err) {
@@ -80,7 +82,7 @@ const Balance = ({
 
         {/* 두 번째 선택지 */}
         <button
-          className={st.Blance_button}
+          className={st.Balance_button}
           onClick={() => handleVote("option2")}
           disabled={hasVoted}
         >

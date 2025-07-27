@@ -75,23 +75,37 @@
   overflow: hidden;
 }
 
+.board_wrapper.expanded {
+  max-height: none; /* 기존 max-height 제한 해제 */
+  grid-template-columns: repeat(6, 1fr); /* 6열로 변경 */
+  grid-template-rows: repeat(3, auto); /* 3줄로 고정 */
+  gap: 15px;
+  z-index: 999;
+  transition: max-height 0.3s ease;
+}
+
 .Menu_container {
   position: absolute;
   bottom: 20px;
   right: 20px;
-  z-index: 10; /* ✅ 게시글 위로 */
+  gap: 12px;
+  z-index: 10; /* 게시글 위로 */
   display: flex;
   align-items: center;
 }
 
 /* 기능 버튼들 */
 .Menu_buttons {
+  gap: 12px;
+  height: 60px;
   display: flex;
   flex-direction: row;
   animation: slideIn 0.3s ease forwards;
 }
 
 .Menu_item {
+  height: 60px;
+  all: unset;
   background: none;
   border: none;
   color: white;
@@ -108,11 +122,16 @@
 
 /* 메뉴 토글 버튼 */
 .Menu_toggle {
+  all: unset;
   cursor: pointer;
   z-index: 11;
   background: none;
   border: none;
   transition: transform 0.3s ease;
+}
+
+.Menu_toggle img {
+  display: block;
 }
 
 .Menu_toggle.rotate {

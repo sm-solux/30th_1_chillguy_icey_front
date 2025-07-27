@@ -58,6 +58,9 @@ const Team = () => {
   // 팀 투표 확정을 위한 추가 변수 코드
   const [confirmVoteData, setConfirmVoteData] = useState([]);
 
+  // state: 게시판 확장 상태
+  const [isBoardExpanded, setIsBoardExpanded] = useState(false);
+
   // 🔁 팀 리스트 로드
   useEffect(() => {
     const loadTeams = async () => {
@@ -218,14 +221,42 @@ const Team = () => {
     setIsDateSaved(false);
   };
 
+  // 토글 함수
+  const toggleBoardExpand = () => {
+    setIsBoardExpanded((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        toggleBoardExpand();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [toggleBoardExpand]);
+
   return (
     <>
       <div className={st.Team_container}>
         <section className={st.Team_section1}>
-          <div className={`${st.box} ${st.team_borad_box}`}>
-            {selectedTeam && <Board team={selectedTeam} />}
+          <div
+            className={`${st.box} ${st.team_board_box} ${
+              isBoardExpanded && selectedTeam?.confirmedDate === null
+                ? st.promExpandedBoard
+                : ""
+            }`}
+          >
+            {selectedTeam && (
+              <Board
+                team={selectedTeam}
+                isBoardExpanded={isBoardExpanded}
+                onToggleExpand={toggleBoardExpand}
+                onCloseExpand={() => setIsBoardExpanded(false)}
+              />
+            )}
           </div>
-          <div>
+          <div className={st.card_message_wrapper}>
             <div className={`${st.box} ${st.team_card_box}`}>
               {selectedTeam && (
                 <CardM card={{}} team={selectedTeam} />

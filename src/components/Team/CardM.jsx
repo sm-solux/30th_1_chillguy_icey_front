@@ -6,7 +6,11 @@ const CardM = ({ card, team }) => {
   const navigate = useNavigate();
 
   const handleCardMClick = () => {
-    navigate("/mycard", { state: team });
+    const teamId = team.teamId;
+    const teamName = team.teamName;
+    navigate(
+      `/mycard?teamId=${teamId}&teamName=${encodeURIComponent(teamName)}`,
+    );
   };
 
   if (!team) return null;

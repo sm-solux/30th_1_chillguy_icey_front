@@ -25,6 +25,7 @@
 
 /* Section1: 왼쪽 큰 박스 */
 .Team_section1 {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -33,11 +34,13 @@
 }
 
 /* 위쪽 보드 박스 */
-.team_borad_box {
+.team_board_box {
+  position: relative;
   height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* transition: height 0.4s ease; */
 }
 
 /* 아래쪽 카드 + 메시지 */
@@ -126,4 +129,14 @@
   opacity: 0;
   transform: scale(0.97);
   pointer-events: none;
+}
+
+/* 게시판이 확장되었을 때 */
+.box.team_board_box.promExpandedBoard {
+  width: 1370px;
+  height: 825px;
+  position: fixed;
+  top: 100;
+  left: 500;
+  z-index: 9999;
 }
