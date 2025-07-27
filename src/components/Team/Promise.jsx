@@ -4,18 +4,33 @@ import EXPromiseCalendar from "./promise/EXPromiseCalendar.jsx";
 
 const Promise = ({ team, teamCreateDate, goalDate }) => {
   const goals = goalDate ? goalDate.split("-") : [];
-  // goalDate가 존재하면 D-day 계산
+
   let dday = null;
   if (goalDate) {
-    const today = new Date(); // 오늘 날짜
-    const goal = new Date(goalDate); // 목표 날짜
-    // 시간 차이를 밀리초 단위로 계산 후 일 수로 환산
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // 시간 제거
+
+    const goal = new Date(goalDate);
+    goal.setHours(0, 0, 0, 0); // 시간 제거
+
     const diffTime = goal.getTime() - today.getTime();
-    dday = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1; // 남은 일 수
-    {
-      dday === 0 ? (dday = "DAY") : dday;
+    dday = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (dday === 0) {
+      dday = "DAY";
     }
   }
+  const goalsHour = team.confirmedHour ? team.confirmedHour : 0;
+  let completionHour = "";
+  let hour = "";
+  if (goalsHour) {
+    const offset = goalsHour > 12 ? (goalsHour === 24 ? "AM" : "PM") : "AM";
+    const h = goalsHour > 12 ? goalsHour - 12 : goalsHour;
+    const h0 = h < 10 ? `${offset} 0${h}:00` : `${offset} ${h}:00`;
+
+    completionHour = h0;
+  }
+
   return (
     <div className={st.Promise_content}>
       <div className={st.promise_calendar_box}>
@@ -38,7 +53,7 @@ const Promise = ({ team, teamCreateDate, goalDate }) => {
             <div className={st.promise_date}>
               {goals[1]}.{goals[2]}
             </div>
-            <div className={st.promise_time}>AM 09:00</div>
+            <div className={st.promise_time}>{completionHour}</div>
           </>
         )}
       </div>

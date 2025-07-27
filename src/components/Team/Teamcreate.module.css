@@ -10,13 +10,14 @@
 .team_create_box {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 
   width: 100%;
 }
 
 .team_create_mid_text {
-  width: 110px;
+  width: 80px;
+  min-width: 80px;
   color: var(--Font-Color-50, #4b527e);
 
   /* Body1/SemiBold/24px */
@@ -29,8 +30,9 @@
 }
 
 .team_create_input {
-  flex-grow: 1; /* ✅ 남은 공간 꽉 채움 */
+  /* flex-grow: 1; ✅ 남은 공간 꽉 채움 */
   height: 35px;
+  width: 100%;
 
   color: #7b83b1;
   font-family: Inter;

@@ -63,3 +63,41 @@ export const fetchTeamLink = async (token, teamId) => {
     throw error;
   }
 };
+
+export const fetchCheckTeamLinkToken = async (invitationToken, token) => {
+  try {
+    const response = await axios.get(
+      `${backLink}/api/teams/invitation/${invitationToken}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+    console.log("팀 링크 토큰을 통해 정보를 불러왔습니다 : ", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("팀 링크 토큰을 통해 정보를 불러오지 못했습니다.");
+    throw error;
+  }
+};
+
+export const fetchAcceptTeamLink = async (token, invitationToken) => {
+  try {
+    const response = await axios.post(
+      `${backLink}/api/teams/invitation/${invitationToken}`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+    console.log("링크 토큰을 통해 팀 초대를 수락하였습니다.", response);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      const status = error.response.status;
+      console.error(`${status} 에러 :`, error.response);
+      return error.response.data;
+    } else {
+      console.log("네트워크 오류");
+      throw error;
+    }
+  }
+};

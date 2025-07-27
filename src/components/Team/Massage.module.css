@@ -65,3 +65,13 @@
   line-height: 140%;
   letter-spacing: -0.32px;
 }
+
+@media (max-width: 1050px) {
+  .massage_title {
+    display: none;
+  }
+
+  .massage_subtitle {
+    display: none;
+  }
+}

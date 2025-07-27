@@ -1,5 +1,5 @@
 import styles from "./Snackbar.module.css";
-import Button from "../Button";
+import Button from "../../components/Button";
 
 const Snackbar = ({ text, buttontext, buttonOnclick }) => {
   return (
