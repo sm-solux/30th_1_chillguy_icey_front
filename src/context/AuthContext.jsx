@@ -5,12 +5,19 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
   const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
+
+  useEffect(() => {
+    console.log("isLoggedIn:", !!token); // ✅ 항상 최신값
+  }, [token]);
 
   // 로컬스토리지에서 초기화
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
+    console.log("storedToken :", storedToken);
     if (storedToken) setToken(storedToken);
+    setLoading(false);
   }, []);
 
   // 로그인 처리 함수
@@ -35,6 +42,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("loginType");
       setToken(null);
+      console.log("isLoggedIn :", isLoggedIn);
     }
   };
 
@@ -42,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ token, login, logout, isLoggedIn, backLink }}
+      value={{ token, login, logout, isLoggedIn, loading, backLink }}
     >
       {children}
     </AuthContext.Provider>

@@ -14,8 +14,10 @@ import {
 
 const PromiseCheck2 = ({
   team,
+  // reloadPromiseCheck,
   summary,
   myVotes,
+  hasDateVotes,
   setMyVotes,
   savedVotes,
   setSavedVotes,
@@ -63,6 +65,9 @@ const PromiseCheck2 = ({
   useEffect(() => {
     setTeamDate(team.hasSchedule);
   }, [team.hasSchedule]);
+
+  const type =
+    view === "time" ? (isTimeEditing ? "" : "no") : hasDateVotes ? "" : "no";
 
   const saveTime = async () => {
     try {
@@ -137,8 +142,8 @@ const PromiseCheck2 = ({
           <Button
             text="완료"
             // type={team.hasSchedule ? "" : "no"}
-            type={view === "time" ? (isTimeEditing ? "" : "no") : ""}
-            disabled={view === "time" ? !isTimeEditing : isDateSaved}
+            type={type}
+            disabled={type === "no"}
             // 완료 버튼 클릭 로직 수정
             onClick={() => {
               if (view === "time") {
@@ -148,6 +153,7 @@ const PromiseCheck2 = ({
                 setView("time");
                 setTabLocked(true); // 날짜 탭은 이 시점 이후 비활성화
               }
+              // reloadPromiseCheck();
             }}
           />
         </div>

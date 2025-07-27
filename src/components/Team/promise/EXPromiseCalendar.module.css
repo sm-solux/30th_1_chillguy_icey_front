@@ -4,6 +4,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: 170px;
+  max-height: 170px;
   height: 100%;
   background-color: white;
   border-radius: 20px;
@@ -19,7 +21,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -122,12 +123,19 @@
 
 /* 오늘 날짜 */
 .today {
-  background-color: #cde8ff !important;
+  border: 1px solid #7b83b1 !important; /* 은은한 보더 */
+  border-radius: 6px; /* 살짝 둥글게 */
   color: #4b527e;
+  background-color: transparent !important;
+  box-shadow: inset 0 0 0 1px rgba(123, 131, 177, 0.2); /* 은은한 안쪽 그림자 */
+  font-weight: 600;
 }
 
 .today:hover {
-  background-color: #b9dcff !important;
+  /* 호버 시에도 색상 유지 (튀지 않도록) */
+  .today:hover {
+    background-color: rgba(123, 131, 177, 0.05) !important;
+  }
 }
 
 /* 목표 날짜 */
@@ -141,7 +149,7 @@
 }
 
 .create {
-  background-color: rgb(173, 244, 221);
+  background-color: rgb(173, 244, 221) !important;
 }
 
 .create:hover {
