@@ -9,14 +9,53 @@ const CardM = ({ card, team }) => {
     navigate("/mycard", { state: team });
   };
 
+  const colorMap = {
+    빨강: 1,
+    주황: 2,
+    노랑: 3,
+    초록: 4,
+    파랑: 5,
+    남색: 6,
+    보라: 7,
+    검정: 8,
+    흰색: 9,
+    회색: 10,
+  };
+
+  const animalMap = {
+    강아지: "dog",
+    고양이: "cat",
+    곰: "bear",
+    개구리: "frog",
+    돼지: "pig",
+    토끼: "rabbit",
+  };
+
+  const images = import.meta.glob("../../assets/animal/*.svg", { eager: true });
+  const pickAnimalImg = () => {
+    const fileName = `animal_${animalMap[card.animal]}${colorMap[card.profileColor]}.svg`;
+    const imagePath = images[`../../assets/animal/${fileName}`];
+    console.log(imagePath);
+    return (
+      <div className={st.cardM_img_background}>
+        <img
+          className={st.cardM_img}
+          src={imagePath?.default || imagePath}
+          alt=""
+        />
+      </div>
+    );
+  };
+
   if (!team) return null;
   // console.log("team.card 확인", card);
 
   return (
     <div className={st.CardM_content} onClick={handleCardMClick}>
-      <div className={st.cardM_img_background}>
-        <img className={st.cardM_img} src={Img} alt="" />
-      </div>
+      {/* <div className={st.cardM_img_background}>
+        <img className={st.cardM_img} src={pickAnimalImg()} alt="" />
+      </div> */}
+      {pickAnimalImg()}
       <div className={st.cardM_board}>
         <div className={st.cardM_text}>{card.nickname}</div>
         <div className={st.cardM_text}>{card.mbti}</div>
