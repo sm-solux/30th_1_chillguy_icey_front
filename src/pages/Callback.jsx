@@ -29,7 +29,7 @@ const Callback = () => {
       login(accessToken);
       console.log("✅ 로그인 성공. 이동 경로:", redirectPath);
 
-      sessionStorage.removeItem("loginRedirectPath"); // → 나중에 원하면 주석 해제
+      sessionStorage.removeItem("loginRedirectPath");
       navigate(redirectPath, { replace: true });
     } else {
       console.error("❌ 로그인 실패: 토큰 없음");

@@ -84,7 +84,7 @@
   overflow: visible; /* 꼭 확인 */
   position: relative; /* 필요시 */
   flex-direction: column;
-  gap: 25px;
+  gap: 21px;
 
   width: 240px;
   margin-left: 30px;

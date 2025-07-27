@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import st from "./Team.module.css";
 import Board from "../components/Team/Board";
 import CardM from "../components/Team/CardM";
@@ -8,6 +9,7 @@ import PromiseCheck2 from "../components/Team/PromiseCheck2";
 import Teamlist from "../components/Team/Teamlist";
 import PromiseDialog from "../components/Dialog/PromiseDialog";
 import LinkSnackbar from "../components/Snackbar/LinkSnackbar";
+import Snackbar from "../components/Snackbar/Snackbar";
 import { useAuth } from "../context/AuthContext";
 import {
   fetchTeamList,
@@ -27,7 +29,7 @@ import {
 } from "../util/TeamVoteAPI";
 
 const Team = () => {
-  const { token } = useAuth();
+  const { token, logout } = useAuth();
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [showPromiseCheck, setShowPromiseCheck] = useState(false);
@@ -40,9 +42,11 @@ const Team = () => {
 
   const [isLinkSnackbarOpen, setIsLinkSnackbarOpen] = useState(false);
   const [isPromiseDialogOpen, setIsPromiseDialogOpen] = useState(false);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
   const [pendingTeamId, setPendingTeamId] = useState(null);
-  const timeoutRef = useRef(null);
+  const linkTimeoutRef = useRef(null); // 초대 링크 스낵바 전용
+  const messageTimeoutRef = useRef(null); // 메시지 (linkMessage) 스낵바 전용
 
   // 팀 투표를 위한 추가 변수 코드
   const [myVotes, setMyVotes] = useState([]);
@@ -59,6 +63,11 @@ const Team = () => {
   // 팀 투표 확정을 위한 추가 변수 코드
   const [confirmVoteData, setConfirmVoteData] = useState([]);
 
+  // 팀 링크 초대 확정을 위한 추가 변수 코드
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { linkMessage, linkStatus, linkTeamId } = location.state || {};
+
   // 🔁 팀 리스트 로드
   useEffect(() => {
     const loadTeams = async () => {
@@ -68,7 +77,11 @@ const Team = () => {
         setTeams(teamList);
         // console.log(teamList[3].id);
         if (teamList.length > 0) {
-          setSelectedTeamId(teamList[0].id);
+          if (linkTeamId) {
+            setSelectedTeamId(linkTeamId);
+          } else {
+            setSelectedTeamId(teamList[0].id);
+          }
         }
       } catch (error) {
         if (error.response) {
@@ -78,6 +91,8 @@ const Team = () => {
           if (status === 401) {
             // 🔐 인증 실패 처리 (예: 로그아웃 또는 로그인 페이지로 리다이렉트)
             console.warn("토큰 만료 또는 인증 실패. 로그인 필요.");
+            logout();
+
             setTeams(status);
             setSelectedTeam(status);
           }
@@ -162,10 +177,10 @@ const Team = () => {
       setInvitationLink(res.data.invitationLink || "");
       setIsLinkSnackbarOpen(true);
 
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
+      if (linkTimeoutRef.current) clearTimeout(linkTimeoutRef.current);
+      linkTimeoutRef.current = setTimeout(() => {
         setIsLinkSnackbarOpen(false);
-        timeoutRef.current = null;
+        linkTimeoutRef.current = null;
       }, 3000);
     } catch (error) {
       console.error("초대 링크 가져오기 실패", error);
@@ -246,6 +261,39 @@ const Team = () => {
 
     setIsDateSaved(false);
   };
+
+  // ✅ 메시지 (linkMessage) 스낵바
+  const handleSnackbar = () => {
+    setIsSnackbarOpen(true);
+
+    if (messageTimeoutRef.current) clearTimeout(messageTimeoutRef.current);
+    messageTimeoutRef.current = setTimeout(() => {
+      setIsSnackbarOpen(false);
+      clearLocationState();
+      messageTimeoutRef.current = null;
+    }, 3000);
+  };
+
+  // ✅ 확인 버튼 눌러서 닫기
+  const handleCloseSnackbar = () => {
+    console.log("아니 버튼 누르는중.");
+    if (messageTimeoutRef.current) {
+      clearTimeout(messageTimeoutRef.current);
+      messageTimeoutRef.current = null;
+    }
+    setIsSnackbarOpen(false);
+    clearLocationState();
+  };
+
+  const clearLocationState = () => {
+    navigate(location.pathname, { replace: true, state: null });
+  };
+
+  useEffect(() => {
+    if (linkMessage) {
+      handleSnackbar();
+    }
+  }, [linkMessage]);
 
   return (
     <>
@@ -352,6 +400,14 @@ const Team = () => {
           onConfirm={confirmPromiseDialog}
           onCancel={closePromiseDialog}
           setConfirmVoteData={setConfirmVoteData}
+        />
+      )}
+
+      {isSnackbarOpen && linkMessage && (
+        <Snackbar
+          text={linkMessage}
+          buttontext="확인"
+          buttonOnclick={handleCloseSnackbar} // ✅ 오타 수정 및 핸들러 연결
         />
       )}
     </>

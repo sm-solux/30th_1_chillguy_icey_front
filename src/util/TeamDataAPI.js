@@ -88,22 +88,13 @@ export const fetchAcceptTeamLink = async (token, invitationToken) => {
       {},
       { headers: { Authorization: `Bearer ${token}` } },
     );
-    console.log("링크 토큰을 통해 팀 초대를 수락하였습니다.", response.message);
-    return response.message;
+    console.log("링크 토큰을 통해 팀 초대를 수락하였습니다.", response);
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response.status;
-      switch (status) {
-        case 404:
-          console.error("404 에러: ", error.response.data.message);
-          return error.response.data.message;
-        case 409:
-          console.error("409 에러 - 충돌 : ", error.response.data.message);
-          return error.response.data.message;
-        default:
-          console.error("링크 토큰을 수락하지 못했습니다.");
-          throw error;
-      }
+      console.error(`${status} 에러 :`, error.response);
+      return error.response.data;
     } else {
       console.log("네트워크 오류");
       throw error;

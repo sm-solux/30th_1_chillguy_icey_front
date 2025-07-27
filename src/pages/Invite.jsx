@@ -30,8 +30,8 @@ const Invite = () => {
     if (invitationToken) {
       const loadLinkRes = async () => {
         try {
-          const ras = await fetchCheckTeamLinkToken(invitationToken, token);
-          setInvitationRes(ras);
+          const res = await fetchCheckTeamLinkToken(invitationToken, token);
+          setInvitationRes(res);
         } catch (error) {
           console.error("❌ 팀 정보 로딩 실패:", error);
         }

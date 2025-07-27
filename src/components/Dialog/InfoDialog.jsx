@@ -8,16 +8,28 @@ const InfoDialog = ({ linkTeam, invitationToken }) => {
   const navigate = useNavigate();
   const { token } = useAuth();
 
-  const handleConfirm = () => {
-    console.log("📌 보낼 token: ", token);
+  const handleConfirm = async () => {
+    try {
+      const res = await acceptInvitation();
+      console.log("초대 수락 반응 확인 : ", res);
 
-    acceptInvitation();
-    navigate("/team");
+      navigate("/team", {
+        state: {
+          linkMessage: res.message,
+          linkStatus: res.status,
+          linkTeamId: res.data?.teamId ?? res.teamId,
+        },
+      });
+    } catch (error) {
+      console.error("예외 발생", error);
+      navigate("/home");
+    }
   };
 
   const acceptInvitation = async () => {
-    const res = fetchAcceptTeamLink(token, invitationToken);
-    console.log("초대 수락 반응 확인 : ", res);
+    const res = await fetchAcceptTeamLink(token, invitationToken);
+
+    return res;
   };
 
   const handleCancel = () => {

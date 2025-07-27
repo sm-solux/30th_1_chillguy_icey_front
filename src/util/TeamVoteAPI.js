@@ -110,8 +110,10 @@ export const fetchScheduleConfirm = async (token, teamId, schedule) => {
       { date: `${schedule.date}`, hour: Number(schedule.hour) },
       // { schedule },
       {
-        headers: { Authorization: `Bearer ${token}` },
-        "Content-Type": "application/json",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       },
     );
     console.log("약속 잡기 스케줄 확정 성공:", response.data);
