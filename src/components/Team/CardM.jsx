@@ -18,7 +18,7 @@ const CardM = ({ card, team }) => {
     남색: 6,
     보라: 7,
     검정: 8,
-    흰색: 9,
+    하양: 9,
     회색: 10,
   };
 
@@ -33,9 +33,11 @@ const CardM = ({ card, team }) => {
 
   const images = import.meta.glob("../../assets/animal/*.svg", { eager: true });
   const pickAnimalImg = () => {
+    if (!card || !card.animal || !card.profileColor) return null;
+
     const fileName = `animal_${animalMap[card.animal]}${colorMap[card.profileColor]}.svg`;
     const imagePath = images[`../../assets/animal/${fileName}`];
-    console.log(imagePath);
+
     return (
       <div className={st.cardM_img_background}>
         <img
@@ -48,7 +50,6 @@ const CardM = ({ card, team }) => {
   };
 
   if (!team) return null;
-  // console.log("team.card 확인", card);
 
   return (
     <div className={st.CardM_content} onClick={handleCardMClick}>
