@@ -42,3 +42,12 @@ export const fetchMyCardInTeam = async (token, teamId) => {
   );
   return res.data;
 };
+
+// 쪽지 전송
+export const sendLetter = async (token, teamId, cardId, content) => {
+  await axios.post(
+    `${backLink}/api/teams/${teamId}/cards/${cardId}/letters`,
+    { content },
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+};
