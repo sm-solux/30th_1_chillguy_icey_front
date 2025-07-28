@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import axios from "axios";
 
 import ReceivedLetter from "../components/Letter/ReceivedLetter";
 import CardList from "../components/Letter/CardList";
@@ -11,97 +10,56 @@ import Snackbar from "../components/Snackbar/Snackbar";
 
 import st from "./Letter.module.css";
 
-const Letter = () => {
-  // 토큰 불러오기
-  const { token } = useAuth();
-  const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
+import {
+  fetchReceivedLetters,
+  fetchLetterContent,
+} from "../util/LetterDataAPI";
+import { fetchTeamCards, fetchCurrentTeamCard } from "../util/CardDataAPI";
 
-  // 현재 팀 정보 받기
+const Letter = () => {
+  const { token } = useAuth();
   const [searchParams] = useSearchParams();
   const currentTeamId = searchParams.get("teamId");
 
-  // state: 열려있는 쪽지
   const [openedId, setOpenedId] = useState(null);
-  // state: 쪽지 내용
   const [letters, setLetters] = useState([]);
-  // state: 모달 열림 상태
   const [modalOpen, setModalOpen] = useState(false);
-  // state: 쪽지 보내기로 선택한 명함
   const [selectedCard, setSelectedCard] = useState(null);
-  // state: 쪽지 전송 완료 snackbar 상태
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  // state: 명함 추가
   const [cards, setCards] = useState([]);
-  // state: 쪽지 발신자 이름
   const [myNickname, setMyNickname] = useState("");
-  // state: 현재 사용자 카드 아이디
   const [myCardId, setMyCardId] = useState(null);
 
-  // ref: 실제 스크롤되는 영역(Letter_list)
   const letterListRef = useRef(null);
-  // ref: 뷰포트 역할 요소(Letter_body)
   const letterBodyRef = useRef(null);
-  // ref: 선택된 쪽지+내용 영역(Selected_section)
   const selectedSectionRef = useRef(null);
 
   useEffect(() => {
     if (!token || !currentTeamId) return;
     const fetchData = async () => {
       try {
-        // 쪽지 목록 불러오기
-        const lettersRes = await axios.get(
-          `${backLink}/api/teams/${currentTeamId}/letters/received`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-        const fetchedLetters = lettersRes.data?.data || [];
+        const fetchedLetters = await fetchReceivedLetters(token, currentTeamId);
         setLetters(fetchedLetters);
-        console.log("받은 쪽지 목록:", fetchedLetters);
 
-        // 팀 명함 목록 불러오기
-        const cardsRes = await axios.get(
-          `${backLink}/api/cards/teams/${currentTeamId}/cards`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-        const fetchedCards = cardsRes.data || [];
+        const fetchedCards = await fetchTeamCards(token, currentTeamId);
         setCards(fetchedCards);
-        console.log("팀 명함 목록:", fetchedCards);
 
         await fetchMyCardNickname();
       } catch (err) {
         console.error("데이터 불러오기 실패", err);
       }
     };
-
     fetchData();
   }, [currentTeamId, token]);
 
-  // 쪽지 클릭 시 내용 불러오기
   const handleClick = async (letterId) => {
     if (!token || !currentTeamId) return;
     if (openedId === letterId) {
       setOpenedId(null);
       return;
     }
-
     try {
-      const res = await axios.get(
-        `${backLink}/api/teams/${currentTeamId}/letters/${letterId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const content = res.data?.data?.content || "";
-
+      const content = await fetchLetterContent(token, currentTeamId, letterId);
       setLetters((prev) =>
         prev.map((l) =>
           l.id === letterId ? { ...l, content, isRead: true } : l,
@@ -113,21 +71,10 @@ const Letter = () => {
     }
   };
 
-  // 발신자용 명함 불러오기
-  // 발신자용 명함 불러오기 (내가 현재 팀에서 사용하는 명함 정보만 불러오기)
   const fetchMyCardNickname = async () => {
     if (!currentTeamId || !token) return;
     try {
-      const res = await axios.get(
-        `${backLink}/api/cards/teams/${currentTeamId}/cards/my`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      // API 응답 예시: { cardId, nickname, ... }
-      const myCard = res.data;
+      const myCard = await fetchCurrentTeamCard(token, currentTeamId);
       if (myCard && myCard.nickname) {
         setMyNickname(myCard.nickname);
         setMyCardId(myCard.cardId);
@@ -144,25 +91,21 @@ const Letter = () => {
     }
   };
 
-  // 확인 버튼 클릭 시 쪽지 내용 닫기
   const handleCloseContent = () => {
     handleClick(openedId);
   };
 
-  // 모달 열기/닫기 함수
   const openModal = (cardData) => {
     setSelectedCard(cardData);
     setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
-    setSelectedCard(null); // 닫을 때 초기화
+    setSelectedCard(null);
   };
 
-  // Snackbar 닫기 함수
   const handleSnackbarClose = () => setSnackbarOpen(false);
 
-  // 선택된 쪽지를 Letter_body 뷰포트 기준 중앙에 위치시키기
   useEffect(() => {
     if (
       openedId === null ||
@@ -172,17 +115,12 @@ const Letter = () => {
     )
       return;
 
-    const container = letterListRef.current; // 스크롤 가능한 div
-    const viewport = letterBodyRef.current; // 실제 보이는 영역
-    const target = selectedSectionRef.current; // 선택된 쪽지+내용
+    const container = letterListRef.current;
+    const viewport = letterBodyRef.current;
+    const target = selectedSectionRef.current;
 
-    // 선택된 요소의 중앙 좌표 (Letter_list 컨테이너 기준)
     const targetCenter = target.offsetLeft + target.clientWidth / 2;
-
-    // Letter_body (뷰포트) 너비의 중앙
     const viewportCenter = viewport.clientWidth / 2;
-
-    // 스크롤 위치 계산: 선택된 쪽지의 중앙을 뷰포트 중앙에 맞춤
     const scrollLeft = targetCenter - viewportCenter;
 
     container.scrollTo({ left: scrollLeft, behavior: "smooth" });
@@ -200,7 +138,6 @@ const Letter = () => {
               openedId !== null ? st.Letter_list_expanded : ""
             }`}
           >
-            {/* 선택된 쪽지 + 내용 묶음 */}
             {openedId !== null && selectedLetter && (
               <div ref={selectedSectionRef} className={st.Selected_section}>
                 <ReceivedLetter
@@ -224,7 +161,6 @@ const Letter = () => {
                 </div>
               </div>
             )}
-            {/* 선택된 쪽지 제외한 나머지 쪽지들 */}
             {letters.map((letter) => {
               if (letter.id === openedId) return null;
               return (
@@ -239,7 +175,6 @@ const Letter = () => {
             })}
           </div>
 
-          {/* 명함 리스트 */}
           <CardList
             cards={cards.filter((card) => card.cardId !== myCardId)}
             onSendClick={openModal}
@@ -247,7 +182,6 @@ const Letter = () => {
           />
         </div>
       </div>
-      {/* 쪽지 작성 모달 LetterModal */}
       {modalOpen && selectedCard && (
         <div onClick={closeModal}>
           <div onClick={(e) => e.stopPropagation()}>
