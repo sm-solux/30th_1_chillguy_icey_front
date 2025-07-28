@@ -71,6 +71,9 @@ const Team = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { linkMessage, linkStatus, linkTeamId } = location.state || {};
+  // 쿼리스트링으로 초기화
+  const queryParms = new URLSearchParams(location.search);
+  const queryTeamId = queryParms.get("teamId");
 
   // 팀 카드 미리보기를 위한 추가 변수 코드
   const [selectedCardM, setSelectedCardM] = useState([]);
@@ -84,7 +87,11 @@ const Team = () => {
         setTeams(teamList);
         // console.log(teamList[3].id);
         if (teamList.length > 0) {
-          if (linkTeamId) {
+          const validTeam =
+            queryTeamId && teamList.some((t) => t.id === parseInt(queryTeamId));
+          if (validTeam) {
+            setSelectedTeamId(parseInt(queryTeamId));
+          } else if (linkTeamId) {
             setSelectedTeamId(linkTeamId);
           } else {
             setSelectedTeamId(teamList[0].id);
@@ -177,6 +184,7 @@ const Team = () => {
       setPendingTeamId(teamId);
     } else {
       setSelectedTeamId(teamId);
+      navigate(`/team?teamId=${teamId}`); // 🔥 쿼리스트링 반영
     }
   };
 
