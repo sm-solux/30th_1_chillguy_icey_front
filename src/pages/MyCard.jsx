@@ -7,6 +7,7 @@ import CardList from "../components/Letter/CardList";
 import CardModal from "../components/Modal/CardModal";
 import Button from "../components/Button";
 import AlertDialog from "../components/Dialog/AlertDialog";
+import Snackbar from "../components/Snackbar/Snackbar";
 
 import st from "./MyCard.module.css";
 
@@ -41,6 +42,8 @@ const MyCard = () => {
   const [cardList, setCardList] = useState([]);
   // state: 내가 현재 팀에서 사용 중인 명함 ID
   const [currentCardIdInTeam, setCurrentCardIdInTeam] = useState(null);
+  // state: 명함 삭제 snackbar용
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   // 내 명함 목록 불러오기
   const fetchMyCards = async () => {
@@ -131,6 +134,11 @@ const MyCard = () => {
     setModalOpen(true);
   };
 
+  // 스낵바 닫기 함수
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   // 명함 저장 함수
   const handleSaveCard = async (newCardData) => {
     try {
@@ -215,6 +223,7 @@ const MyCard = () => {
       setCardList((prev) => prev.filter((c) => c.cardId !== selectedCardId));
       setSelectedCardId(null);
       setAlertOpen(false);
+      setSnackbarOpen(true);
     } catch (err) {
       console.error("명함 삭제 실패", err);
     }
@@ -329,6 +338,14 @@ const MyCard = () => {
             />
           </div>
         </div>
+      )}
+
+      {snackbarOpen && (
+        <Snackbar
+          text={"삭제가 완료되었습니다!"}
+          buttontext={"확인"}
+          buttonOnclick={handleSnackbarClose}
+        />
       )}
     </>
   );

@@ -9,6 +9,9 @@ import board_menu from "../../assets/board_menu.svg";
 import wide from "../../assets/board_wide.svg";
 import memo_add from "../../assets/board_memo_add.svg";
 import balance_add from "../../assets/board_balance_add.svg";
+import memo_add_disable from "../../assets/memo_add_disable.svg";
+import balance_add_disable from "../../assets/balance_add_disable.svg";
+import board_narrow from "../../assets/board_narrow.svg";
 
 import { useAuth } from "../../context/AuthContext";
 
@@ -27,6 +30,8 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
   const [balanceGames, setBalanceGames] = useState([]);
   // state: 메뉴 토글에 사용됨
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const isLimitReached = memos.length + balanceGames.length >= 18;
 
   useEffect(() => {
     if (!team || !team.teamId) return;
@@ -241,6 +246,32 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
   // 팀 아이디 아직 없는 경우 게시판 로딩 중 표시
   if (!team || !team.teamId) return <div>로딩 중...</div>;
 
+  // memos와 balanceGames 합치고 createdAt 기준 내림차순 정렬
+  const combinedItems = [...memos, ...balanceGames].sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return dateB - dateA; // 내림차순 정렬
+  });
+
+  // 팀별 밸런스 게임 투표 결과 조회 함수
+  const getVoteResult = async (gameId) => {
+    if (!token || !team.teamId || !gameId) return;
+    try {
+      const res = await axios.get(
+        `${backLink}/api/teams/${team.teamId}/balance-game/${gameId}/result`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return res.data; // 예: { totalVotes: 5 }
+    } catch (err) {
+      console.error("투표 결과 조회 실패:", err);
+      return { totalVotes: 0 };
+    }
+  };
+
   return (
     <div className={st.Board_content}>
       <div
@@ -256,31 +287,40 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
         <div
           className={`${st.board_wrapper} ${isBoardExpanded ? st.expanded : ""}`}
         >
-          {memos.map((memo) => (
-            <Memo
-              key={memo.memoId}
-              teamId={team.teamId}
-              memoId={memo.memoId}
-              memo={memo}
-              onDelete={handleDeleteMemo}
-              onEdit={() => openMemoEdit(memo)}
-            />
-          ))}
-          {balanceGames.map((game) => (
-            <Balance
-              key={game.id}
-              gameId={game.id}
-              option1={game.option1}
-              option1Count={game.option1Count}
-              option2={game.option2}
-              option2Count={game.option2Count}
-              totalVotes={game.totalVotes}
-              onDelete={() => handleBalanceDelete(game.id)}
-              onVote={(gameId, selectedOption) =>
-                handleBalanceVote(gameId, selectedOption)
-              }
-            />
-          ))}
+          {combinedItems.map((item) => {
+            // memos는 memoId가 있고, balanceGames는 id
+            if (item.memoId !== undefined) {
+              return (
+                <Memo
+                  key={`memo-${item.memoId}`}
+                  teamId={team.teamId}
+                  memoId={item.memoId}
+                  memo={item}
+                  onDelete={handleDeleteMemo}
+                  onEdit={() => openMemoEdit(item)}
+                />
+              );
+            } else if (item.id !== undefined) {
+              return (
+                <Balance
+                  key={`balance-${item.id}`}
+                  gameId={item.id}
+                  option1={item.option1}
+                  option1Count={item.option1Count}
+                  option2={item.option2}
+                  option2Count={item.option2Count}
+                  totalVotes={item.totalVotes}
+                  onDelete={() => handleBalanceDelete(item.id)}
+                  onVote={(gameId, selectedOption) =>
+                    handleBalanceVote(gameId, selectedOption)
+                  }
+                  teamMemberCount={team.memberCount}
+                  getVoteResult={getVoteResult}
+                />
+              );
+            }
+            return null;
+          })}
         </div>
 
         <div className={st.Menu_container}>
@@ -288,15 +328,33 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
             <div className={st.Menu_buttons}>
               <button
                 className={st.Menu_item}
-                onClick={() => openMemoEdit(null)}
+                onClick={() => {
+                  if (!isLimitReached) openMemoEdit(null);
+                }}
+                disabled={isLimitReached}
               >
-                <img src={memo_add} alt="메모" />
+                <img
+                  src={isLimitReached ? memo_add_disable : memo_add}
+                  alt="메모"
+                />
               </button>
-              <button className={st.Menu_item} onClick={handleAddBalance}>
-                <img src={balance_add} alt="밸런스 게임" />
+              <button
+                className={st.Menu_item}
+                onClick={() => {
+                  if (!isLimitReached) handleAddBalance();
+                }}
+                disabled={isLimitReached}
+              >
+                <img
+                  src={isLimitReached ? balance_add_disable : balance_add}
+                  alt="밸런스 게임"
+                />
               </button>
               <button className={st.Menu_item} onClick={toggleExpand}>
-                <img src={wide} alt="확대" />
+                <img
+                  src={isBoardExpanded ? board_narrow : wide}
+                  alt={isBoardExpanded ? "축소" : "확대"}
+                />
               </button>
             </div>
           )}

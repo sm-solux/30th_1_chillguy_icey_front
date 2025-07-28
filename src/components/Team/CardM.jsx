@@ -1,5 +1,4 @@
 import st from "./CardM.module.css";
-import Img from "../../assets/exPig.png";
 import { useNavigate } from "react-router-dom";
 
 const CardM = ({ card, team }) => {
