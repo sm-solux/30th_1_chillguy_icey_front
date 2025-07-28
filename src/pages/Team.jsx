@@ -198,12 +198,13 @@ const Team = () => {
   const handleTeamAdd = async (teamName) => {
     try {
       const res = await createTeam(token, teamName);
-      const newTeam = res.data;
-      const newres = await fetchTeamList(token);
-      const newTeamList = newres.data;
-      console.log(newTeamList);
-      setTeams(newTeamList);
-      setSelectedTeamId(newTeam.teamId);
+      const newTeamId = res.data.id;
+      const newTeamres = await fetchTeamList(token);
+      const newres = await fetchTeamDetail(token, newTeamId);
+      const newTeamDetail = newres.data;
+      console.log(newTeamDetail);
+      setTeams(newTeamres.data);
+      setSelectedTeamId(newTeamDetail.teamId);
     } catch (error) {
       console.error("팀 생성 실패", error);
     }
