@@ -54,7 +54,7 @@ const Team = () => {
   const [hasDateVotes, setHasDateVotes] = useState(false);
   const [savedVotes, setSavedVotes] = useState([]);
   const [summary, setSummary] = useState([]);
-  const [maxVoteCount, setMaxVoteCount] = useState(0);
+  // const [maxVoteCount, setMaxVoteCount] = useState(0);
   const [bestCandidates, setBestCandidates] = useState([]);
 
   // 팀 날짜 생성을 위한 추가 변수 코드
@@ -110,7 +110,6 @@ const Team = () => {
 
   // 새 팀 선택 시 데이터 초기화
   useEffect(() => {
-    setMaxVoteCount(0);
     setSummary([]);
     setMyVotes([]);
     setSavedVotes([]);
@@ -134,14 +133,13 @@ const Team = () => {
         const res = await fetchTeamDetail(token, selectedTeamId);
         const res_card = await fetchTeamCardM(token, selectedTeamId);
 
+        setSelectedTeam(res.data);
+        console.log(res.data);
+        setSelectedCardM(res_card);
         console.log(
           `🐳${selectedTeamId} 팀 카드 미리보기 조회 성공 :`,
           res_card,
         );
-
-        setSelectedTeam(res.data);
-        setSelectedCardM(res_card);
-        // console.log(res.data);
       } catch (error) {
         console.error("팀 상세 정보 불러오기 실패", error);
       }
@@ -159,8 +157,6 @@ const Team = () => {
       try {
         const resSum = await fetchTeamVotesSummary(token, selectedTeamId);
         const resVotes = await fetchTeamMyVotes(token, selectedTeamId);
-        const maxCount = resSum.data.maxVoteCount;
-        setMaxVoteCount(maxCount);
         setSummary(resSum.data.summary);
         setMyVotes(resVotes.data.myVotes);
         setSavedVotes(resVotes.data.myVotes); // 저장용도도 초기화
@@ -217,6 +213,7 @@ const Team = () => {
     if (fadeState === "visible") return;
     if (selectedTeam?.confirmedDate !== null) return;
     if (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule) return;
+    console.log(`handlePromiseClick 이거 작동했음`);
 
     setIsExpanded(true);
     setShowPromiseCheck(true);
@@ -273,6 +270,11 @@ const Team = () => {
     setIsDateSaved(false);
   };
 
+  const handleSaveTime = () => {
+    setFadeState("hidden");
+    setIsExpanded(false);
+  };
+
   // ✅ 메시지 (linkMessage) 스낵바
   const handleSnackbar = () => {
     setIsSnackbarOpen(true);
@@ -320,7 +322,7 @@ const Team = () => {
           <div>
             <div className={`${st.box} ${st.team_card_box}`}>
               {selectedTeam && teams !== 401 ? (
-                <CardM card={selectedCardM[0]} team={selectedTeam} />
+                <CardM card={selectedCardM} team={selectedTeam} />
               ) : (
                 // TODO: card 데이터 별도 조회 필요 시 fetchTeamCard 추가 필요
                 <div></div>
@@ -338,7 +340,7 @@ const Team = () => {
 
         <section className={st.Team_section2}>
           <div
-            className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam?.confirmedDate === null ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : st.promExpanded) : ""}`}
+            className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam?.confirmedDate === null ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : selectedTeam.confirmedDate ? "" : st.promExpanded) : ""}`}
             onClick={handlePromiseClick}
           >
             {selectedTeam && teams !== 401 ? (
@@ -352,7 +354,7 @@ const Team = () => {
             )}
 
             <div
-              className={`${st.fadeWrap} ${fadeState === "visible" ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? st.hide : st.show) : st.hide}`}
+              className={`${st.fadeWrap} ${fadeState === "visible" ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? st.hide : selectedTeam.confirmedDate ? st.hide : st.show) : st.hide}`}
               style={{
                 display:
                   fadeState === "hidden"
@@ -360,13 +362,17 @@ const Team = () => {
                     : selectedTeam.role === "MEMBER" &&
                         !selectedTeam.hasSchedule
                       ? "none"
-                      : "block",
+                      : selectedTeam?.confirmedDate
+                        ? "none"
+                        : "block",
               }}
               onTransitionEnd={onFadeTransitionEnd}
             >
               {selectedTeam && teams !== 401 ? (
                 <PromiseCheck2
                   team={selectedTeam}
+                  setSelectedTeam={setSelectedTeam}
+                  handleSaveTime={handleSaveTime}
                   summary={summary}
                   myVotes={myVotes}
                   setMyVotes={setMyVotes}
@@ -374,8 +380,6 @@ const Team = () => {
                   savedVotes={savedVotes}
                   setSavedVotes={setSavedVotes}
                   setSummary={setSummary}
-                  maxVoteCount={maxVoteCount}
-                  setMaxVoteCount={setMaxVoteCount}
                   openPromiseDialog={openPromiseDialog}
                   selectedDates={selectedDates}
                   setSelectedDates={setSelectedDates}
@@ -389,7 +393,7 @@ const Team = () => {
           </div>
 
           <div
-            className={`${st.box} ${st.team_list_box} ${isExpanded ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : st.listShrinked) : ""}`}
+            className={`${st.box} ${st.team_list_box} ${isExpanded && selectedTeam?.confirmedDate === null ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : selectedTeam?.confirmedDate ? "" : st.listShrinked) : ""}`}
             onClick={handleListClick}
           >
             <Teamlist
