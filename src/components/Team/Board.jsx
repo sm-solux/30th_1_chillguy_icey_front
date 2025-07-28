@@ -316,6 +316,7 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
                   }
                   teamMemberCount={team.memberCount}
                   getVoteResult={getVoteResult}
+                  userSelectedOption={item.userSelectedOption}
                 />
               );
             }

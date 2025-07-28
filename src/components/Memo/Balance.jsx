@@ -20,6 +20,7 @@ const Balance = ({
   onVote,
   teamMemberCount,
   getVoteResult,
+  userSelectedOption,
 }) => {
   // state: 투표 여부 상태
   const [hasVoted, setHasVoted] = useState(false);
@@ -29,6 +30,17 @@ const Balance = ({
   const [totalVotes, setTotalVotes] = useState(0);
   // state: 어떤 항목에 투표했는지
   const [votedOption, setVotedOption] = useState(null);
+
+  // userSelectedOption 값으로 초기 상태 설정
+  useEffect(() => {
+    if (userSelectedOption === 1) {
+      setHasVoted(true);
+      setVotedOption("option1");
+    } else if (userSelectedOption === 2) {
+      setHasVoted(true);
+      setVotedOption("option2");
+    }
+  }, [userSelectedOption]);
 
   // 투표 상태 불러오기
   useEffect(() => {

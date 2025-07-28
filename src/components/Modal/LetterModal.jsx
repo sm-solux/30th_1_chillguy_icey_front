@@ -142,9 +142,7 @@ const LetterModal = ({ card, teamId, onClose, sender, onSendSuccess }) => {
                   src={modal_line_vertical}
                   alt="modal_line_vertical"
                 />
-                <div className={st.Info_text}>
-                  {card.nickname} {card.animal}
-                </div>
+                <div className={st.Info_text}>{card.nickname}</div>
               </div>
             </div>
 
