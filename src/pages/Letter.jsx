@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 
 import ReceivedLetter from "../components/Letter/ReceivedLetter";
@@ -11,9 +12,13 @@ import Snackbar from "../components/Snackbar/Snackbar";
 import st from "./Letter.module.css";
 
 const Letter = () => {
-  // location : 현재 사용 중인 팀 데이터 받아오기
-  const location = useLocation();
-  const team = location.state || { id: 0, name: "테스트팀" };
+  // 토큰 불러오기
+  const { token } = useAuth();
+  const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
+
+  // 현재 팀 정보 받기
+  const [searchParams] = useSearchParams();
+  const currentTeamId = searchParams.get("teamId");
 
   // state: 열려있는 쪽지
   const [openedId, setOpenedId] = useState(null);
@@ -27,6 +32,8 @@ const Letter = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   // state: 명함 추가
   const [cards, setCards] = useState([]);
+  // state: 쪽지 발신자 이름
+  const [myNickname, setMyNickname] = useState("");
 
   // ref: 실제 스크롤되는 영역(Letter_list)
   const letterListRef = useRef(null);
@@ -36,24 +43,45 @@ const Letter = () => {
   const selectedSectionRef = useRef(null);
 
   useEffect(() => {
+    if (!token || !currentTeamId) return;
     const fetchData = async () => {
       try {
         // 쪽지 목록 불러오기
         const lettersRes = await axios.get(
-          `/api/teams/${team.id}/letters/received`,
+          `${backLink}/api/teams/${currentTeamId}/letters/received`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
-        setLetters(lettersRes.data?.data || []);
+        const fetchedLetters = lettersRes.data?.data || [];
+        setLetters(fetchedLetters);
+        console.log("받은 쪽지 목록:", fetchedLetters);
 
         // 팀 명함 목록 불러오기
-        const cardsRes = await axios.get(`/api/cards/teams/${team.id}/cards`);
-        setCards(cardsRes.data || []); // 필요 시 cardsRes.data.data로 수정
+        const cardsRes = await axios.get(
+          `${backLink}/api/cards/teams/${currentTeamId}/cards`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        const fetchedCards = cardsRes.data?.data || [];
+        setCards(fetchedCards);
+        console.log("팀 명함 목록:", fetchedCards);
+
+        await fetchMyCardNickname();
       } catch (err) {
         console.error("데이터 불러오기 실패", err);
       }
     };
 
     fetchData();
-  }, [team.id]);
+  }, [currentTeamId]);
+
+  useEffect(() => {}, [currentTeamId, token]);
 
   // 쪽지 클릭 시 내용 불러오기
   const handleClick = async (letterId) => {
@@ -63,7 +91,14 @@ const Letter = () => {
     }
 
     try {
-      const res = await axios.get(`/api/teams/${team.id}/letters/${letterId}`);
+      const res = await axios.get(
+        `${backLink}/api/teams/${currentTeamId}/letters/${letterId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       const content = res.data?.data?.content || "";
 
       setLetters((prev) =>
@@ -74,6 +109,60 @@ const Letter = () => {
       setOpenedId(letterId);
     } catch (err) {
       console.error("쪽지 내용 불러오기 실패", err);
+    }
+  };
+
+  // 발신자용 명함 불러오기
+  const fetchMyCardNickname = async () => {
+    try {
+      const res = await axios.get(`${backLink}/api/cards`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const cards = res.data;
+
+      // 각 카드에 대해 사용 중인 팀 정보 조회
+      const cardsWithTeams = await Promise.all(
+        cards.map(async (card) => {
+          try {
+            const teamRes = await axios.get(
+              `${backLink}/api/cards/${card.templateId}/used-teams`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            );
+            return {
+              ...card,
+              teams: teamRes.data.map((team) => team.teamId),
+            };
+          } catch (teamErr) {
+            console.error(
+              `카드 ${card.cardId}의 팀 정보 불러오기 실패`,
+              teamErr,
+            );
+            return {
+              ...card,
+              teams: [],
+            };
+          }
+        }),
+      );
+
+      // 현재 팀에서 사용 중인 내 카드 찾기
+      const matchedCard = cardsWithTeams.find((card) =>
+        card.teams.includes(currentTeamId),
+      );
+
+      if (matchedCard) {
+        setMyNickname(matchedCard.nickname);
+      } else {
+        console.warn("현재 팀에서 사용 중인 내 명함을 찾을 수 없습니다.");
+      }
+    } catch (err) {
+      console.error("내 명함 불러오기 실패", err);
     }
   };
 
@@ -99,9 +188,14 @@ const Letter = () => {
   const handleSendLetter = async (message) => {
     try {
       await axios.post(
-        `/api/teams/${team.id}/cards/${selectedCard.cardId}/letters`,
+        `${backLink}/api/teams/${currentTeamId}/cards/${selectedCard.cardId}/letters`,
         {
           content: message,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
       );
 
@@ -205,10 +299,10 @@ const Letter = () => {
           <div onClick={(e) => e.stopPropagation()}>
             <LetterModal
               card={selectedCard}
-              teamId={team.id}
+              teamId={currentTeamId}
               onClose={closeModal}
               onSend={handleSendLetter}
-              // sender={user}   // 여기 받는 걸로 수정
+              sender={myNickname}
             />
           </div>
         </div>

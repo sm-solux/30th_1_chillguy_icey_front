@@ -1,11 +1,16 @@
 import st from "./Massage.module.css";
 import { useNavigate } from "react-router-dom";
 
-const Massage = (team) => {
+const Massage = ({ team }) => {
   const navigate = useNavigate();
 
   const handleMassageClick = () => {
-    navigate("/letter", { state: team });
+    const teamId = team.teamId;
+    const teamName = team.teamName;
+
+    navigate(
+      `/letter?teamId=${teamId}&teamName=${encodeURIComponent(teamName)}`,
+    );
   };
   return (
     <div className={st.Massage_button} onClick={handleMassageClick}>

@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 import st from "./MemoEdit.module.css";
 import memo_save from "../../assets/memo_save.svg";
 
 const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
+  // 토큰 불러오기
+  const { token } = useAuth();
+  const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
+
   // state: 메모 내용 저장
   const [text, setText] = useState("");
 
   // 기존 메모 내용 불러오기
   useEffect(() => {
+    if (!teamId || !editingMemo?.memoId) return;
+
     const fetchMemoContent = async () => {
       if (!editingMemo) {
         setText("");
@@ -17,7 +24,12 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
       }
       try {
         const { data } = await axios.get(
-          `/api/teams/${teamId}/memos/${editingMemo.memoId}`,
+          `${backLink}/api/teams/${teamId}/memos/${editingMemo.memoId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         setText(data.content);
       } catch (err) {
@@ -37,7 +49,7 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
 
     // 줄 수 제한 (10줄 이상이면 return)
     const lines = input.split("\n");
-    if (lines.length > 10) return;
+    if (lines.length > 9) return;
 
     setText(input);
   };
@@ -50,8 +62,8 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
 
     try {
       const url = editingMemo
-        ? `/api/teams/${teamId}/memos/${editingMemo.memoId}`
-        : `/api/teams/${teamId}/memos`;
+        ? `${backLink}/api/teams/${teamId}/memos/${editingMemo.memoId}`
+        : `${backLink}/api/teams/${teamId}/memos`;
 
       const method = editingMemo ? "PUT" : "POST";
 
@@ -59,6 +71,9 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
         method,
         url,
         data: { content: text },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       onSave(data);

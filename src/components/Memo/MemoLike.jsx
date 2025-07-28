@@ -17,7 +17,8 @@ const MemoLike = ({ users = [] }) => {
     <div className={st.MemoLike}>
       {users.map((data, idx) => {
         const animalKey = animalMap[data.animal] || "pig";
-        const animalImageSrc = getAnimalImage(animalKey, data.profileColor);
+        const animalImageSrc = getAnimalImage(animalKey, 3);
+        // const animalImageSrc = getAnimalImage(animalKey, data.profileColor);
 
         return (
           <img

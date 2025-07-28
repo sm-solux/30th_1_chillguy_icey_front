@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:8080", // 👉 여기에 백엔드 주소
+        target: "http://icey-backend-1027532113913.asia-northeast3.run.app", // 👉 여기에 백엔드 주소
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

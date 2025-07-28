@@ -44,6 +44,25 @@ const CardModal = ({
     setHobby(defaultValue?.hobby || "");
     setSecretTip(defaultValue?.secretTip || "");
     setTmi(defaultValue?.tmi || "");
+
+    // nickname에서 adjective 추출
+    if (defaultValue?.nickname) {
+      const nickname = defaultValue.nickname.trim();
+      const knownAnimals = ["강아지", "고양이", "곰", "개구리", "돼지", "토끼"];
+      const matchedAnimal = knownAnimals.find((animal) =>
+        nickname.endsWith(animal),
+      );
+
+      if (matchedAnimal) {
+        setAnimal(matchedAnimal);
+        setAdjective(nickname.replace(matchedAnimal, "").trim());
+      } else {
+        // fallback: nickname 전체를 adjective로 간주
+        setAdjective(nickname);
+      }
+    } else {
+      setAdjective(defaultValue?.adjective || "");
+    }
   }, [defaultValue]);
 
   const handleSave = () => {
@@ -87,10 +106,24 @@ const CardModal = ({
     토끼: "rabbit",
   };
 
+  // 색상 매핑
+  const colorMap = {
+    빨강: 1,
+    주황: 2,
+    노랑: 3,
+    초록: 4,
+    파랑: 5,
+    남색: 6,
+    보라: 7,
+    검정: 8,
+    하양: 9,
+    회색: 10,
+  };
+
   // 이미지 경로 받아오기
-  const animalKey = animalMap[animal] || null;
-  const animalImageSrc =
-    animalKey && profileColor ? getAnimalImage(animalKey, profileColor) : exPig;
+  const animalKey = animalMap[animal] || "default";
+  const colorKey = colorMap[profileColor] || "default";
+  const animalImageSrc = getAnimalImage(animalKey, colorKey);
 
   return (
     <div className={st.Overlay}>
@@ -156,7 +189,14 @@ const CardModal = ({
                   type="text"
                   placeholder="직접 작성.."
                   value={mbti}
-                  onChange={(e) => setMbti(e.target.value)}
+                  onChange={(e) => {
+                    const input = e.target.value;
+                    // 영문자만 필터링하고 대문자로 변환
+                    const onlyAlphabets = input
+                      .replace(/[^a-zA-Z]/g, "")
+                      .toUpperCase();
+                    setMbti(onlyAlphabets);
+                  }}
                 />
               </div>
             </div>

@@ -67,6 +67,11 @@
   justify-content: flex-start;
 }
 
+.Memo_save_btn {
+  background: transparent;
+  border: none;
+}
+
 .Memo_save_img {
   position: relative;
   width: 12px;
