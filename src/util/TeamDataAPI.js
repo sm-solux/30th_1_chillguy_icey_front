@@ -31,7 +31,7 @@ export const fetchTeamList = async (token) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response?.status === 401) await logout();
+    // if (error.response?.status === 401) await logout();
     console.error("팀 리스트 불러오기 실패:", error);
     throw error;
   }
@@ -45,7 +45,7 @@ export const fetchTeamDetail = async (token, teamId) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response?.status === 401) await logout();
+    // if (error.response?.status === 401) await logout();
     console.error("팀 상세 정보 불러오기 실패:", error);
     throw error;
   }
@@ -64,7 +64,7 @@ export const createTeam = async (token, teamName) => {
     console.log("팀 생성 완료:", response.data);
     return response.data;
   } catch (error) {
-    if (error.response?.status === 401) await logout();
+    // if (error.response?.status === 401) await logout();
     console.error("팀 생성 실패:", error);
     throw error;
   }
@@ -81,7 +81,7 @@ export const fetchTeamLink = async (token, teamId) => {
     );
     return response.data;
   } catch (error) {
-    if (error.response?.status === 401) await logout();
+    // if (error.response?.status === 401) await logout();
     console.error("팀 상세 정보 불러오기 실패:", error);
     throw error;
   }
@@ -99,7 +99,7 @@ export const fetchCheckTeamLinkToken = async (invitationToken, token) => {
     console.log("팀 링크 토큰을 통해 정보를 불러왔습니다 : ", response.data);
     return response.data;
   } catch (error) {
-    if (error.response?.status === 401) await logout();
+    // if (error.response?.status === 401) await logout();
     console.error("팀 링크 토큰을 통해 정보를 불러오지 못했습니다.");
     throw error;
   }
@@ -116,7 +116,7 @@ export const fetchAcceptTeamLink = async (token, invitationToken) => {
     console.log("링크 토큰을 통해 팀 초대를 수락하였습니다.", response);
     return response.data;
   } catch (error) {
-    if (error.response?.status === 401) await logout(); // ✅ 추가
+    // if (error.response?.status === 401) await logout(); // ✅ 추가
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response.status;
       console.error(`${status} 에러 :`, error.response);
@@ -140,7 +140,7 @@ export const fetchTeamCardM = async (token, teamId) => {
     console.log("팀 명함 전체 목록 조회 성공:", response.data);
     return response.data;
   } catch (error) {
-    if (error.response?.status === 401) await logout();
+    // if (error.response?.status === 401) await logout();
     console.error("팀 명함 전체 목록 조회 실패:", error);
     throw error;
   }
