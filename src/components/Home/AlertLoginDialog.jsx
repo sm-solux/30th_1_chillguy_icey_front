@@ -11,22 +11,24 @@ const AlertLoginDialog = ({ onClose }) => {
   };
 
   return (
-    <div className={st.alert} onClick={onClose}>
-      <div className={st.button_body} onClick={(e) => e.stopPropagation()}>
-        <div className={st.mark}>
-          <div className={st.q_1}></div>
-          <div className={st.q_2}></div>
+    <div className={st.overlay} onClick={onClose}>
+      <div className={st.alert} onClick={(e) => e.stopPropagation()}>
+        <div className={st.button_body}>
+          <div className={st.mark}>
+            <div className={st.q_1}></div>
+            <div className={st.q_2}></div>
+          </div>
         </div>
-      </div>
-      <div className={st.have_to}>
-        <div className={st.button_text}>
-          해당 기능을 사용하기 위해서는
-          <br />
-          로그인이 필요합니다!
+        <div className={st.have_to}>
+          <div className={st.button_text}>
+            해당 기능을 사용하기 위해서는
+            <br />
+            로그인이 필요합니다!
+          </div>
         </div>
-      </div>
-      <div className={st.login_button}>
-        <Button text={"로그인"} type={"midStroke"} onClick={onClickLogin} />
+        <div className={st.login_button}>
+          <Button text={"로그인"} type={"midStroke"} onClick={onClickLogin} />
+        </div>
       </div>
     </div>
   );
