@@ -133,8 +133,8 @@ const Team = () => {
     const loadTeamDetail = async () => {
       if (!selectedTeamId) return;
       try {
-        const res = await fetchTeamDetail(token, selectedTeamId);
-        const res_card = await fetchTeamCardM(token, selectedTeamId);
+        const res = await fetchTeamDetail(selectedTeamId);
+        const res_card = await fetchTeamCardM(selectedTeamId);
 
         setSelectedTeam(res.data);
         console.log(res.data);
@@ -158,8 +158,8 @@ const Team = () => {
       if (teams === 401) return;
 
       try {
-        const resSum = await fetchTeamVotesSummary(token, selectedTeamId);
-        const resVotes = await fetchTeamMyVotes(token, selectedTeamId);
+        const resSum = await fetchTeamVotesSummary(selectedTeamId);
+        const resVotes = await fetchTeamMyVotes(selectedTeamId);
         setSummary(resSum.data.summary);
         setMyVotes(resVotes.data.myVotes);
         setSavedVotes(resVotes.data.myVotes); // 저장용도도 초기화
@@ -183,7 +183,7 @@ const Team = () => {
   // ✅ 초대 링크 클릭 시
   const handleLinkSnackbar = async (teamId) => {
     try {
-      const res = await fetchTeamLink(token, teamId);
+      const res = await fetchTeamLink(teamId);
       setInvitationLink(res.data.invitationLink || "");
       setIsLinkSnackbarOpen(true);
 
@@ -200,10 +200,10 @@ const Team = () => {
   // ✅ 팀 생성
   const handleTeamAdd = async (teamName) => {
     try {
-      const res = await createTeam(token, teamName);
+      const res = await createTeam(teamName);
       const newTeamId = res.data.id;
       const newTeamres = await fetchTeamList(token);
-      const newres = await fetchTeamDetail(token, newTeamId);
+      const newres = await fetchTeamDetail(newTeamId);
       const newTeamDetail = newres.data;
       console.log(newTeamDetail);
       setTeams(newTeamres.data);
@@ -245,7 +245,7 @@ const Team = () => {
   };
 
   const openPromiseDialog = async () => {
-    const bestCandidates = await fetchMaxCandidates(token, selectedTeamId);
+    const bestCandidates = await fetchMaxCandidates(selectedTeamId);
     setBestCandidates(bestCandidates.data.results);
     setIsPromiseDialogOpen(true);
   };
@@ -254,9 +254,9 @@ const Team = () => {
   // 확정했을 때의 코드
   const confirmPromiseDialog = async (data) => {
     console.log(data);
-    await fetchScheduleConfirm(token, selectedTeamId, data);
+    await fetchScheduleConfirm(selectedTeamId, data);
     // 🔁 확정 후 팀 상세 정보 다시 불러오기
-    const res = await fetchTeamDetail(token, selectedTeamId);
+    const res = await fetchTeamDetail(selectedTeamId);
     setSelectedTeam(res.data);
 
     setFadeState("hidden");
@@ -266,7 +266,7 @@ const Team = () => {
   };
 
   const handleSaveDate = async () => {
-    const res = await fetchTeamVoteCreate(token, selectedTeamId, selectedDates);
+    const res = await fetchTeamVoteCreate(selectedTeamId, selectedDates);
 
     setSummary(res.data.summary);
     setMyVotes(res.data.myVotes);

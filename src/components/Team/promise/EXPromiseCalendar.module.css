@@ -111,15 +111,15 @@
   font-weight: 700;
   line-height: 140%;
   letter-spacing: -0.262px;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: all 0.2s;
   border-radius: 50%;
   position: relative;
 }
 
-.dayCell:hover {
+/* .dayCell:hover {
   background-color: #f0f0f0;
-}
+} */
 
 /* 오늘 날짜 */
 .today {
