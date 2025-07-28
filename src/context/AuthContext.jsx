@@ -4,7 +4,8 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+  const [token, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
 
@@ -14,16 +15,23 @@ export const AuthProvider = ({ children }) => {
 
   // 로컬스토리지에서 초기화
   useEffect(() => {
-    const storedToken = localStorage.getItem("accessToken");
-    console.log("storedToken :", storedToken);
-    if (storedToken) setToken(storedToken);
+    const storedAccessToken = localStorage.getItem("accessToken");
+    const storedRefreshToken = localStorage.getItem("refreshToken");
+
+    console.log("storedAccessToken :", storedAccessToken);
+    console.log("storedRefreshToken :", storedRefreshToken);
+
+    if (storedAccessToken) setAccessToken(storedAccessToken);
+    if (storedRefreshToken) setRefreshToken(storedRefreshToken);
     setLoading(false);
   }, []);
 
   // 로그인 처리 함수
-  const login = (newToken) => {
+  const login = (newToken, newRefreshToken) => {
     localStorage.setItem("accessToken", newToken);
-    setToken(newToken);
+    localStorage.setItem("refreshToken", newRefreshToken);
+    setAccessToken(newToken);
+    setRefreshToken(newRefreshToken);
   };
 
   // 로그아웃 처리 함수
@@ -41,7 +49,8 @@ export const AuthProvider = ({ children }) => {
     } finally {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("loginType");
-      setToken(null);
+      setAccessToken(null);
+      setRefreshToken(null);
       console.log("isLoggedIn :", isLoggedIn);
     }
   };
