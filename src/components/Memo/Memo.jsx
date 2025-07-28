@@ -23,6 +23,8 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
   const [likeUsers, setLikeUsers] = useState(memo?.likeUsers || []);
   // state: 중복 호출 방지
   const [isFetched, setIsFetched] = useState(false);
+  // state: 메모 작성자인지 판단
+  const [isMine, setIsMine] = useState(false);
 
   useEffect(() => {
     if (!teamId || !memoId || !token || isFetched) {
@@ -43,6 +45,7 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
         setContent(memoData.content);
         setLiked(memoData.liked || false);
         setLikeUsers(memoData.likeUsers || []);
+        setIsMine(memoData.mine || false);
         setIsFetched(true);
 
         // 좋아요 관련 초기값 세팅
@@ -109,20 +112,22 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
             </div>
           )}
         </div>
-        <div className={st.edit_delete}>
-          <img
-            className={st.Memo_edit_img}
-            src={memo_edit}
-            alt="memo_edit"
-            onClick={() => onEdit({ memo, teamId, content })}
-          />
-          <img
-            className={st.Memo_delete_img}
-            src={memo_delete}
-            alt="memo_delete"
-            onClick={() => onDelete(teamId, memoId)}
-          />
-        </div>
+        {isMine && (
+          <div className={st.edit_delete}>
+            <img
+              className={st.Memo_edit_img}
+              src={memo_edit}
+              alt="memo_edit"
+              onClick={() => onEdit({ memo, teamId, content })}
+            />
+            <img
+              className={st.Memo_delete_img}
+              src={memo_delete}
+              alt="memo_delete"
+              onClick={() => onDelete(teamId, memoId)}
+            />
+          </div>
+        )}
       </div>
       <img className={st.Memo_line_img} src={memo_line} alt="memo_line" />
       <div className={st.Memo_text}>{content}</div>

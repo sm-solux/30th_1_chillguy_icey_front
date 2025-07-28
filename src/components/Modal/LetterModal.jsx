@@ -15,7 +15,7 @@ import exPig from "../../assets/exPig.png";
 // onClose: 모달 닫기 함수
 // onSend: 쪽지 내용 저장 함수
 
-const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
+const LetterModal = ({ card, teamId, onClose, sender, onSendSuccess }) => {
   // 토큰 불러오기
   const { token } = useAuth();
   const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
@@ -44,7 +44,8 @@ const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
           },
         },
       );
-      onSend(message);
+      onSendSuccess();
+      onClose();
     } catch (e) {
       console.error("쪽지 전송 실패", e);
       setError("쪽지 전송에 실패했습니다. 다시 시도해주세요.");
@@ -52,6 +53,7 @@ const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
       setSending(false);
     }
   };
+
   // 동물 이미지 매핑
   const animalMap = {
     강아지: "dog",

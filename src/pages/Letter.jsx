@@ -162,30 +162,6 @@ const Letter = () => {
   // Snackbar 닫기 함수
   const handleSnackbarClose = () => setSnackbarOpen(false);
 
-  // 쪽지 전송 함수
-  const handleSendLetter = async (message) => {
-    try {
-      await axios.post(
-        `${backLink}/api/teams/${currentTeamId}/cards/${selectedCard.cardId}/letters`,
-        {
-          content: message,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      closeModal();
-      setSnackbarOpen(true);
-      setTimeout(() => setSnackbarOpen(false), 3000);
-    } catch (error) {
-      console.error("쪽지 전송 실패", error);
-      alert("쪽지 전송에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
-
   // 선택된 쪽지를 Letter_body 뷰포트 기준 중앙에 위치시키기
   useEffect(() => {
     if (
@@ -279,8 +255,12 @@ const Letter = () => {
               card={selectedCard}
               teamId={currentTeamId}
               onClose={closeModal}
-              onSend={handleSendLetter}
               sender={myNickname}
+              onSendSuccess={() => {
+                setModalOpen(false);
+                setSelectedCard(null);
+                setSnackbarOpen(true);
+              }}
             />
           </div>
         </div>
