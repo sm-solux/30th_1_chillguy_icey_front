@@ -34,6 +34,8 @@ const Letter = () => {
   const [cards, setCards] = useState([]);
   // state: 쪽지 발신자 이름
   const [myNickname, setMyNickname] = useState("");
+  // state: 현재 사용자 카드 아이디
+  const [myCardId, setMyCardId] = useState(null);
 
   // ref: 실제 스크롤되는 영역(Letter_list)
   const letterListRef = useRef(null);
@@ -68,7 +70,7 @@ const Letter = () => {
             },
           },
         );
-        const fetchedCards = cardsRes.data?.data || [];
+        const fetchedCards = cardsRes.data || [];
         setCards(fetchedCards);
         console.log("팀 명함 목록:", fetchedCards);
 
@@ -79,12 +81,11 @@ const Letter = () => {
     };
 
     fetchData();
-  }, [currentTeamId]);
-
-  useEffect(() => {}, [currentTeamId, token]);
+  }, [currentTeamId, token]);
 
   // 쪽지 클릭 시 내용 불러오기
   const handleClick = async (letterId) => {
+    if (!token || !currentTeamId) return;
     if (openedId === letterId) {
       setOpenedId(null);
       return;
@@ -113,56 +114,33 @@ const Letter = () => {
   };
 
   // 발신자용 명함 불러오기
+  // 발신자용 명함 불러오기 (내가 현재 팀에서 사용하는 명함 정보만 불러오기)
   const fetchMyCardNickname = async () => {
+    if (!currentTeamId || !token) return;
     try {
-      const res = await axios.get(`${backLink}/api/cards`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await axios.get(
+        `${backLink}/api/cards/teams/${currentTeamId}/cards/my`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
-      const cards = res.data;
-
-      // 각 카드에 대해 사용 중인 팀 정보 조회
-      const cardsWithTeams = await Promise.all(
-        cards.map(async (card) => {
-          try {
-            const teamRes = await axios.get(
-              `${backLink}/api/cards/${card.templateId}/used-teams`,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              },
-            );
-            return {
-              ...card,
-              teams: teamRes.data.map((team) => team.teamId),
-            };
-          } catch (teamErr) {
-            console.error(
-              `카드 ${card.cardId}의 팀 정보 불러오기 실패`,
-              teamErr,
-            );
-            return {
-              ...card,
-              teams: [],
-            };
-          }
-        }),
       );
-
-      // 현재 팀에서 사용 중인 내 카드 찾기
-      const matchedCard = cardsWithTeams.find((card) =>
-        card.teams.includes(currentTeamId),
-      );
-
-      if (matchedCard) {
-        setMyNickname(matchedCard.nickname);
+      // API 응답 예시: { cardId, nickname, ... }
+      const myCard = res.data;
+      if (myCard && myCard.nickname) {
+        setMyNickname(myCard.nickname);
+        setMyCardId(myCard.cardId);
       } else {
-        console.warn("현재 팀에서 사용 중인 내 명함을 찾을 수 없습니다.");
+        console.warn(
+          "현재 팀에서 사용 중인 내 명함 정보를 불러올 수 없습니다.",
+        );
+        setMyNickname("");
+        setMyCardId(null);
       }
     } catch (err) {
       console.error("내 명함 불러오기 실패", err);
+      setMyNickname("");
     }
   };
 
@@ -287,7 +265,7 @@ const Letter = () => {
 
           {/* 명함 리스트 */}
           <CardList
-            cards={cards}
+            cards={cards.filter((card) => card.cardId !== myCardId)}
             onSendClick={openModal}
             showSendButton={true}
           />

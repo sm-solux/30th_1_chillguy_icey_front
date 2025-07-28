@@ -39,6 +39,8 @@ const MyCard = () => {
 
   // state: cards 상태 업데이트용
   const [cardList, setCardList] = useState([]);
+  // state: 내가 현재 팀에서 사용 중인 명함 ID
+  const [currentCardIdInTeam, setCurrentCardIdInTeam] = useState(null);
 
   // 내 명함 목록 불러오기
   const fetchMyCards = async () => {
@@ -88,7 +90,28 @@ const MyCard = () => {
 
   useEffect(() => {
     fetchMyCards();
+    fetchCurrentTeamCard();
   }, [token, currentTeamId, currentTeamName]);
+
+  // 현재 팀에서 내가 사용 중인 명함 ID 불러오기
+  const fetchCurrentTeamCard = async () => {
+    if (!currentTeamId || !token) return;
+    try {
+      const res = await axios.get(
+        `${backLink}/api/cards/teams/${currentTeamId}/cards/my`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      setCurrentCardIdInTeam(res.data.cardId);
+      console.log("내가 현재 팀에서 사용 중인 명함:", res.data);
+    } catch (err) {
+      console.error("현재 팀에서 내 명함 불러오기 실패", err);
+      setCurrentCardIdInTeam(null);
+    }
+  };
 
   // 모달 열기/닫기 함수
   const openModal = () => setModalOpen(true);
@@ -127,7 +150,7 @@ const MyCard = () => {
           prev.map((card) => {
             if (card.cardId === selectedCardId) {
               // 선택된 명함은 현재 팀으로 변경
-              return { ...card, ...newCardData, teams: [currentTeamName] };
+              return { ...card, ...newCardData };
             } else {
               // 나머지 명함은 기존 teams 유지
               return card;
@@ -145,6 +168,10 @@ const MyCard = () => {
         const newCard = { ...res.data, teams: [] };
         setCardList((prev) => [...prev, newCard]);
       }
+
+      await fetchMyCards();
+      await fetchCurrentTeamCard();
+
       closeModal();
     } catch (err) {
       console.error("명함 저장 실패", err);
@@ -155,8 +182,7 @@ const MyCard = () => {
   const openAlert = () => {
     if (selectedCardId === null) return;
 
-    const selectedCard = cardList.find((c) => c.cardId === selectedCardId);
-    if (selectedCard?.teams?.includes(currentTeamName)) {
+    if (selectedCardId === currentCardIdInTeam) {
       setAlertDialogConfig({
         mainText: "현재 사용 중인 명함입니다.",
         subText: "명함 교체 후 삭제 가능합니다.",
@@ -220,6 +246,7 @@ const MyCard = () => {
         );
 
         await fetchMyCards();
+        await fetchCurrentTeamCard();
       } catch (err) {
         console.error("팀에 명함 설정 실패", err);
       }
@@ -255,6 +282,7 @@ const MyCard = () => {
           }}
           currentTeamName={currentTeamName}
           onSelectTeam={handleSelectTeam}
+          currentCardId={currentCardIdInTeam}
         />
       </div>
 

@@ -121,8 +121,8 @@ const CardModal = ({
   };
 
   // 이미지 경로 받아오기
-  const animalKey = animalMap[animal] || "default";
-  const colorKey = colorMap[profileColor] || "default";
+  const animalKey = animalMap[animal] || "pig";
+  const colorKey = colorMap[profileColor] || "9";
   const animalImageSrc = getAnimalImage(animalKey, colorKey);
 
   return (

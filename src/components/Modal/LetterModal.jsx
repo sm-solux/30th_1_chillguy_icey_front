@@ -98,9 +98,7 @@ const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
         <div className={st.Letter_wrapper}>
           {/* 수신자 명함 정보 */}
           <div className={st.Card}>
-            <div className={st.Card_Name}>
-              {card.nickname} {card.animal}
-            </div>
+            <div className={st.Card_Name}>{card.nickname}</div>
             <div className={st.Card_Wrapper}>
               <div className={st.Card_image}>
                 <img

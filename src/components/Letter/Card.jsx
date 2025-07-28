@@ -23,6 +23,7 @@ const Card = ({
   onClick,
   currentTeamName,
   onSelectTeam,
+  isCurrentCard = false,
 }) => {
   // 동물 이름 매핑
   const animalMap = {
@@ -118,10 +119,13 @@ const Card = ({
             <div className={st.TeamName}>{renderTeams()}</div>
             <div
               className={`${st.SelectButtonWrapper} ${
-                isSelected && !teams.includes(currentTeamName)
-                  ? st.Show
-                  : st.Hide
+                isSelected ? st.Show : st.Hide
               }`}
+              style={{
+                visibility: teams.includes(currentTeamName)
+                  ? "hidden"
+                  : "visible",
+              }}
             >
               <Button text={"선택"} onClick={handleSelect} />
             </div>
