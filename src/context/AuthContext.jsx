@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const backLink = "https://icey-backend-1027532113913.asia-northeast3.run.app";
 
@@ -21,9 +22,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // 로그인 처리 함수
-  const login = (newToken) => {
+  const login = (newToken, newRefreshToken) => {
     localStorage.setItem("accessToken", newToken);
+    localStorage.setItem("refreshToken", newRefreshToken);
     setToken(newToken);
+    setRefreshToken(newRefreshToken);
   };
 
   // 로그아웃 처리 함수
