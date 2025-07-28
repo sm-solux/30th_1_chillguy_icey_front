@@ -1,4 +1,5 @@
 import InfoDialog from "../components/Dialog/InfoDialog";
+import st from "./Invite.module.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -41,9 +42,10 @@ const Invite = () => {
   }, [invitationToken, token]);
 
   // ✅ 렌더링 조건
-  if (loading) return <div>로딩 중...</div>;
+  if (loading) return <div className={st.small_text}>로딩 중...</div>;
   if (!isLoggedIn) return null;
-  if (!invitationRes) return <div>팀 정보를 불러오는 중입니다...</div>;
+  if (!invitationRes)
+    return <div className={st.small_text}>팀 정보를 불러오는 중입니다...</div>;
 
   return (
     <>
