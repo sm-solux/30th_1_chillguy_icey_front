@@ -43,7 +43,7 @@ const Card = ({
     남색: 6,
     보라: 7,
     검정: 8,
-    흰색: 9,
+    하양: 9,
     회색: 10,
   };
   const animalKey = animalMap[data.animal] || "default";

@@ -106,10 +106,24 @@ const CardModal = ({
     토끼: "rabbit",
   };
 
+  // 색상 매핑
+  const colorMap = {
+    빨강: 1,
+    주황: 2,
+    노랑: 3,
+    초록: 4,
+    파랑: 5,
+    남색: 6,
+    보라: 7,
+    검정: 8,
+    하양: 9,
+    회색: 10,
+  };
+
   // 이미지 경로 받아오기
-  const animalKey = animalMap[animal] || null;
-  const animalImageSrc =
-    animalKey && profileColor ? getAnimalImage(animalKey, profileColor) : exPig;
+  const animalKey = animalMap[animal] || "default";
+  const colorKey = colorMap[profileColor] || "default";
+  const animalImageSrc = getAnimalImage(animalKey, colorKey);
 
   return (
     <div className={st.Overlay}>

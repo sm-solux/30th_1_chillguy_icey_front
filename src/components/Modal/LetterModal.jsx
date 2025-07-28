@@ -62,12 +62,24 @@ const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
     토끼: "rabbit",
   };
 
-  // 명함 이미지
-  const animalKey = animalMap[card.animal] || null;
-  const imageSrc =
-    animalKey && card.profileColor
-      ? getAnimalImage(animalKey, card.profileColor)
-      : exPig;
+  // 색상 매핑
+  const colorMap = {
+    빨강: 1,
+    주황: 2,
+    노랑: 3,
+    초록: 4,
+    파랑: 5,
+    남색: 6,
+    보라: 7,
+    검정: 8,
+    하양: 9,
+    회색: 10,
+  };
+
+  // 이미지 경로 받아오기
+  const animalKey = animalMap[card.animal] || "default";
+  const colorKey = colorMap[card.profileColor] || "default";
+  const animalImageSrc = getAnimalImage(animalKey, colorKey);
 
   return (
     <div className={st.Overlay}>
@@ -92,7 +104,7 @@ const LetterModal = ({ card, teamId, onClose, onSend, sender }) => {
             <div className={st.Card_Wrapper}>
               <div className={st.Card_image}>
                 <img
-                  src={imageSrc}
+                  src={animalImageSrc}
                   alt={`${card.animal} image`}
                   onError={(e) => {
                     e.currentTarget.src = exPig; // 로딩 실패 시 예시 이미지 나중에 수정
