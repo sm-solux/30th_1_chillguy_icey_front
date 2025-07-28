@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import st from "./SmallTalk.module.css";
 
-import MakeSmallTalk from "../components/MakeSmallTalk";
+import MakeSmallTalk from "../components/SmallTalk/MakeSmallTalk";
 import Minilist from "../components/SmallTalk/SmallTalk_minilist";
 import SmallTalkName from "../components/SmallTalk/SmallTalkName";
-
+import NewSmallTalk from "./NewSmallTalk";
 //제목 및 날짜 길이 고정, gap 고정값
 const SmallTalk = () => {
   const [list, setList] = useState([
@@ -25,7 +27,11 @@ const SmallTalk = () => {
     setList((prev) => prev.filter((item) => item.id !== id));
     if (selectedId === id) setSelectedId(null);
   };
+  const navigate = useNavigate();
 
+  const onClickNewSmall = (e) => {
+    navigate("/newsmalltalk"); // 로그인 페이지로 이동
+  };
   return (
     <div className={st.body}>
       <div className={st.list_section}>
@@ -62,7 +68,7 @@ const SmallTalk = () => {
             )}
           </div>
 
-          <MakeSmallTalk />
+          <MakeSmallTalk onClick={onClickNewSmall} />
         </div>
         {!selectedId && (
           <div className={st.notselected}>

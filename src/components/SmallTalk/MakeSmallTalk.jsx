@@ -1,11 +1,7 @@
 import mst from "./MakeSmallTalk.module.css";
-const MakeSmallTalk = () => {
-  //이벤트 객체
-  const onClickButton = (e) => {
-    console.log(e);
-  };
+const MakeSmallTalk = ({ onClick }) => {
   return (
-    <button className={mst.MakeSmallTalk} onClick={onClickButton}>
+    <button className={mst.MakeSmallTalk} onClick={onClick}>
       스몰톡 생성하기
     </button>
   );
