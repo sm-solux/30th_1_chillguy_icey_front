@@ -1,39 +1,3 @@
-.small_talk_menu,
-.small_talk_menu * {
-  box-sizing: border-box;
-}
-.small_talk_menu {
-  background: var(
-    --2,
-    linear-gradient(
-      120.88deg,
-      rgba(118, 140, 240, 1) 0%,
-      rgba(148, 188, 240, 1) 23.468783497810364%,
-      rgba(181, 208, 253, 1) 57.376015186309814%,
-      rgba(222, 222, 246, 1) 86.24975085258484%
-    )
-  );
-  padding: 18px 38px 18px 38px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: center;
-  justify-content: flex-end;
-  align-self: stretch;
-  height: 1024px;
-  min-width: 744px;
-  position: relative;
-  overflow: hidden;
-}
-
-.menu {
-  flex-shrink: 0;
-  width: 70px;
-  height: 70px;
-  position: relative;
-  overflow: visible;
-}
-
 .body {
   display: flex;
   flex-direction: row;
