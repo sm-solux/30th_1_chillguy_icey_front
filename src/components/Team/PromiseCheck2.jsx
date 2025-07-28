@@ -11,10 +11,12 @@ import {
   fetchTeamVotesSummary,
   fetchTeamVoteCreate,
 } from "../../util/TeamVoteAPI.js";
+import { fetchTeamDetail } from "../../util/TeamDataAPI.js";
 
 const PromiseCheck2 = ({
   team,
-  // reloadPromiseCheck,
+  setSelectedTeam,
+  handleSaveTime,
   summary,
   myVotes,
   hasDateVotes,
@@ -22,8 +24,6 @@ const PromiseCheck2 = ({
   savedVotes,
   setSavedVotes,
   setSummary,
-  maxVoteCount,
-  setMaxVoteCount,
   openPromiseDialog,
   selectedDates,
   setSelectedDates,
@@ -73,10 +73,18 @@ const PromiseCheck2 = ({
     try {
       // isTeamDate(true);
       const newSummary = await fetchTeamVoteSave(token, team.teamId, myVotes);
+      const newTeams = await fetchTeamDetail(token, team.teamId);
+
+      console.log("newTeams 새로운 팀 데이터 배정 :", newTeams.data);
+
+      if (newTeams.data.confirmedDate) {
+        handleSaveTime();
+      }
 
       setIsTimeEditing(false);
 
-      setMaxVoteCount(newSummary.data.maxVoteCount);
+      setSelectedTeam(newTeams.data);
+
       setSummary(newSummary.data.summary);
       setMyVotes(newSummary.data.myVotes);
       setSavedVotes(newSummary.data.myVotes);
@@ -132,10 +140,8 @@ const PromiseCheck2 = ({
             <Button
               text="약속 확정"
               // type="promise_no"
-              type={
-                team.memberCount === maxVoteCount ? "promise" : "promise_no"
-              }
-              disabled={team.memberCount === maxVoteCount ? false : true}
+              type={team.allVoted ? "promise" : "promise_no"}
+              disabled={team.allVoted ? false : true}
               onClick={openPromiseDialog}
             />
           )}
