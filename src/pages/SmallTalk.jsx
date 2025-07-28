@@ -1,12 +1,12 @@
 import { useState } from "react";
-import st from "./SmallTalk.module.css";
+import { useNavigate } from "react-router-dom";
 
-import Header from "../components/Header";
+import st from "./SmallTalk.module.css";
 
 import MakeSmallTalk from "../components/SmallTalk/MakeSmallTalk";
 import Minilist from "../components/SmallTalk/SmallTalk_minilist";
 import SmallTalkName from "../components/SmallTalk/SmallTalkName";
-
+import NewSmallTalk from "./NewSmallTalk";
 //제목 및 날짜 길이 고정, gap 고정값
 const SmallTalk = () => {
   const [list, setList] = useState([
@@ -27,60 +27,61 @@ const SmallTalk = () => {
     setList((prev) => prev.filter((item) => item.id !== id));
     if (selectedId === id) setSelectedId(null);
   };
+  const navigate = useNavigate();
 
+  const onClickNewSmall = (e) => {
+    navigate("/newsmalltalk"); // 로그인 페이지로 이동
+  };
   return (
-    <div className={st.small_talk_menu}>
-      <Header />
-      <div className={st.body}>
-        <div className={st.list_section}>
-          <div className={st.list_title}>
-            <div className={st.list_div}>
-              <div className={st.list}>스몰톡 리스트</div>
-            </div>
-
-            {list.map((item) => (
-              <SmallTalkName
-                key={item.id}
-                date={item.date}
-                text={item.title}
-                onSelect={() => handleSelect(item.id)}
-                onDelete={() => handleDelete(item.id)}
-              />
-            ))}
+    <div className={st.body}>
+      <div className={st.list_section}>
+        <div className={st.list_title}>
+          <div className={st.list_div}>
+            <div className={st.list}>스몰톡 리스트</div>
           </div>
-        </div>
-        <div className={st.left_section}>
-          <div className={st.upperSection}>
-            <div className={st.target_purpose}>
-              {selectedId && (
-                <>
-                  <div className={st.d}>
-                    <div className={st.ds}>대상 :</div>
-                    <div className={st.dg}>동기</div>
-                  </div>
-                  <div className={st.mj}>
-                    <div className={st.ds}>목적 :</div>
-                    <div className={st.o}>오랜만에 만나 안부 확인</div>
-                  </div>
-                </>
-              )}
-            </div>
 
-            <MakeSmallTalk />
+          {list.map((item) => (
+            <SmallTalkName
+              key={item.id}
+              date={item.date}
+              text={item.title}
+              onSelect={() => handleSelect(item.id)}
+              onDelete={() => handleDelete(item.id)}
+            />
+          ))}
+        </div>
+      </div>
+      <div className={st.left_section}>
+        <div className={st.upperSection}>
+          <div className={st.target_purpose}>
+            {selectedId && (
+              <>
+                <div className={st.d}>
+                  <div className={st.ds}>대상 :</div>
+                  <div className={st.dg}>동기</div>
+                </div>
+                <div className={st.mj}>
+                  <div className={st.ds}>목적 :</div>
+                  <div className={st.o}>오랜만에 만나 안부 확인</div>
+                </div>
+              </>
+            )}
           </div>
-          {!selectedId && (
-            <div className={st.notselected}>
-              <div className={st.select}>스몰톡 리스트를 선택해주세요</div>
-              <div className={st.make}>
-                리스트 항목이 없다면
-                <br />
-                스몰톡을 생성하세요!
-              </div>
-            </div>
-          )}
 
-          {selectedId && <Minilist />}
+          <MakeSmallTalk onClick={onClickNewSmall} />
         </div>
+        {!selectedId && (
+          <div className={st.notselected}>
+            <div className={st.select}>스몰톡 리스트를 선택해주세요</div>
+            <div className={st.make}>
+              리스트 항목이 없다면
+              <br />
+              스몰톡을 생성하세요!
+            </div>
+          </div>
+        )}
+
+        {selectedId && <Minilist />}
       </div>
     </div>
   );

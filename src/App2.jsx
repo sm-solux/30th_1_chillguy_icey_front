@@ -12,6 +12,8 @@ import NotFound from "./pages/NotFound";
 import Callback from "./pages/Callback";
 import Home from "./pages/Home";
 import TeamsTest from "./util/TeamsTest";
+import SmallTalk from "./pages/SmallTalk";
+import NewSmallTalk from "./pages/NewSmallTalk";
 
 function App2() {
   return (
@@ -20,6 +22,8 @@ function App2() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/team" element={<Team />} />
+          <Route path="/smalltalk" element={<SmallTalk />} />
+          <Route path="/newsmalltalk" element={<NewSmallTalk />} />
           <Route path="/mycard" element={<MyCard />} />
           <Route path="/invitation/:invitationToken" element={<Invite />} />
           <Route path="/letter" element={<Letter />} />
