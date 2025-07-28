@@ -1,8 +1,9 @@
-.home,
-.home * {
+.background,
+.background cground * {
   box-sizing: border-box;
 }
-.home {
+
+.background {
   background: linear-gradient(
     172.35deg,
     rgba(118, 140, 240, 1) 0%,
@@ -11,16 +12,28 @@
     rgba(181, 208, 253, 1) 44.23076808452606%,
     rgba(191, 191, 255, 1) 73.55769276618958%
   );
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 가로 중앙 */
+  align-items: center;
+  width: 100%;
   padding: 18px 38px 18px 38px;
+  min-height: 100vh;
+
+  position: relative;
+}
+.home {
   display: flex;
   flex-direction: column;
   gap: 22px;
   align-items: center;
   justify-content: flex-start;
   min-width: 744px;
+  max-width: 1440px;
   position: relative;
   overflow-y: auto;
 }
+
 .header {
   display: flex;
   flex-direction: column;
@@ -516,13 +529,10 @@
   width: 100%;
 }
 .smalltalkBox {
-  background: var(
-    --,
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0.2) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.2) 100%
   );
   border-radius: 20px;
   padding: 51px 627px 51px 627px;
