@@ -95,9 +95,10 @@
 
 /* 기본 높이 상태 */
 .team_promise_box {
-  height: 250px;
+  height: 245px;
   overflow: hidden;
 }
+
 .team_list_box {
   height: 560px;
 }
