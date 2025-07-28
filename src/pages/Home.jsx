@@ -20,6 +20,9 @@ const Home = () => {
     e.stopPropagation(); // 팝업 닫힘 방지
     navigate("/login"); // 로그인 페이지로 이동
   };
+  const onClicksmalltalk = (e) => {
+    navigate("/smalltalk"); // 스몰톡 페이지로 이동
+  };
 
   return (
     <div className={st.background}>
@@ -50,7 +53,7 @@ const Home = () => {
               </div>
             </div>
             <div className={st.go_button}>
-              <div className={st.smalltalk}>
+              <div className={st.smalltalk} onClick={onClicksmalltalk}>
                 <div className={st.go_text}>스몰톡</div>
               </div>
               <div className={st.team} onClick={handleTeamPageClick}>
