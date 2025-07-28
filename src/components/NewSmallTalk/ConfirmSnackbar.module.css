@@ -1,0 +1,51 @@
+/* overlay가 전체 화면을 덮도록 */
+.overlay {
+  position: fixed; /* 화면에 고정 */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #4b527e50;
+  opacity: 1;
+  z-index: 999; /* 팝업보다 아래, 다른 요소보다 위 */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 팝업 본체 */
+.popup {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px 41px;
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  align-items: center;
+  justify-content: center;
+  width: 550px;
+  height: 180px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.text {
+  color: var(--font-color-70, #252b5a);
+  text-align: center;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 30px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.button_frame {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
