@@ -5,7 +5,7 @@
 .List {
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  gap: 1.875rem;
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
@@ -13,13 +13,13 @@
   overflow-x: auto;
   overflow-y: hidden;
   flex-wrap: nowrap;
-  padding: 10px 0px;
+  padding: 0.625rem 0px;
 }
 
 /* 스크롤바 전체 영역 */
 .List::-webkit-scrollbar {
-  width: 6px;
-  height: 10px;
+  width: 0.375rem;
+  height: 0.625rem;
 }
 
 /* 스크롤바 막대 (thumb) */
@@ -40,8 +40,8 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  width: 357px;
-  height: 507px;
+  width: 22.3125rem;
+  height: 31.6875rem;
   border-radius: 20px;
   transition: background-color 0.2s ease;
 }
@@ -51,7 +51,7 @@
 }
 
 .Add_card_img {
-  width: 357px;
-  height: 507px;
+  width: 22.3125rem;
+  height: 31.6875rem;
   transition: filter 0.2s ease;
 }

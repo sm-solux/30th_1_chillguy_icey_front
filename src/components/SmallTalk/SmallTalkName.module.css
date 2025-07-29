@@ -1,25 +1,25 @@
 .div {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.625rem;
   align-items: center;
   justify-content: flex-end;
   align-self: stretch;
   flex-shrink: 0;
-  height: 50px;
+  height: 3.125rem;
   position: relative;
 }
 .title_section {
-  padding: 0px 10px 0px 10px;
+  padding: 0px 0.625rem 0px 0.625rem;
   display: flex;
   flex-direction: row;
-  gap: 0px 39px;
+  gap: 0px 2.4375rem;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   align-content: center;
   flex-shrink: 0;
-  height: 38px;
+  height: 2.375rem;
   position: absolute;
   right: 0px;
   left: 0px;
@@ -28,14 +28,14 @@
 }
 .vector {
   flex-shrink: 0;
-  width: 25px;
-  height: 25px;
+  width: 1.5625rem;
+  height: 1.5625rem;
   position: relative;
   overflow: visible;
   aspect-ratio: 1;
 }
 .date {
-  width: 137px;
+  width: 8.5625rem;
   color: #ffffff;
   text-align: left;
   /* font */
@@ -55,7 +55,7 @@
   justify-content: flex-start;
 }
 .title {
-  width: 114px;
+  width: 7.125rem;
   cursor: pointer;
   color: #ffffff;
   text-align: left;

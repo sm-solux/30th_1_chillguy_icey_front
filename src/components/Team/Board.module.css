@@ -7,7 +7,7 @@
 } */
 
 .Board_content {
-  gap: 20px;
+  gap: 1.25rem;
   display: flex;
   flex-direction: column;
   border: 20px;
@@ -19,7 +19,7 @@
 .board_team_box {
   /* background-color: aqua; */
   display: flex;
-  gap: 20px;
+  gap: 1.25rem;
   width: 100%;
   align-items: end;
   justify-content: start;
@@ -33,7 +33,7 @@
 
   /* Title2/Bold/48px */
   font-family: Inter;
-  font-size: 48px;
+  font-size: 3rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
@@ -49,7 +49,7 @@
 
   /* Body1/Bold/24px */
   font-family: Inter;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
@@ -70,14 +70,14 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
   width: 100%;
-  max-height: 480px;
-  padding: 20px;
-  gap: 15px;
+  max-height: 30rem;
+  padding: 1.25rem;
+  gap: 0.9375rem;
   overflow: hidden;
 }
 
 /* 890px 이하일 때 3열로 변경 */
-@media (max-width: 890px) {
+@media (max-width: 55.625rem) {
   .board_wrapper {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -87,27 +87,27 @@
   max-height: none; /* 기존 max-height 제한 해제 */
   grid-template-columns: repeat(6, 1fr); /* 6열로 변경 */
   grid-template-rows: repeat(3, auto); /* 3줄로 고정 */
-  gap: 15px;
+  gap: 0.9375rem;
   z-index: 999;
   transition: max-height 0.3s ease;
 }
 
 /* 1233px 이하 → 5열 */
-@media (max-width: 1233px) {
+@media (max-width: 77.0625rem) {
   .board_wrapper.expanded {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 
 /* 1042px 이하 → 4열 */
-@media (max-width: 1042px) {
+@media (max-width: 65.125rem) {
   .board_wrapper.expanded {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
 /* 848px 이하 → 3열 */
-@media (max-width: 848px) {
+@media (max-width: 53rem) {
   .board_wrapper.expanded {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -117,7 +117,7 @@
   position: absolute;
   bottom: 20px;
   right: 20px;
-  gap: 12px;
+  gap: 0.75rem;
   z-index: 10; /* 게시글 위로 */
   display: flex;
   align-items: center;
@@ -125,28 +125,28 @@
 
 /* 기능 버튼들 */
 .Menu_buttons {
-  gap: 12px;
-  height: 60px;
+  gap: 0.75rem;
+  height: 3.75rem;
   display: flex;
   flex-direction: row;
   animation: slideIn 0.3s ease forwards;
 }
 
 .Menu_item {
-  height: 60px;
+  height: 3.75rem;
   all: unset;
   background: none;
   border: none;
   color: white;
   border: none;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 
 .Menu_item img {
-  width: 60px;
-  height: 60px;
+  width: 3.75rem;
+  height: 3.75rem;
 }
 
 /* 메뉴 토글 버튼 */
@@ -179,7 +179,7 @@
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 61.25rem) {
   .board_team_number {
     display: none;
   }
