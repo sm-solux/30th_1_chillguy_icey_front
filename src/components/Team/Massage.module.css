@@ -66,8 +66,19 @@
   letter-spacing: -0.02rem; /* -0.32px */
 }
 
-@media (max-width: 65.625rem) {
-  /* 1050px */
+/* 기존 반응형 */
+/* @media (max-width: 65.625rem) {
+  .massage_title {
+    display: none;
+  }
+
+  .massage_subtitle {
+    display: none;
+  }
+} */
+
+@media (max-width: 56.25rem) {
+  /* 900px */
   .massage_title {
     display: none;
   }

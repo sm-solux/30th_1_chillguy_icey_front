@@ -4,8 +4,9 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* max-width: 10.625rem; */
-  /* max-height: 10.625rem; */
+  /* min-width: none */
+  min-width: 10.625rem;
+  min-height: 10.625rem;
   height: 100%;
   background-color: white;
   border-radius: 1.25rem;

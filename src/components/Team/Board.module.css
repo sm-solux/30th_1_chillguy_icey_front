@@ -189,9 +189,9 @@
 
 @media (max-width: 61.25rem) {
   /* 980px */
-  .board_team_number {
+  /* .board_team_number {
     display: none;
-  }
+  } */
 }
 
 button:disabled {
