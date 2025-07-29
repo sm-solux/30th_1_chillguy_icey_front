@@ -1,28 +1,28 @@
 .popup_invite_space {
-  position: fixed; /* ✅ 화면 고정 */
-  top: 20px; /* ✅ 원하는 위치 (원래 padding-top이었음) */
+  position: fixed; /* 화면 고정 */
+  top: 1.25rem; /* 20px */
   left: 50%;
   transform: translateX(-50%); /* 가로 중앙 정렬 */
 
   z-index: 999;
 
-  width: 34.375rem;
-  height: 11.25rem;
+  width: 34.375rem; /* 550px */
+  height: 11.25rem; /* 180px */
   flex-shrink: 0;
-  border-radius: 20px;
+  border-radius: 1.25rem; /* 20px */
   background: #fff;
 
-  padding: 1.5625rem;
+  padding: 1.5625rem; /* 25px */
 
   /* 글래스모피즘 종합 */
-  box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.5) inset;
-  backdrop-filter: blur(22.5px);
+  box-shadow: 0 0 1.25rem 0 rgba(255, 255, 255, 0.5) inset; /* 0 0 20px */
+  backdrop-filter: blur(1.40625rem); /* 22.5px */
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5625rem;
+  gap: 1.5625rem; /* 25px */
 }
 
 .popup_invite_text_space {
@@ -31,11 +31,11 @@
   text-align: center;
 
   font-family: Inter;
-  font-size: 1.875rem;
+  font-size: 1.875rem; /* 30px */
   font-style: normal;
   font-weight: 700;
-  line-height: 140%; /* 42px */
-  letter-spacing: -0.6px;
+  line-height: 1.4; /* 42px */
+  letter-spacing: -0.0375rem; /* -0.6px */
 }
 
 .popup_invite_link_space {
@@ -46,20 +46,20 @@
 }
 
 .link_text {
-  width: 25rem;
-  height: 2.1875rem;
+  width: 25rem; /* 400px */
+  height: 2.1875rem; /* 35px */
 
   color: var(--Font-Color-30, #a4abd5);
 
   /* Body2/Bold/20px */
   font-family: Inter;
-  font-size: 1.25rem;
+  font-size: 1.25rem; /* 20px */
   font-style: normal;
   font-weight: 700;
-  line-height: 140%; /* 28px */
-  letter-spacing: -0.4px;
+  line-height: 1.4; /* 28px */
+  letter-spacing: -0.025rem; /* -0.4px */
 
-  /* ✅ 하단 경계선만 */
-  border-bottom: 3px solid #7b83b1;
+  /* 하단 경계선만 */
+  border-bottom: 0.1875rem solid #7b83b1; /* 3px */
   overflow: hidden;
 }

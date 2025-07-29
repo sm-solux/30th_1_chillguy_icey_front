@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   background: #fff;
-  border-radius: 20px;
+  border-radius: 1.25rem; /* 20px */
 }
 
 .wrapper {
@@ -11,14 +11,14 @@
   height: 19.375rem;
   background: #fff;
   padding: 0.625rem;
-  border-radius: 20px;
+  border-radius: 1.25rem; /* 20px */
 }
 
 .dateNav {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem; /* 5px */
   margin-left: 1.5rem;
 }
 
@@ -26,7 +26,7 @@
 .chevron {
   width: 1.5625rem;
   height: 1.5625rem;
-  border-radius: 5px;
+  border-radius: 0.3125rem; /* 5px */
   color: #4b527e;
   background: none;
   border: none;
@@ -54,7 +54,6 @@
   gap: 0;
   font-size: 0.75rem;
   user-select: none;
-
   margin-right: 2rem;
 }
 
@@ -67,7 +66,7 @@
 .dateItem {
   color: #374151;
   width: 2.1875rem;
-  height: 1.25rem; /* 날짜 셀 높이 고정 */
+  height: 1.25rem;
   text-align: center;
   visibility: visible;
 
@@ -77,8 +76,8 @@
   font-size: 0.8125rem;
   font-style: normal;
   font-weight: 600;
-  line-height: 140%; /* 16.8px */
-  letter-spacing: -0.24px;
+  line-height: 140%; /* 1.05rem */
+  letter-spacing: -0.015rem; /* -0.24px */
 }
 
 .timeLabels {
@@ -99,14 +98,14 @@
   font-size: 0.6875rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 140%; /* 14px */
-  letter-spacing: -0.2px;
+  line-height: 140%; /* 0.875rem */
+  letter-spacing: -0.0125rem; /* -0.2px */
 }
 
 .dateColumn {
   display: flex;
   flex-direction: column;
-  min-height: 100%; /* 열 높이 고정 */
+  min-height: 100%;
 }
 
 .cell {
@@ -117,29 +116,29 @@
 }
 
 .defaultCell {
-  border: 1px solid #4b527e;
+  border: 0.0625rem solid #4b527e; /* 1px */
   border-radius: 0;
 }
 
 .roundedFull {
-  border: 2.5px solid #ff7dee;
+  border: 0.15625rem solid #ff7dee; /* 2.5px */
   border-radius: 0.25rem;
 }
 
 .roundedTop {
-  border: 2.5px solid #ff7dee;
+  border: 0.15625rem solid #ff7dee;
   border-bottom: none;
   border-radius: 0.25rem 0.25rem 0 0;
 }
 
 .roundedBottom {
-  border: 2.5px solid #ff7dee;
+  border: 0.15625rem solid #ff7dee;
   border-top: none;
   border-radius: 0 0 0.25rem 0.25rem;
 }
 
 .blockMiddle {
-  border: 2.5px solid #ff7dee;
+  border: 0.15625rem solid #ff7dee;
   border-top: none;
   border-bottom: none;
   border-radius: 0;
