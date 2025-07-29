@@ -140,21 +140,21 @@
 
 /* 목표 날짜 */
 .goal {
-  background-color: #ffeb3b !important;
+  background-color: #ffb8f6 !important;
   color: #4b527e;
 }
 
-.goal:hover {
+/* .goal:hover {
   background-color: #fdd835 !important;
-}
+} */
 
 .create {
-  background-color: rgb(173, 244, 221) !important;
+  background-color: var(--Primary-Color-20, #afcdff) !important;
 }
 
-.create:hover {
+/* .create:hover {
   background-color: rgb(169, 223, 206) !important;
-}
+} */
 
 /* 이전/다음 달 날짜 */
 .neighboringMonth {
