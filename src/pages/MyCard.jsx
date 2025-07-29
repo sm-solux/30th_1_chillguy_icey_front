@@ -91,7 +91,7 @@ const MyCard = () => {
   const openAlert = () => {
     if (selectedCardId === null) return;
 
-    if (selectedCardId === currentCardIdInTeam) {
+    if (selectedCard.teams.length > 0) {
       setAlertDialogConfig({
         mainText: "현재 사용 중인 명함입니다.",
         subText: "명함 교체 후 삭제 가능합니다.",
