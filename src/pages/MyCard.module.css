@@ -9,13 +9,13 @@
     rgba(255, 255, 255, 0.3) 0%,
     rgba(255, 255, 255, 0.2) 100%
   );
-  padding: 1.25rem 3.75rem 3.125rem 3.75rem;
+  padding: 1.25rem 5rem 3.125rem 5rem;
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
-  margin-left: -50px;
-  margin-right: -50px;
-  width: calc(100% + 6.25rem);
+  margin-left: -4rem;
+  margin-right: -4rem;
+  width: calc(100% + 8rem);
   align-items: stretch;
   justify-content: flex-start;
   flex-shrink: 0;
