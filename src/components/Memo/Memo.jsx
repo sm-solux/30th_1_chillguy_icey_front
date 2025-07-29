@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 
 import st from "./Memo.module.css";
 import MemoLike from "./MemoLike";
@@ -12,8 +11,6 @@ import memo_delete from "../../assets/memo_delete.svg";
 import { fetchMemoDetail, toggleMemoLike } from "../../util/BoardDataAPI";
 
 const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
-  const { token } = useAuth();
-
   const [content, setContent] = useState(memo?.content || "");
   const [liked, setLiked] = useState(memo?.liked || false);
   const [likeUsers, setLikeUsers] = useState(memo?.likeUsers || []);
@@ -21,11 +18,11 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
   const [isMine, setIsMine] = useState(false);
 
   useEffect(() => {
-    if (!teamId || !memoId || !token || isFetched) return;
+    if (!teamId || !memoId || isFetched) return;
 
     const loadMemo = async () => {
       try {
-        const memoData = await fetchMemoDetail(token, teamId, memoId);
+        const memoData = await fetchMemoDetail(teamId, memoId);
         setContent(memoData.content);
         setLiked(memoData.liked || false);
         setLikeUsers(memoData.likeUsers || []);
@@ -40,7 +37,7 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
     };
 
     loadMemo();
-  }, [teamId, memoId, token, isFetched]);
+  }, [teamId, memoId, isFetched]);
 
   useEffect(() => {
     if (memo?.content) setContent(memo.content);
@@ -48,7 +45,7 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
 
   const handleLikeClick = async () => {
     try {
-      const updatedMemo = await toggleMemoLike(token, teamId, memoId);
+      const updatedMemo = await toggleMemoLike(teamId, memoId);
       setLiked(updatedMemo.liked);
       setLikeUsers(updatedMemo.likeUsers || []);
     } catch (error) {

@@ -12,7 +12,6 @@ import memo_add_disable from "../../assets/memo_add_disable.svg";
 import balance_add_disable from "../../assets/balance_add_disable.svg";
 import board_narrow from "../../assets/board_narrow.svg";
 
-import { useAuth } from "../../context/AuthContext";
 import {
   fetchMemos,
   deleteMemo,
@@ -24,8 +23,6 @@ import {
 } from "../../util/BoardDataAPI";
 
 const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
-  const { token } = useAuth();
-
   const [memos, setMemos] = useState([]);
   const [editingMemo, setEditingMemo] = useState(null);
   const [isMemoEditOpen, setIsMemoEditOpen] = useState(false);
@@ -40,8 +37,8 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
     const loadData = async () => {
       try {
         const [memoList, balanceList] = await Promise.all([
-          fetchMemos(token, team.teamId),
-          fetchBalanceGames(token, team.teamId),
+          fetchMemos(team.teamId),
+          fetchBalanceGames(team.teamId),
         ]);
         setMemos(memoList);
         setBalanceGames(balanceList);
@@ -51,7 +48,7 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
     };
 
     loadData();
-  }, [team?.teamId, token]);
+  }, [team?.teamId]);
 
   const openMemoEdit = (memo = null) => {
     if (!memo && isLimitReached) {
@@ -83,7 +80,7 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
 
   const handleDeleteMemo = async (teamId, memoId) => {
     try {
-      await deleteMemo(token, teamId, memoId);
+      await deleteMemo(teamId, memoId);
       setMemos((prev) => prev.filter((memo) => memo.memoId !== memoId));
     } catch (error) {
       console.error("메모 삭제 실패", error);
@@ -103,10 +100,10 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
       return;
     }
     try {
-      const newGame = await createBalanceGame(token, team.teamId);
+      const newGame = await createBalanceGame(team.teamId);
       if (newGame) setBalanceGames((prev) => [...prev, newGame]);
       // 최신 목록 재조회
-      const balanceList = await fetchBalanceGames(token, team.teamId);
+      const balanceList = await fetchBalanceGames(team.teamId);
       setBalanceGames(balanceList);
     } catch (error) {
       console.error("밸런스 게임 생성 실패", error);
@@ -116,7 +113,7 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
 
   const handleBalanceDelete = async (gameId) => {
     try {
-      await deleteBalanceGame(token, team.teamId, gameId);
+      await deleteBalanceGame(team.teamId, gameId);
       setBalanceGames((prev) => prev.filter((game) => game.id !== gameId));
     } catch (error) {
       console.error("밸런스 게임 삭제 실패", error);
@@ -126,8 +123,8 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
 
   const handleBalanceVote = async (gameId, selectedOption) => {
     try {
-      await voteBalanceGame(token, team.teamId, gameId, selectedOption);
-      const data = await fetchBalanceGames(token, team.teamId);
+      await voteBalanceGame(team.teamId, gameId, selectedOption);
+      const data = await fetchBalanceGames(team.teamId);
       setBalanceGames(data);
     } catch (error) {
       console.error("밸런스 게임 투표 실패", error);
@@ -159,7 +156,7 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
   });
 
   const getVoteResult = (gameId) => {
-    return fetchBalanceGameResult(token, team.teamId, gameId);
+    return fetchBalanceGameResult(team.teamId, gameId);
   };
 
   return (

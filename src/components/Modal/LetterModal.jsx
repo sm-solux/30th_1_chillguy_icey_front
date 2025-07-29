@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 
 import Button from "../Button";
 import st from "./LetterModal.module.css";
@@ -12,8 +11,6 @@ import exPig from "../../assets/exPig.png";
 import { sendLetter } from "../../util/LetterDataAPI";
 
 const LetterModal = ({ card, teamId, onClose, sender, onSendSuccess }) => {
-  const { token } = useAuth();
-
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(null);
@@ -50,7 +47,7 @@ const LetterModal = ({ card, teamId, onClose, sender, onSendSuccess }) => {
     setError(null);
 
     try {
-      await sendLetter(token, teamId, card.cardId, message);
+      await sendLetter(teamId, card.cardId, message);
       onSendSuccess();
       onClose();
     } catch (e) {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 
 import st from "./MemoEdit.module.css";
 import memo_save from "../../assets/memo_save.svg";
@@ -7,8 +6,6 @@ import memo_save from "../../assets/memo_save.svg";
 import { fetchMemoDetail, saveMemo } from "../../util/BoardDataAPI";
 
 const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
-  const { token } = useAuth();
-
   const [text, setText] = useState("");
 
   useEffect(() => {
@@ -19,11 +16,7 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
 
     const loadMemo = async () => {
       try {
-        const memoData = await fetchMemoDetail(
-          token,
-          teamId,
-          editingMemo.memoId,
-        );
+        const memoData = await fetchMemoDetail(teamId, editingMemo.memoId);
         setText(memoData.content);
       } catch (err) {
         console.error("메모 내용 불러오기 실패", err);
@@ -31,7 +24,7 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
     };
 
     loadMemo();
-  }, [editingMemo, teamId, token]);
+  }, [editingMemo, teamId]);
 
   const handleChange = (e) => {
     const input = e.target.value;
@@ -48,12 +41,7 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
     if (!text.trim()) return;
 
     try {
-      const data = await saveMemo(
-        token,
-        teamId,
-        text,
-        editingMemo?.memoId || null,
-      );
+      const data = await saveMemo(teamId, text, editingMemo?.memoId || null);
       onSave(data);
       setText("");
       onClose();

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 
 import ReceivedLetter from "../components/Letter/ReceivedLetter";
 import CardList from "../components/Letter/CardList";
@@ -17,7 +16,6 @@ import {
 import { fetchTeamCards, fetchCurrentTeamCard } from "../util/CardDataAPI";
 
 const Letter = () => {
-  const { token } = useAuth();
   const [searchParams] = useSearchParams();
   const currentTeamId = searchParams.get("teamId");
 
@@ -35,13 +33,13 @@ const Letter = () => {
   const selectedSectionRef = useRef(null);
 
   useEffect(() => {
-    if (!token || !currentTeamId) return;
+    if (!currentTeamId) return;
     const fetchData = async () => {
       try {
-        const fetchedLetters = await fetchReceivedLetters(token, currentTeamId);
+        const fetchedLetters = await fetchReceivedLetters(currentTeamId);
         setLetters(fetchedLetters);
 
-        const fetchedCards = await fetchTeamCards(token, currentTeamId);
+        const fetchedCards = await fetchTeamCards(currentTeamId);
         setCards(fetchedCards);
 
         await fetchMyCardNickname();
@@ -50,16 +48,16 @@ const Letter = () => {
       }
     };
     fetchData();
-  }, [currentTeamId, token]);
+  }, [currentTeamId]);
 
   const handleClick = async (letterId) => {
-    if (!token || !currentTeamId) return;
+    if (!currentTeamId) return;
     if (openedId === letterId) {
       setOpenedId(null);
       return;
     }
     try {
-      const content = await fetchLetterContent(token, currentTeamId, letterId);
+      const content = await fetchLetterContent(currentTeamId, letterId);
       setLetters((prev) =>
         prev.map((l) =>
           l.id === letterId ? { ...l, content, isRead: true } : l,
@@ -72,9 +70,9 @@ const Letter = () => {
   };
 
   const fetchMyCardNickname = async () => {
-    if (!currentTeamId || !token) return;
+    if (!currentTeamId) return;
     try {
-      const myCard = await fetchCurrentTeamCard(token, currentTeamId);
+      const myCard = await fetchCurrentTeamCard(currentTeamId);
       if (myCard && myCard.nickname) {
         setMyNickname(myCard.nickname);
         setMyCardId(myCard.cardId);

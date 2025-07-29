@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 
 import CardList from "../components/Letter/CardList";
 import CardModal from "../components/Modal/CardModal";
@@ -20,7 +19,6 @@ import {
 } from "../util/CardDataAPI";
 
 const MyCard = () => {
-  const { token } = useAuth();
   const [searchParams] = useSearchParams();
   const currentTeamId = searchParams.get("teamId");
   const currentTeamName = searchParams.get("teamName");
@@ -43,11 +41,10 @@ const MyCard = () => {
 
   // 카드 목록 및 현재 팀 내 카드 조회
   const loadCards = async () => {
-    if (!token) return;
     try {
-      const cards = await fetchMyCards(token);
+      const cards = await fetchMyCards();
       setCardList(cards);
-      const currentCard = await fetchCurrentTeamCard(token, currentTeamId);
+      const currentCard = await fetchCurrentTeamCard(currentTeamId);
       setCurrentCardIdInTeam(currentCard?.cardId || null);
     } catch (error) {
       console.error("카드 불러오기 실패", error);
@@ -56,7 +53,7 @@ const MyCard = () => {
 
   useEffect(() => {
     loadCards();
-  }, [token, currentTeamId]);
+  }, [currentTeamId]);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -79,9 +76,9 @@ const MyCard = () => {
   const handleSaveCard = async (newCardData) => {
     try {
       if (isEditMode && selectedCardId !== null) {
-        await updateCard(token, selectedCardId, newCardData);
+        await updateCard(selectedCardId, newCardData);
       } else {
-        await createCard(token, newCardData);
+        await createCard(newCardData);
       }
       await loadCards();
       closeModal();
@@ -117,7 +114,7 @@ const MyCard = () => {
   // 명함 삭제
   const handleDeleteCard = async () => {
     try {
-      await deleteCard(token, selectedCardId);
+      await deleteCard(selectedCardId);
       setCardList((prev) => prev.filter((c) => c.cardId !== selectedCardId));
       setSelectedCardId(null);
       setAlertOpen(false);
@@ -134,13 +131,13 @@ const MyCard = () => {
       if (!selectedCard) return;
 
       try {
-        await selectCardForTeam(token, currentTeamId, selectedCard.templateId);
+        await selectCardForTeam(currentTeamId, selectedCard.templateId);
         await loadCards();
       } catch (error) {
         console.error("팀에 명함 설정 실패", error);
       }
     },
-    [cardList, currentTeamId, token],
+    [cardList, currentTeamId],
   );
 
   const selectedCard =
