@@ -3,11 +3,11 @@
   background-color: #ffffff;
   cursor: pointer;
   border: none;
-  border-radius: 20px;
-  width: 5rem;
-  height: 3.125rem;
-  padding: 0.625rem 0.3125rem;
-  font-size: 1.25rem;
+  border-radius: 1.25rem; /* 20px */
+  width: 5rem; /* 80px */
+  height: 3.125rem; /* 50px */
+  padding: 0.625rem 0.3125rem; /* 10px 5px */
+  font-size: 1.25rem; /* 20px */
   font-weight: bold;
   color: #4b527e;
   white-space: nowrap;
@@ -35,17 +35,17 @@
 
 /* 기본 흰색 스트로크 버튼 */
 .Button_stroke {
-  border: 2px solid #4b527e;
+  border: 0.125rem solid #4b527e; /* 2px */
 }
 
 /* 110x50 흰색 버튼 */
 .Button_promise {
-  width: 6.875rem;
+  width: 6.875rem; /* 110px */
 }
 
 /* 110x50 흰색 비활성화 버튼 */
 .Button_promise_no {
-  width: 6.875rem;
+  width: 6.875rem; /* 110px */
   cursor: auto;
 
   background: linear-gradient(
@@ -57,24 +57,24 @@
 
 /* 110x50 흰색 배경 진한 테두리 버튼 */
 .Button_stroke {
-  border: 2px solid #4b527e;
+  border: 0.125rem solid #4b527e; /* 2px */
 }
 
 /* 200x50 흰색 버튼 */
 .Button_mid {
-  width: 12.5rem;
+  width: 12.5rem; /* 200px */
 }
 
 /* 200x50 파란색 버튼 */
 .Button_midBlue {
-  width: 12.5rem;
+  width: 12.5rem; /* 200px */
   background-color: #597edb;
   color: #ffffff;
 }
 
 /* 200x50 파란색 비활성화 버튼 */
 .Button_midBlue_no {
-  width: 12.5rem;
+  width: 12.5rem; /* 200px */
   cursor: auto;
 
   background-color: rgba(89, 126, 219, 0.8);
@@ -83,25 +83,25 @@
 
 /* 200x50 빨간색 버튼 */
 .Button_midRed {
-  width: 12.5rem;
+  width: 12.5rem; /* 200px */
   background-color: #ff4f49;
   color: #ffffff;
 }
 
 /* 200x50 흰색 배경 진한 테두리 버튼 */
 .Button_midStroke {
-  width: 12.5rem;
-  border: 2px solid #4b527e;
+  width: 12.5rem; /* 200px */
+  border: 0.125rem solid #4b527e; /* 2px */
 }
 
 /* 330x50 흰색 버튼 */
 .Button_long {
-  width: 20.625rem;
+  width: 20.625rem; /* 330px */
 }
 
 /* 330x50 파란색 버튼 */
 .Button_longBlue {
-  width: 20.625rem;
+  width: 20.625rem; /* 330px */
   background-color: #597edb;
   color: #ffffff;
 }
