@@ -40,9 +40,27 @@ const Letter = () => {
         setLetters(fetchedLetters);
 
         const fetchedCards = await fetchTeamCards(currentTeamId);
-        setCards(fetchedCards);
+        const myCard = await fetchCurrentTeamCard(currentTeamId);
 
-        await fetchMyCardNickname();
+        if (myCard && myCard.nickname) {
+          setMyNickname(myCard.nickname);
+          setMyCardId(myCard.cardId);
+
+          // 여기서 내 명함을 제외한 카드만 저장
+          const filteredCards = fetchedCards.filter(
+            (card) => card.cardId !== myCard.cardId,
+          );
+          setCards(filteredCards);
+        } else {
+          console.warn(
+            "현재 팀에서 사용 중인 내 명함 정보를 불러올 수 없습니다.",
+          );
+          setMyNickname("");
+          setMyCardId(null);
+
+          // 필터링 없이 전체 카드 저장
+          setCards(fetchedCards);
+        }
       } catch (err) {
         console.error("데이터 불러오기 실패", err);
       }
