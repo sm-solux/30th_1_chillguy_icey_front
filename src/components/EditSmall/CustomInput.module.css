@@ -1,0 +1,54 @@
+.customInputCard,
+.customInputCard * {
+  box-sizing: border-box;
+}
+.customInputCard {
+  background: var(--netural-white, #ffffff);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.customInputHeader {
+  display: flex;
+  flex-direction: row;
+  row-gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.customInputText {
+  color: var(--font-color-50, #4b527e);
+  text-align: left;
+  font-family: var(
+    --body1-semibold-24px-font-family,
+    "Inter-SemiBold",
+    sans-serif
+  );
+  font-size: var(--body1-semibold-24px-font-size, 24px);
+  line-height: var(--body1-semibold-24px-line-height, 140%);
+  letter-spacing: var(--body1-semibold-24px-letter-spacing, -0.02em);
+  font-weight: var(--body1-semibold-24px-font-weight, 600);
+  position: relative;
+  flex: 1;
+}
+.customInputActions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}

@@ -2,10 +2,10 @@ import st from "./ConfirmSnackbar.module.css";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
 
-const ConfirmSnackbar = ({ onClick, onClose }) => {
+const ConfirmSnackbar = ({ onClick, onClose, smallTalk }) => {
   const navigate = useNavigate();
   const onClickSmall = (e) => {
-    navigate("/smalltalk"); // 로그인 페이지로 이동
+    navigate("/editsmall", { state: { refresh: true } });
   };
 
   return (
@@ -16,12 +16,19 @@ const ConfirmSnackbar = ({ onClick, onClose }) => {
           <Button
             text={"확인"}
             type={"midBlue"}
-            onClick={() => {
-              onClick(); // post 요청
-              onClose(); // 닫기
-              navigate("/smalltalk");
+            onClick={async () => {
+              try {
+                const smallTalk = await onClick(); // ✅ 생성된 데이터 받기
+                onClose();
+                navigate("/editsmall/:id", {
+                  state: { smallTalk }, // ✅ 전체 데이터 전달
+                });
+              } catch (err) {
+                console.error("에러 발생:", err);
+              }
             }}
           />
+
           <Button text={"취소"} type={"midStroke"} onClick={onClose} />
         </div>
       </div>
