@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import TeamsTest from "./util/TeamsTest";
 import SmallTalk from "./pages/SmallTalk";
 import NewSmallTalk from "./pages/NewSmallTalk";
+import EditSmall from "./pages/EditSmall";
 
 function App2() {
   return (
@@ -24,6 +25,8 @@ function App2() {
           <Route path="/team" element={<Team />} />
           <Route path="/smalltalk" element={<SmallTalk />} />
           <Route path="/newsmalltalk" element={<NewSmallTalk />} />
+          <Route path="/editsmall/:id" element={<EditSmall />} />
+
           <Route path="/mycard" element={<MyCard />} />
           <Route path="/invitation/:invitationToken" element={<Invite />} />
           <Route path="/letter" element={<Letter />} />
