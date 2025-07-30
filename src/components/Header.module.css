@@ -6,11 +6,11 @@
 .Header {
   display: flex;
   flex-direction: column;
-  gap: 0; /* 0px */
+  gap: 0px;
   align-items: center;
   justify-content: flex-end;
   width: 100%;
-  height: 7.875rem; /* 126px */
+  height: 7.875rem;
   align-self: stretch;
   flex-shrink: 0;
   margin: 0 auto;
@@ -23,19 +23,19 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 85.25rem; /* 1364px */
-  height: 7.875rem; /* 126px */
+  max-width: 85.25rem;
+  height: 7.875rem;
 }
 
 .Header_title {
   display: flex;
   flex-direction: row;
-  gap: 0; /* 0px */
-  margin-left: 1.25rem; /* 20px */
+  gap: 0px;
+  margin-left: 20px;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  height: 7.875rem; /* 126px */
+  height: 7.875rem;
   position: relative;
 }
 
@@ -43,7 +43,7 @@
   color: #ffffff;
   text-align: left;
   font-family: "Inter-Bold", sans-serif;
-  font-size: 5rem; /* 80px */
+  font-size: 5rem;
   line-height: 140%;
   letter-spacing: -0.02em;
   font-weight: 700;
@@ -52,16 +52,16 @@
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
-  text-shadow: 0 0.125rem 0.625rem rgba(89, 126, 219, 0.5); /* 0px 2px 10px */
+  text-shadow: 0px 2px 10px rgba(89, 126, 219, 0.5);
 }
 
 .Header_menu {
   background: transparent;
-  border-radius: 0.9375rem; /* 15px */
-  width: 4.6875rem; /* 75px */
-  height: 4.0625rem; /* 65px */
-  margin-top: 1.25rem; /* 20px */
-  margin-right: 1.25rem; /* 20px */
+  border-radius: 15px;
+  width: 4.6875rem;
+  height: 4.0625rem;
+  margin-top: 20px;
+  margin-right: 20px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -72,13 +72,13 @@
 
 .Header_menu:hover {
   background: #a4abd5;
-  box-shadow: inset 0 0.25rem 1.25rem rgba(75, 82, 126, 0.5); /* 0px 4px 20px */
-  backdrop-filter: blur(1.40625rem); /* 22.5px */
+  box-shadow: inset 0px 4px 20px rgba(75, 82, 126, 0.5);
+  backdrop-filter: blur(22.5px);
 }
 
 .Menu_logo {
-  width: 3.28125rem; /* 52.5px */
-  height: 2.1875rem; /* 35px */
+  width: 3.28125rem;
+  height: 2.1875rem;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
@@ -87,13 +87,13 @@
 .Line {
   display: flex;
   flex-direction: row;
-  gap: 0.625rem; /* 10px */
+  gap: 0.625rem;
   align-items: center;
   justify-content: center;
   align-self: stretch;
   flex-shrink: 0;
   width: 100%;
-  max-width: 85.125rem; /* 1362px */
+  max-width: 85.125rem;
   height: auto;
   position: relative;
   overflow: hidden;
@@ -102,12 +102,12 @@
 
 .headerLine {
   width: 100%;
-  min-width: 41.625rem; /* 666px */
-  max-width: 85.125rem; /* 1362px */
-  height: 0.125rem; /* 2px */
+  min-width: 666px;
+  max-width: 85.125rem;
+  height: 0.125rem;
 
-  border: 0.125rem solid #fff; /* 2px */
+  border: 2px solid #fff;
   opacity: 0.7;
   /* color: #fff; */
-  filter: blur(0.125rem); /* 2px */
+  filter: blur(2px);
 }

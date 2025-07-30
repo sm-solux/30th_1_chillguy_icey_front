@@ -3,11 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem; 
-}  */
+  font-size: 48px;
+} */
 
 .Board_content {
-  gap: 1.25rem; /* 20px */
+  gap: 1.25rem;
   display: flex;
   flex-direction: column;
   border: 20px;
@@ -19,7 +19,7 @@
 .board_team_box {
   /* background-color: aqua; */
   display: flex;
-  gap: 1.25rem; /* 20px */
+  gap: 1.25rem;
   width: 100%;
   align-items: end;
   justify-content: start;
@@ -29,36 +29,36 @@
   color: #fff;
 
   /* font */
-  text-shadow: 0 0.125rem 0.625rem rgba(89, 126, 219, 0.5); /* 0px 2px 10px */
+  text-shadow: 0px 2px 10px rgba(89, 126, 219, 0.5);
 
   /* Title2/Bold/48px */
   font-family: Inter;
-  font-size: 3rem; /* 48px */
+  font-size: 3rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
-  letter-spacing: -0.06rem; /* -0.96px */
+  letter-spacing: -0.96px;
 }
 
 .board_team_number {
   color: #fff;
-  padding-bottom: 0.625rem; /* 10px */
+  padding-bottom: 10px;
 
   /* font */
-  text-shadow: 0 0.125rem 0.625rem rgba(89, 126, 219, 0.5); /* 0px 2px 10px */
+  text-shadow: 0px 2px 10px rgba(89, 126, 219, 0.5);
 
   /* Body1/Bold/24px */
   font-family: Inter;
-  font-size: 1.5rem; /* 24px */
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
-  letter-spacing: 0.03rem; /* 0.48px */
+  letter-spacing: 0.48px;
 }
 
 .board_team_notice {
   background-color: #fff;
-  border-radius: 1.25rem; /* 20px */
+  border-radius: 20px;
   flex-grow: 1;
   width: 100%;
   height: 100%;
@@ -71,16 +71,15 @@
   grid-template-rows: repeat(3, 1fr);
   width: 100%;
   height: 100%;
-  max-height: 30rem; /* 300px */
-  padding: 1.25rem; /* 20px */
-  gap: 0.9375rem; /* 15px */
+  max-height: 30rem;
+  padding: 20px;
+  gap: 0.9375rem;
   overflow: hidden;
   place-items: center;
 }
 
 /* 890px 이하일 때 3열로 변경 */
-@media (max-width: 55.625rem) {
-  /* 890px */
+@media (max-width: 890px) {
   .board_wrapper {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -90,31 +89,28 @@
   max-height: none; /* 기존 max-height 제한 해제 */
   grid-template-columns: repeat(6, 1fr); /* 6열로 변경 */
   grid-template-rows: repeat(3, auto); /* 3줄로 고정 */
-  gap: 0.9375rem; /* 15px */
-  padding: 1.25rem; /* 20px */
+  gap: 15px;
+  padding: 20px;
   z-index: 999;
   transition: max-height 0.3s ease;
 }
 
 /* 1233px 이하 → 5열 */
-@media (max-width: 77.0625rem) {
-  /* 1233px */
+@media (max-width: 1233px) {
   .board_wrapper.expanded {
     grid-template-columns: repeat(6, 1fr);
   }
 }
 
 /* 1042px 이하 → 4열 */
-@media (max-width: 65.125rem) {
-  /* 1042px */
+@media (max-width: 1042px) {
   .board_wrapper.expanded {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 
 /* 848px 이하 → 3열 */
-@media (max-width: 53rem) {
-  /* 848px */
+@media (max-width: 848px) {
   .board_wrapper.expanded {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -122,9 +118,9 @@
 
 .Menu_container {
   position: absolute;
-  bottom: 1.25rem; /* 20px */
-  right: 1.25rem; /* 20px */
-  gap: 0.75rem; /* 12px */
+  bottom: 20px;
+  right: 20px;
+  gap: 0.75rem;
   z-index: 10; /* 게시글 위로 */
   display: flex;
   align-items: center;
@@ -132,27 +128,28 @@
 
 /* 기능 버튼들 */
 .Menu_buttons {
-  gap: 0.75rem; /* 12px */
-  height: 3.75rem; /* 60px */
+  gap: 0.75rem;
+  height: 3.75rem;
   display: flex;
   flex-direction: row;
   animation: slideIn 0.3s ease forwards;
 }
 
 .Menu_item {
-  height: 3.75rem; /* 60px */
+  height: 3.75rem;
   all: unset;
   background: none;
   border: none;
   color: white;
-  border-radius: 1.25rem; /* 20px */
-  font-size: 0.75rem; /* 12px */
+  border: none;
+  border-radius: 20px;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 
 .Menu_item img {
-  width: 3.75rem; /* 60px */
-  height: 3.75rem; /* 60px */
+  width: 3.75rem;
+  height: 3.75rem;
 }
 
 /* 메뉴 토글 버튼 */
@@ -167,8 +164,8 @@
 
 .Menu_toggle img {
   display: block;
-  width: 3.75rem; /* 60px */
-  height: 3.75rem; /* 60px */
+  width: 3.75rem;
+  height: 3.75rem;
 }
 
 .Menu_toggle.rotate {
@@ -179,7 +176,7 @@
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(1.25rem); /* 20px */
+    transform: translateX(20px);
   }
   to {
     opacity: 1;
@@ -188,10 +185,9 @@
 }
 
 @media (max-width: 61.25rem) {
-  /* 980px */
-  /* .board_team_number {
+  .board_team_number {
     display: none;
-  } */
+  }
 }
 
 button:disabled {

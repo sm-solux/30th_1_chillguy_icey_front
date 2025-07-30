@@ -1,5 +1,5 @@
 .black_background {
-  position: fixed;
+  position: fixed; /* 화면에 고정 */
   top: 0;
   left: 0;
   width: 100vw;
@@ -7,7 +7,7 @@
 
   background-color: #4b527e50;
   opacity: 1;
-  z-index: 999;
+  z-index: 999; /* 팝업보다 아래, 다른 요소보다 위 */
 
   display: flex;
   align-items: center;
@@ -15,47 +15,50 @@
 }
 
 .popup_space {
-  width: 50rem; /* 800px */
-  height: 28.125rem; /* 450px */
+  width: 50rem;
+  height: 28.125rem;
   flex-shrink: 0;
-  border-radius: 1.25rem; /* 20px */
+  border-radius: 20px;
   background: #fff;
 
-  padding: 0 6.875rem; /* 0 110px */
+  padding: 0 6.875rem;
 
-  box-shadow: 0 0 1.25rem 0 rgba(255, 255, 255, 0.5) inset; /* 0 0 20px */
-  backdrop-filter: blur(1.40625rem); /* 22.5px */
+  /* 글래스모피즘 종합 */
+  box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.5) inset;
+  backdrop-filter: blur(22.5px);
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem; /* 20px */
+  gap: 1.25rem;
 }
 
 .text_space {
   color: var(--Font-Color-70, #252b5a);
   text-align: center;
 
+  /* Subtitle1/Bold/36px */
   font-family: Inter;
-  font-size: 2.25rem; /* 36px */
-  font-style: normal; /* font-style: bold는 유효하지 않아 normal로 수정 */
+  font-size: 2.25rem;
+  font-style: bold;
   font-weight: 700;
-  line-height: 1.4; /* 50.4px */
-  letter-spacing: -0.045rem; /* -0.72px */
+  line-height: 140%; /* 50.4px */
+  letter-spacing: -0.72px;
 }
 
 .select_space {
   width: 100%;
-  height: 10rem; /* 160px */
+  height: 10rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.875rem; /* 30px */
-  gap: 1.25rem; /* 20px */
+  /* margin-bottom: 20px; */
+  padding: 1.875rem;
+  gap: 1.25rem;
 
-  border-radius: 1.25rem; /* 20px */
-  border: 0.15625rem solid var(--Font-Color-50, #4b527e); /* 2.5px */
+  border-radius: 20px;
+  border: 2.5px solid var(--Font-Color-50, #4b527e);
   background: var(
     --,
     linear-gradient(
@@ -65,41 +68,42 @@
     )
   );
 
-  box-shadow: 0 0 1.25rem 0 rgba(255, 255, 255, 0.5) inset;
-  backdrop-filter: blur(1.40625rem);
+  /* 글래스모피즘 종합 */
+  box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.5) inset;
+  backdrop-filter: blur(22.5px);
 }
 
 .mid_size_text_space {
   display: flex;
   flex-direction: column;
-  gap: 1.5625rem; /* 25px */
+  gap: 1.5625rem;
 }
 
 .mid_size_2_space {
   display: flex;
-  overflow: visible;
-  position: relative;
+  overflow: visible; /* 꼭 확인 */
+  position: relative; /* 필요시 */
   flex-direction: column;
-  gap: 1.3125rem; /* 21px */
+  gap: 1.3125rem;
 
-  width: 15rem; /* 240px */
-  margin-left: 1.875rem; /* 30px */
+  width: 15rem;
+  margin-left: 30px;
 }
 
 .mid_size_text {
-  width: 6.25rem; /* 100px */
+  width: 6.25rem;
 
   color: var(--Font-Color-50, #4b527e);
   font-family: Inter;
-  font-size: 1.5rem; /* 24px */
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 1.4; /* 33.6px */
-  letter-spacing: -0.03rem; /* -0.48px */
+  line-height: 140%; /* 33.6px */
+  letter-spacing: -0.48px;
 }
 
 .select_drop_box {
-  margin-bottom: 0.125rem; /* 2px */
+  margin-bottom: 2px;
 }
 
 .section_bottom {
@@ -107,36 +111,37 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem; /* 20px */
+  gap: 1.25rem;
 }
 
 .popup_info_text {
   color: var(--Red-Default, #ff4f49);
   text-align: center;
 
+  /* Body3/SemiBold/16px */
   font-family: Inter;
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 1.4; /* 22.4px */
-  letter-spacing: -0.02rem; /* -0.32px */
+  line-height: 140%; /* 22.4px */
+  letter-spacing: -0.32px;
 
-  padding-top: 0.3125rem; /* 5px */
+  padding-top: 5px;
 }
 
 .popup_button_space {
-  width: 35.625rem; /* 570px */
+  width: 35.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem; /* 20px */
+  gap: 1.25rem;
 }
 
 /* 세로 구분선 */
 .popup_v_line {
-  width: 0.1875rem; /* 3px */
-  height: 5.9375rem; /* 95px */
-  border-radius: 3.125rem; /* 50px */
+  width: 0.1875rem;
+  height: 5.9375rem;
+  border-radius: 50px;
   background-color: var(--Font-Color-40, #7b83b1);
   align-self: center;
 }

@@ -1,32 +1,32 @@
 .team_button {
   background-color: #fff;
   border: none;
-  border-radius: 1.25rem; /* 20px */
+  border-radius: 20px;
   width: 100%;
-  padding: 0.9375rem; /* 15px */
+  padding: 0.9375rem;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.625rem; /* 10px */
+  gap: 0.625rem;
 
   /* 최소 너비 설정으로 너무 작아지는 것 방지 */
-  min-width: 15.625rem; /* 250px */
+  min-width: 250px;
 }
 
 /* 왼쪽 섹션: 체크박스 + 팀 이름 */
 .left_section {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* 8px */
-  height: 2.8125rem; /* 45px */
+  gap: 0.5rem;
+  height: 2.8125rem;
 
   /* 유연하게 늘어나고 줄어들되, 최소 너비 보장 */
   flex: 1;
   width: auto;
 
   /* 최소 너비를 체크박스 + 팀이름 최소너비로 설정 */
-  min-width: calc(2.8125rem + 0.5rem + 3.125rem); /* 45px + 8px + 50px */
+  min-width: calc(45px + 8px + 50px);
 }
 
 .check_box {
@@ -34,14 +34,14 @@
   align-items: center;
   justify-content: center;
 
-  width: 2.8125rem; /* 45px */
-  height: 2.8125rem; /* 45px */
+  width: 2.8125rem;
+  height: 2.8125rem;
 
   /* 체크박스는 고정 크기 유지 */
   flex-shrink: 0;
 
   border: none;
-  border-radius: 0.9375rem; /* 15px */
+  border-radius: 15px;
   background: var(--Netural-Gray20, #d1d1d1);
   cursor: pointer;
 }
@@ -51,8 +51,8 @@
 }
 
 .check_img_size {
-  width: 1.875rem; /* 30px */
-  height: 1.875rem; /* 30px */
+  width: 1.875rem;
+  height: 1.875rem;
   display: block;
   margin: auto;
 }
@@ -63,7 +63,7 @@
 
   /* 텍스트 줄임표시를 위한 설정 */
   flex: 1;
-  width: 5.3125rem; /* 85px */
+  width: 3.125rem; /* 최소 너비 85px */
   max-width: 100%; /* 최대 너비 제한 */
 
   white-space: nowrap;
@@ -71,27 +71,27 @@
   text-overflow: ellipsis;
 
   font-family: Inter;
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
-  letter-spacing: -0.025rem; /* -0.4px */
+  letter-spacing: -0.4px;
 }
 
 /* 오른쪽 섹션: 링크 버튼 + 구분선 + D-day */
 .right_section {
   display: flex;
   align-items: center;
-  gap: 0.3125rem; /* 5px */
-  height: 2.8125rem; /* 45px */
+  gap: 0.3125rem;
+  height: 2.8125rem;
 
   /* 고정 크기 유지 */
   flex-shrink: 0;
 }
 
 .link_button {
-  width: 2.8125rem; /* 45px */
-  height: 2.8125rem; /* 45px */
+  width: 2.8125rem;
+  height: 2.8125rem;
 
   /* 링크 버튼도 고정 크기 유지 */
   flex-shrink: 0;
@@ -106,17 +106,17 @@
 }
 
 .link_img_size {
-  width: 1.875rem; /* 30px */
-  height: 1.875rem; /* 30px */
+  width: 1.875rem;
+  height: 1.875rem;
   display: block;
   margin: auto;
 }
 
 /* 세로 구분선 */
 .v_line {
-  width: 0.15625rem; /* 2.5px */
-  height: 1.5625rem; /* 25px */
-  border-radius: 3.125rem; /* 50px */
+  width: 0.15625rem;
+  height: 1.5625rem;
+  border-radius: 50px;
   background-color: var(--Font-Color-40, #7b83b1);
 
   /* 구분선도 고정 크기 유지 */
@@ -125,9 +125,9 @@
 
 /* D-day */
 .dday {
-  min-width: 4.0625rem; /* 65px */
+  min-width: 65px;
   text-align: right;
-  padding-right: 0.3125rem; /* 5px */
+  padding-right: 5px;
 
   /* D-day도 고정 크기 유지 */
   flex-shrink: 0;
@@ -135,8 +135,8 @@
   color: #ff4f49;
 
   font-family: Inter;
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 140%;
-  letter-spacing: -0.0625rem; /* -1px */
+  letter-spacing: -1px;
 }
