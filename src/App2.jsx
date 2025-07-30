@@ -25,12 +25,13 @@ function App2() {
       const minFontSize = 12; // 최소 12px
       const maxFontSize = 16; // 최대 16px
 
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
+      const vw = window.innerWidth; // 현재 브라우저의 가로 길이
+      const vh = window.innerHeight; // 현재 브라우저의 세로 길이
 
       // 세로 기준 축소 비율
       let scale = vh / designHeight;
 
+      // 만약 세로 기준으로 계산된 가로 길이가 실제 화면보다 크면,
       // 가로가 실제 화면보다 커지면 가로 기준으로 다시 조절
       if (vw < scale * designWidth) {
         scale = vw / designWidth;
@@ -39,6 +40,8 @@ function App2() {
       // 최소 최대 제한
       scale = Math.min(Math.max(scale, minFontSize / 16), maxFontSize / 16);
 
+      // 최종적으로 루트(html) 요소의 font-size를 설정
+      // rem 단위가 이 크기를 기준으로 계산됨
       document.documentElement.style.fontSize = `${scale * 16}px`;
     }
 
