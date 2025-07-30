@@ -134,12 +134,12 @@
 
 /* 게시판이 확장되었을 때 */
 .box.team_board_box.promExpandedBoard {
-  width: min(92vw, 85.625rem); /* 1370px */
-  min-width: 41.75rem; /* 668px */
+  width: min(92.82vw, 85.625rem); /* 1370px */
+  min-width: 668px;
   height: 51.5625rem; /* 825px */
   position: fixed;
-  top: 6.25rem; /* 100px */
-  left: 31.25rem; /* 500px */
+  top: 100;
+  left: 500; /* 500px */
   z-index: 9999;
   padding: 1.25rem; /* 20px */
 }

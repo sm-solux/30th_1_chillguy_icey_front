@@ -86,6 +86,7 @@
 
 .Letter_list_expanded {
   height: 40.125rem;
+  overflow-x: hidden;
 }
 
 .Letter_list_expanded::-webkit-scrollbar {
