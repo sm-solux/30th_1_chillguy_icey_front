@@ -5,6 +5,7 @@ import forum from "../../assets/forum.svg";
 import group_off from "../../assets/group_off.svg";
 import vs from "../../assets/vs.svg";
 
+// 백엔드의 NotificationType과 일치하도록 typeMap을 수정합니다.
 const typeMap = {
   LETTER: {
     icon: forum,
@@ -17,7 +18,8 @@ const typeMap = {
       </>
     ),
   },
-  PROMISE_CREATED: {
+  // PROMISE_CREATED -> APPOINTMENT_CREATED로 변경
+  APPOINTMENT_CREATED: {
     icon: event,
     title: "약속 잡기 생성!",
     getDescription: (team) => (
@@ -28,7 +30,8 @@ const typeMap = {
       </>
     ),
   },
-  PROMISE_DONE: {
+  // PROMISE_DONE -> APPOINTMENT_COMPLETED로 변경
+  APPOINTMENT_COMPLETED: {
     icon: event_available,
     title: "약속 잡기 완료!",
     getDescription: (team) => (
@@ -39,7 +42,8 @@ const typeMap = {
       </>
     ),
   },
-  PROMISE_FIXED: {
+  // PROMISE_FIXED -> APPOINTMENT_REGISTRATION_COMPLETED로 변경
+  APPOINTMENT_REGISTRATION_COMPLETED: {
     icon: event_available,
     title: "약속 잡기 확정!",
     getDescription: (team) => (
@@ -50,7 +54,8 @@ const typeMap = {
       </>
     ),
   },
-  TEAM_DELETE_D3: {
+  // TEAM_DELETE_D3 -> TEAM_EXPIRATION_3로 변경
+  TEAM_EXPIRATION_3: {
     icon: group_off,
     title: (team) => `${team} 삭제 예정 D-3`,
     getDescription: (team) => (
@@ -61,7 +66,8 @@ const typeMap = {
       </>
     ),
   },
-  TEAM_DELETE_D1: {
+  // TEAM_DELETE_D1 -> TEAM_EXPIRATION_1로 변경
+  TEAM_EXPIRATION_1: {
     icon: group_off,
     title: (team) => `${team} 삭제 예정 D-1`,
     getDescription: (team) => (

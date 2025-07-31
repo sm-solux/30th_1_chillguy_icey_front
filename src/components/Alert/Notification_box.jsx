@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  getUnreadNotifications,
-  markAllAsRead,
-  // subscribeToNotifications // SSE를 사용한다면 필요
-} from "../../util/NotificationAPI"; // NotificationAPI 경로 확인
+// notificationApi.js에서 모든 API 함수를 가져옵니다.
+import notificationApi from "../../util/NotificationAPI";
+import { useAuth } from "../../context/AuthContext"; // AuthContext 훅을 가져옵니다.
 
 import st from "./Notification_box.module.css";
 import Notification from "./Notification";
@@ -16,53 +14,80 @@ import Login_Info from "./Login_Info"; // Login_Info 경로 확인
 const Notification_box = () => {
   const [showLoginInfo, setShowLoginInfo] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [readList, setReadList] = useState([]);
+  // readList는 더 이상 필요하지 않습니다. 알림 객체 자체가 read 상태를 가집니다.
+  // const [readList, setReadList] = useState([]);
 
-  // 실제 인증 토큰을 저장할 상태를 추가합니다.
-  const [authToken, setAuthToken] = useState(null);
+  // useAuth 훅을 사용하여 로그인 상태와 토큰을 가져옵니다.
+  const { isLoggedIn, token } = useAuth();
 
-  // 컴포넌트 마운트 시 또는 로그인 후 토큰을 localStorage에서 가져오는 useEffect
-  useEffect(() => {
-    // 실제 로그인 성공 시 localStorage에 'jwtToken'이라는 키로 토큰을 저장했다고 가정합니다.
-    const storedToken = localStorage.getItem("jwtToken");
-    if (storedToken) {
-      setAuthToken(storedToken); // localStorage에서 가져온 토큰으로 상태 업데이트
-    } else {
-      console.log(
-        "인증 토큰이 localStorage에 없습니다. 로그인 상태를 확인하세요.",
-      );
-      // 토큰이 없으면 알림을 불러올 수 없으므로, 사용자에게 로그인 필요 메시지를 표시하거나
-      // 로그인 페이지로 리다이렉트하는 등의 추가적인 에러 처리가 필요할 수 있습니다.
-    }
-  }, []); // 이 useEffect는 컴포넌트가 처음 마운트될 때 한 번만 실행됩니다.
-
-  // API에서 알림 데이터 불러오기 (authToken이 변경될 때마다 실행)
+  // API에서 읽지 않은 알림 데이터 불러오기 (로그인 상태 및 토큰 변경 시 실행)
   useEffect(() => {
     const fetchNotifications = async () => {
-      try {
-        // authToken이 유효할 때만 API 호출을 시도합니다.
-        if (authToken) {
-          const sortedNotifications = await getUnreadNotifications(authToken); // 실제 토큰 전달
-          setNotifications(sortedNotifications);
-          setReadList(sortedNotifications.map((item) => item.read));
+      // 로그인되어 있고 토큰이 있을 때만 API 호출을 시도합니다.
+      if (isLoggedIn && token) {
+        try {
+          const fetchedNotifications =
+            await notificationApi.getUnreadNotifications(token);
+          // 서버에서 받은 알림 목록으로 상태를 업데이트합니다.
+          setNotifications(fetchedNotifications);
+        } catch (error) {
+          console.error("알림 데이터 로드 실패:", error);
+          setNotifications([]); // 에러 발생 시 알림 목록을 비웁니다.
+          // 401 Unauthorized 에러인 경우, 토큰 만료 등으로 간주하고
+          // 사용자에게 다시 로그인하라는 메시지를 표시하거나 로그인 페이지로 리다이렉트할 수 있습니다.
+          if (error.response && error.response.status === 401) {
+            console.log(
+              "인증 토큰이 만료되었거나 유효하지 않습니다. 다시 로그인해주세요.",
+            );
+            // 예: navigate('/login'); // react-router-dom의 useNavigate 훅을 사용해야 함
+          }
         }
-      } catch (error) {
-        console.error("알림 데이터 로드 실패:", error);
+      } else {
+        // 로그인되어 있지 않거나 토큰이 없으면 알림 목록을 비웁니다.
         setNotifications([]);
-        setReadList([]);
-        // 특히 401 Unauthorized 에러인 경우, 토큰 만료 등으로 간주하고
-        // 사용자에게 다시 로그인하라는 메시지를 표시하거나 로그인 페이지로 리다이렉트할 수 있습니다.
-        if (error.response && error.response.status === 401) {
-          console.log(
-            "인증 토큰이 만료되었거나 유효하지 않습니다. 다시 로그인해주세요.",
-          );
-          // 예: navigate('/login'); // react-router-dom의 useNavigate 훅을 사용해야 함
-        }
+        console.log(
+          "로그인 상태가 아니거나 인증 토큰이 없어 알림을 불러올 수 없습니다.",
+        );
       }
     };
 
-    fetchNotifications(); // authToken 상태가 변경될 때마다 알림을 다시 가져옵니다.
-  }, [authToken]); // 의존성 배열에 authToken을 추가하여 토큰이 변경될 때마다 이 훅이 재실행되도록 합니다.
+    fetchNotifications();
+  }, [isLoggedIn, token]); // 의존성 배열에 isLoggedIn과 token을 추가하여 상태 변경 시 재실행되도록 합니다.
+
+  // 실시간 알림을 위한 SSE 구독
+  useEffect(() => {
+    let eventSource;
+    if (isLoggedIn && token) {
+      eventSource = notificationApi.subscribeToNotifications(token);
+
+      eventSource.onmessage = (event) => {
+        try {
+          const newNotification = JSON.parse(event.data);
+          console.log("새로운 실시간 알림 수신:", newNotification);
+          // 새로운 알림을 기존 알림 목록의 가장 앞에 추가합니다.
+          setNotifications((prevNotifications) => [
+            newNotification,
+            ...prevNotifications,
+          ]);
+        } catch (e) {
+          console.error("SSE 메시지 파싱 오류:", e);
+        }
+      };
+
+      eventSource.onerror = (error) => {
+        console.error("SSE 연결 오류:", error);
+        eventSource.close(); // 오류 발생 시 연결 종료
+      };
+    }
+
+    // 컴포넌트 언마운트 시 SSE 연결 종료
+    return () => {
+      if (eventSource) {
+        eventSource.close();
+        console.log("SSE 연결이 종료되었습니다.");
+      }
+    };
+  }, [isLoggedIn, token]); // isLoggedIn 또는 token이 변경될 때 SSE 연결을 다시 설정합니다.
 
   const handlePersonClick = () => {
     setShowLoginInfo(true);
@@ -72,34 +97,38 @@ const Notification_box = () => {
     setShowLoginInfo(false);
   };
 
+  // 모든 알림을 읽음으로 표시하는 함수
   const handleMarkAllAsRead = async () => {
-    // UI를 먼저 업데이트하여 사용자 경험을 좋게 합니다.
-    setReadList(Array(notifications.length).fill(true));
+    if (!isLoggedIn || !token) {
+      console.log(
+        "로그인 상태가 아니므로 모든 알림을 읽음 처리할 수 없습니다.",
+      );
+      return;
+    }
 
-    // API 호출
     try {
-      if (authToken) {
-        // 토큰이 있을 때만 API 호출
-        await markAllAsRead(authToken); // 실제 토큰 전달
-        console.log("전체 읽음 처리 완료");
-      } else {
-        console.log("인증 토큰이 없어 전체 읽음 처리를 할 수 없습니다.");
-      }
+      await notificationApi.markAllRead(token); // notificationApi의 markAllRead 함수 호출
+      console.log("전체 알림 읽음 처리 완료");
+      // UI에서 모든 알림의 read 상태를 true로 업데이트하여 CSS만 변경되도록 합니다.
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((notif) => ({ ...notif, read: true })),
+      );
     } catch (error) {
-      console.error("전체 읽음 처리 실패:", error);
-      // 에러 발생 시 UI를 이전 상태로 되돌리거나 사용자에게 알림을 줄 수 있습니다.
+      console.error("전체 알림 읽음 처리 실패:", error);
+      // 에러 발생 시 사용자에게 알림을 줄 수 있습니다.
+      alert("모든 알림을 읽음 처리하는 데 실패했습니다.");
     }
   };
 
-  const handleSingleRead = (index) => {
-    setReadList((prev) => {
-      const newList = [...prev];
-      newList[index] = true;
-      // 만약 단일 알림 읽음 처리 API가 있다면 여기서 호출합니다.
-      // 예: markSingleNotificationAsRead(authToken, notifications[index].id);
-      return newList;
-    });
-  };
+  // 단일 알림을 읽음으로 표시하는 함수를 제거합니다.
+  // const handleSingleRead = (notificationId) => {
+  //   setNotifications((prevNotifications) =>
+  //     prevNotifications.map((notif) =>
+  //       notif.id === notificationId ? { ...notif, read: true } : notif,
+  //     ),
+  //   );
+  //   console.log(`알림 ID ${notificationId} 읽음 처리 (UI 업데이트만)`);
+  // };
 
   return (
     <div className={st.notificationBoxWrapper}>
@@ -118,22 +147,30 @@ const Notification_box = () => {
                   <img src={person} alt="person" />
                 </div>
               </div>
-              <ViewAll onClick={handleMarkAllAsRead} />
+              {/* ViewAll 컴포넌트에 읽지 않은 알림 개수를 props로 전달할 수 있습니다. */}
+              <ViewAll
+                onClick={handleMarkAllAsRead}
+                unreadCount={notifications.filter((n) => !n.read).length} // 읽지 않은 알림 개수만 전달
+              />
             </div>
 
             <div className={st.alertListWrapper}>
               <div className={st.alertItemWrapper}>
-                {notifications.length > 0 ? ( // 알림이 있을 때만 렌더링
-                  notifications.map((item, index) => (
+                {notifications.length > 0 ? (
+                  notifications.map((item) => (
                     <Alert
                       key={item.id}
                       type={item.type}
-                      team={item.team}
-                      read={readList[index]}
+                      // API 응답에 teamName이 있으므로 team 대신 teamName을 사용합니다.
+                      team={item.teamName}
+                      // 알림 객체 자체에 read 상태가 있으므로 그대로 전달합니다.
+                      read={item.read}
+                      // 단일 알림 클릭 시 읽음 처리 (선택 사항)
+                      // onClick={() => handleSingleRead(item.id)} // 단일 알림 클릭 핸들러 제거
                     />
                   ))
                 ) : (
-                  <p className={st.noNotifications}>알림이 없습니다.</p> // 알림이 없을 때 메시지
+                  <p className={st.noNotifications}>알림이 없습니다.</p>
                 )}
               </div>
             </div>
