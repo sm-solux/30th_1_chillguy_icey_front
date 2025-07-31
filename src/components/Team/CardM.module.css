@@ -74,7 +74,7 @@
 }
 
 /* 미디어 쿼리: 화면 너비가 400px 이하일 때 */
-@media (max-width: 74.0625rem) {
+@media (max-width: 55.625rem) {
   /* 숨기고 싶은 div에 display: none을 적용 */
   .cardM_board {
     display: none;

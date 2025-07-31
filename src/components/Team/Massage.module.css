@@ -66,7 +66,7 @@
   letter-spacing: -0.32px;
 }
 
-@media (max-width: 65.625rem) {
+@media (max-width: 55.625rem) {
   .massage_title {
     display: none;
   }
