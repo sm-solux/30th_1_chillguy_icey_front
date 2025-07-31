@@ -4,7 +4,7 @@
 }
 .Memo {
   background: #e4f0ff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 0.3125rem 0.625rem;
   display: flex;
   flex-direction: column;

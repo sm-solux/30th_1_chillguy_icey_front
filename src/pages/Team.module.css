@@ -10,7 +10,7 @@
 }
 
 .box {
-  border-radius: 20px;
+  border-radius: 1.25rem;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.3) 0%,
@@ -90,7 +90,7 @@
 }
 
 .team_list_box {
-  padding-left: 20px;
+  padding-left: 15px;
   padding-right: 10px;
 }
 

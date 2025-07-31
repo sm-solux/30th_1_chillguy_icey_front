@@ -58,7 +58,7 @@
 
 .board_team_notice {
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   flex-grow: 1;
   width: 100%;
   height: 100%;
@@ -80,13 +80,13 @@
 }
 
 /* 890px 이하일 때 3열로 변경 */
-@media (max-width: 1020px) {
+@media (max-width: 63.75rem) {
   .board_wrapper {
     grid-template-columns: repeat(3, 11.4375rem);
   }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 55rem) {
   .board_wrapper {
     grid-template-columns: repeat(2, 11.4375rem);
   }
@@ -103,21 +103,21 @@
 }
 
 /* 1233px 이하 → 5열 */
-@media (max-width: 1233px) {
+@media (max-width: 77.0625rem) {
   .board_wrapper.expanded {
     grid-template-columns: repeat(6, 1fr);
   }
 }
 
 /* 1042px 이하 → 4열 */
-@media (max-width: 1042px) {
+@media (max-width: 65.125rem) {
   .board_wrapper.expanded {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 
 /* 848px 이하 → 3열 */
-@media (max-width: 848px) {
+@media (max-width: 53rem) {
   .board_wrapper.expanded {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -149,7 +149,7 @@
   border: none;
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   font-size: 0.75rem;
   cursor: pointer;
 }
@@ -192,9 +192,9 @@
 }
 
 @media (max-width: 61.25rem) {
-  .board_team_number {
+  /* .board_team_number {
     display: none;
-  }
+  } */
 }
 
 button:disabled {

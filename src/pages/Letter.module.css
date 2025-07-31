@@ -34,7 +34,7 @@
     rgba(255, 255, 255, 0.3) 0%,
     rgba(255, 255, 255, 0.2) 100%
   );
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 1.6875rem 2.125rem;
   display: flex;
   flex-direction: row;
@@ -66,7 +66,7 @@
 /* 스크롤바 막대 (thumb) */
 .Letter_list::-webkit-scrollbar-thumb {
   background-color: white;
-  border-radius: 50px;
+  border-radius: 3.125rem;
   border: 10px solid transparent;
   background-clip: content-box;
 }
@@ -116,7 +116,7 @@
 
 .Letter_message {
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   width: 100%;
   max-width: 68.5rem;
   height: 32.375rem;
@@ -155,7 +155,7 @@
 
 .Letter_message_text::-webkit-scrollbar-thumb {
   background-color: #4b527e;
-  border-radius: 50px;
+  border-radius: 3.125rem;
   border: 2px solid transparent;
   background-clip: content-box;
 }

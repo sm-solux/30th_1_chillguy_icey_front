@@ -55,17 +55,19 @@ const CardM = ({ card, team }) => {
   if (!team) return null;
 
   return (
-    <div className={st.CardM_content} onClick={handleCardMClick}>
-      {/* <div className={st.cardM_img_background}>
+    <div className={st.CardM_all_content}>
+      <div className={st.CardM_content} onClick={handleCardMClick}>
+        {/* <div className={st.cardM_img_background}>
         <img className={st.cardM_img} src={pickAnimalImg()} alt="" />
       </div> */}
-      {pickAnimalImg()}
-      <div className={st.cardM_board}>
-        <div className={st.cardM_text}>{card.nickname}</div>
-        <div className={st.cardM_text}>{card.mbti}</div>
-        <div className={st.cardM_text}>{card.hobby}</div>
-        <div className={st.cardM_text}>{card.secretTip}</div>
-        <div className={st.cardM_text}>{card.tmi}</div>
+        {pickAnimalImg()}
+        <div className={st.cardM_board}>
+          <div className={st.cardM_text}>{card.nickname}</div>
+          <div className={st.cardM_text}>{card.mbti}</div>
+          <div className={st.cardM_text}>{card.hobby}</div>
+          <div className={st.cardM_text}>{card.secretTip}</div>
+          <div className={st.cardM_text}>{card.tmi}</div>
+        </div>
       </div>
     </div>
   );

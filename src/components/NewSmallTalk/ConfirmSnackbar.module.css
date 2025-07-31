@@ -18,7 +18,7 @@
 /* 팝업 본체 */
 .popup {
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 1.875rem 2.5625rem;
   display: flex;
   flex-direction: column;

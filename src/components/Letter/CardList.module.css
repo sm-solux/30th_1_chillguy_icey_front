@@ -25,7 +25,7 @@
 /* 스크롤바 막대 (thumb) */
 .List::-webkit-scrollbar-thumb {
   background-color: white;
-  border-radius: 50px;
+  border-radius: 3.125rem;
   border: 2px solid transparent;
   background-clip: content-box;
 }
@@ -42,7 +42,7 @@
   padding: 0;
   width: 22.3125rem;
   height: 31.6875rem;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   transition: background-color 0.2s ease;
 }
 

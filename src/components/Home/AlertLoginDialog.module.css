@@ -4,7 +4,7 @@
 }
 .alert {
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 1.8125rem;
@@ -30,7 +30,7 @@
 }
 .button_body {
   background: #fee102;
-  border-radius: 93px;
+  border-radius: 5.8125rem;
   padding: 2.875rem 5.25rem 2.875rem 5.25rem;
   display: flex;
   flex-direction: row;
@@ -98,7 +98,7 @@
 }
 .button {
   background: var(--netural-white, #ffffff);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   border-style: solid;
   border-color: var(--font-color-50, #4b527e);
   border-width: 1px;

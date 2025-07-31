@@ -17,7 +17,7 @@
   height: 100%;
   overflow-y: auto;
 
-  padding-right: 5px;
+  padding-right: 10px;
   scrollbar-gutter: stable; /* ✅ 스크롤 생겨도 레이아웃 변화 없음 */
 }
 
@@ -43,7 +43,7 @@
 /* 스크롤바 막대 (thumb) */
 .Teamlist_space::-webkit-scrollbar-thumb {
   background-color: white;
-  border-radius: 50px;
+  border-radius: 3.125rem;
   border: 2px solid transparent;
   background-clip: content-box;
 }

@@ -9,7 +9,7 @@
     rgba(255, 255, 255, 0.8) 0%,
     rgba(255, 255, 255, 0.8) 100%
   );
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 1.6875rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -100,7 +100,7 @@
 
 .Card {
   background: #afcdff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 1.0625rem 0.8125rem;
   display: flex;
   flex-direction: column;
@@ -130,7 +130,7 @@
 
 .Image_wrapper {
   background-color: #ffffff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   display: flex;
   flex-direction: row;
   gap: 0.5rem;

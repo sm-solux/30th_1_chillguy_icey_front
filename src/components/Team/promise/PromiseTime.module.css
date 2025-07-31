@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   background: #fff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
 }
 
 .wrapper {
@@ -11,7 +11,7 @@
   height: 19.375rem;
   background: #fff;
   padding: 0.625rem;
-  border-radius: 20px;
+  border-radius: 1.25rem;
 }
 
 .dateNav {
@@ -26,7 +26,7 @@
 .chevron {
   width: 1.5625rem;
   height: 1.5625rem;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   color: #4b527e;
   background: none;
   border: none;

@@ -4,7 +4,7 @@
     rgba(255, 255, 255, 0.6) 0%,
     rgba(255, 255, 255, 0.6) 100%
   );
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 1.65625rem 1.0625rem;
   display: flex;
   flex-direction: column;
@@ -57,7 +57,7 @@
 
 .Card_image {
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -76,7 +76,7 @@
     rgba(255, 255, 255, 0.3) 0%,
     rgba(255, 255, 255, 0.2) 100%
   );
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -140,7 +140,7 @@
 .SelectedCard {
   background: #fdebf8;
   box-shadow: 0 0 16px 4px rgba(182, 204, 252, 0.6);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   transition:
     background 0.4s ease-in-out,
     box-shadow 0.4s ease-in-out,

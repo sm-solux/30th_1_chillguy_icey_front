@@ -18,7 +18,7 @@
   width: 50rem;
   height: 28.125rem;
   flex-shrink: 0;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   background: #fff;
 
   padding: 0 6.875rem;
@@ -57,7 +57,7 @@
   padding: 1.875rem;
   gap: 1.25rem;
 
-  border-radius: 20px;
+  border-radius: 1.25rem;
   border: 2.5px solid var(--Font-Color-50, #4b527e);
   background: var(
     --,
@@ -141,7 +141,7 @@
 .popup_v_line {
   width: 0.1875rem;
   height: 5.9375rem;
-  border-radius: 50px;
+  border-radius: 3.125rem;
   background-color: var(--Font-Color-40, #7b83b1);
   align-self: center;
 }

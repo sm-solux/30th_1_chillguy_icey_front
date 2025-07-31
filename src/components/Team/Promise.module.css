@@ -15,7 +15,7 @@
   min-width: 7.5rem;
   aspect-ratio: 1 / 1; /* ✅ 항상 정사각형 유지 */
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   margin-left: 10px;
 }
 
