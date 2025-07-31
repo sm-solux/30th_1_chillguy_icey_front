@@ -7,7 +7,7 @@
 } */
 
 .Board_content {
-  gap: 20px;
+  gap: 1.25rem;
   display: flex;
   flex-direction: column;
   border: 20px;
@@ -19,7 +19,7 @@
 .board_team_box {
   /* background-color: aqua; */
   display: flex;
-  gap: 20px;
+  gap: 1.25rem;
   width: 100%;
   align-items: end;
   justify-content: start;
@@ -33,7 +33,7 @@
 
   /* Title2/Bold/48px */
   font-family: Inter;
-  font-size: 48px;
+  font-size: 3rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
@@ -49,7 +49,7 @@
 
   /* Body1/Bold/24px */
   font-family: Inter;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
@@ -67,27 +67,37 @@
 
 .board_wrapper {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 11.4375rem);
   grid-template-rows: repeat(3, 1fr);
+  align-content: stretch;
   width: 100%;
-  max-height: 480px;
+  max-height: calc((13.125rem * 2) + 3vw);
   padding: 20px;
-  gap: 15px;
+  gap: 1.5vw;
   overflow: hidden;
+  place-items: start;
+  justify-content: start;
 }
 
 /* 890px 이하일 때 3열로 변경 */
-@media (max-width: 890px) {
+@media (max-width: 1020px) {
   .board_wrapper {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 11.4375rem);
+  }
+}
+
+@media (max-width: 880px) {
+  .board_wrapper {
+    grid-template-columns: repeat(2, 11.4375rem);
   }
 }
 
 .board_wrapper.expanded {
   max-height: none; /* 기존 max-height 제한 해제 */
   grid-template-columns: repeat(6, 1fr); /* 6열로 변경 */
-  grid-template-rows: repeat(3, auto); /* 3줄로 고정 */
+  grid-template-rows: repeat(3, 1fr); /* 3줄로 고정 */
   gap: 15px;
+  padding: 20px;
   z-index: 999;
   transition: max-height 0.3s ease;
 }
@@ -95,21 +105,21 @@
 /* 1233px 이하 → 5열 */
 @media (max-width: 1233px) {
   .board_wrapper.expanded {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
 /* 1042px 이하 → 4열 */
 @media (max-width: 1042px) {
   .board_wrapper.expanded {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
 /* 848px 이하 → 3열 */
 @media (max-width: 848px) {
   .board_wrapper.expanded {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -117,7 +127,7 @@
   position: absolute;
   bottom: 20px;
   right: 20px;
-  gap: 12px;
+  gap: 0.75rem;
   z-index: 10; /* 게시글 위로 */
   display: flex;
   align-items: center;
@@ -125,28 +135,28 @@
 
 /* 기능 버튼들 */
 .Menu_buttons {
-  gap: 12px;
-  height: 60px;
+  gap: 0.75rem;
+  height: 3.75rem;
   display: flex;
   flex-direction: row;
   animation: slideIn 0.3s ease forwards;
 }
 
 .Menu_item {
-  height: 60px;
+  height: 3.75rem;
   all: unset;
   background: none;
   border: none;
   color: white;
   border: none;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 0.75rem;
   cursor: pointer;
 }
 
 .Menu_item img {
-  width: 60px;
-  height: 60px;
+  width: 3.75rem;
+  height: 3.75rem;
 }
 
 /* 메뉴 토글 버튼 */
@@ -161,6 +171,8 @@
 
 .Menu_toggle img {
   display: block;
+  width: 3.75rem;
+  height: 3.75rem;
 }
 
 .Menu_toggle.rotate {
@@ -179,7 +191,7 @@
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 61.25rem) {
   .board_team_number {
     display: none;
   }

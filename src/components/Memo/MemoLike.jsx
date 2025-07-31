@@ -1,6 +1,6 @@
 import st from "./MemoLike.module.css";
 import { getAnimalImage } from "../../util/get-animal-image";
-import exPig from "../../assets/exPig.png";
+import exPig from "../../assets/animal/animal_pig9.svg";
 
 const MemoLike = ({ users = [] }) => {
   // 동물 이름 매핑
@@ -13,6 +13,7 @@ const MemoLike = ({ users = [] }) => {
     토끼: "rabbit",
   };
 
+  // 색상 매핑
   const colorMap = {
     빨강: 1,
     주황: 2,

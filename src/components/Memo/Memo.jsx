@@ -11,15 +11,21 @@ import memo_delete from "../../assets/memo_delete.svg";
 import { fetchMemoDetail, toggleMemoLike } from "../../util/BoardDataAPI";
 
 const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
+  // state: 메모 내용 불러오기
   const [content, setContent] = useState(memo?.content || "");
+  // 좋아요 상태 (내가 좋아요 눌렀는지)
   const [liked, setLiked] = useState(memo?.liked || false);
+  // 좋아요 누른 사람 명함 리스트
   const [likeUsers, setLikeUsers] = useState(memo?.likeUsers || []);
+  // state: 중복 호출 방지
   const [isFetched, setIsFetched] = useState(false);
+  // state: 메모 작성자인지 판단
   const [isMine, setIsMine] = useState(false);
 
   useEffect(() => {
     if (!teamId || !memoId || isFetched) return;
 
+    // 메모 내용 불러오기
     const loadMemo = async () => {
       try {
         const memoData = await fetchMemoDetail(teamId, memoId);
@@ -43,6 +49,7 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
     if (memo?.content) setContent(memo.content);
   }, [memo?.content]);
 
+  // 좋아요 버튼 클릭
   const handleLikeClick = async () => {
     try {
       const updatedMemo = await toggleMemoLike(teamId, memoId);
@@ -57,6 +64,7 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
   return (
     <div className={st.Memo}>
       <div className={st.Memo_tools}>
+        {/* 좋아요 버튼 */}
         <div className={st.MemoLike_wrapper}>
           <img
             className={st.Memo_like_img}
@@ -89,6 +97,7 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
         )}
       </div>
       <img className={st.Memo_line_img} src={memo_line} alt="memo_line" />
+      {/* 메모 내용 */}
       <div className={st.Memo_text}>{content}</div>
     </div>
   );

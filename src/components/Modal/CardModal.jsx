@@ -3,7 +3,7 @@ import modal_line from "../../assets/modal_line.svg";
 import cardmodal_left from "../../assets/cardmodal_left.svg";
 import cardmodal_right from "../../assets/cardmodal_right.svg";
 import { getAnimalImage } from "../../util/get-animal-image";
-import exPig from "../../assets/exPig.png";
+import exPig from "../../assets/animal/animal_pig9.svg";
 
 import Button from "../Button";
 import Dropdown from "../Dropdown";
@@ -40,7 +40,7 @@ const CardModal = ({
     setAdjective(defaultValue?.adjective || "");
     setAnimal(defaultValue?.animal || "");
     setMbti(defaultValue?.mbti || "");
-    setProfileColor(defaultValue?.profileColor || "1"); // 나중에 디폴트 값으로 변경
+    setProfileColor(defaultValue?.profileColor || "9");
     setHobby(defaultValue?.hobby || "");
     setSecretTip(defaultValue?.secretTip || "");
     setTmi(defaultValue?.tmi || "");

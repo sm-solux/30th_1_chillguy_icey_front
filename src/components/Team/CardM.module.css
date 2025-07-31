@@ -1,5 +1,5 @@
 .CardM_content {
-  gap: 20px;
+  gap: 1.25rem;
   display: flex;
   flex-direction: row;
   /* padding: 10px; */
@@ -26,12 +26,12 @@
   color: var(--Font-Color-50, #4b527e);
   text-shadow: 0px 2px 10px rgba(89, 126, 219, 0.5);
   font-family: Inter;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
   letter-spacing: -0.32px;
-  width: 105px;
+  width: 6.5625rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -41,10 +41,10 @@
 .cardM_img_background {
   background-color: #fff;
   border-radius: 20px;
-  width: 130px;
+  width: 8.125rem;
   min-width: 110px;
   aspect-ratio: 1/1;
-  padding: 10px;
+  padding: 0.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,7 +59,7 @@
 }
 
 .cardM_board {
-  gap: 5px;
+  gap: 0.3125rem;
   display: flex;
   flex-direction: column;
 }
@@ -74,7 +74,7 @@
 }
 
 /* 미디어 쿼리: 화면 너비가 400px 이하일 때 */
-@media (max-width: 1185px) {
+@media (max-width: 55.625rem) {
   /* 숨기고 싶은 div에 display: none을 적용 */
   .cardM_board {
     display: none;
