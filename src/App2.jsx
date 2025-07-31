@@ -61,7 +61,7 @@ function App2() {
               <Route path="/team" element={<Team />} />
               <Route path="/smalltalk" element={<SmallTalk />} />
               <Route path="/newsmalltalk" element={<NewSmallTalk />} />
-              <Route path="/editsmall/:id" element={<EditSmall />} />
+              <Route path="/editsmall" element={<EditSmall />} />
               <Route path="/mycard" element={<MyCard />} />
               <Route path="/invitation/:invitationToken" element={<Invite />} />
               <Route path="/letter" element={<Letter />} />

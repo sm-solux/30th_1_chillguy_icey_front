@@ -150,7 +150,7 @@ const SmallTalk = () => {
     console.log("selectedSmallTalkDetail 상태:", selectedSmallTalkDetail);
 
     if (selectedSmallTalkDetail) {
-      navigate("/editsmall/:id", {
+      navigate("/editsmall", {
         state: { smallTalk: selectedSmallTalkDetail },
       });
     } else {
