@@ -134,7 +134,7 @@
 
 /* 게시판이 확장되었을 때 */
 .box.team_board_box.promExpandedBoard {
-  width: min(92vw, 85.625rem);
+  width: min(92.8vw, 85.625rem);
   min-width: 668px;
   height: 51.5625rem;
   position: fixed;
