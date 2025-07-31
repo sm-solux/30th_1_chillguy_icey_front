@@ -1,0 +1,117 @@
+.writeCardContainer,
+.writeCardContainer * {
+  box-sizing: border-box;
+}
+.writeCardContainer {
+  background: var(--netural-white, #ffffff);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.textareaWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.questionTextarea {
+  color: var(--font-color-30, #4b527e);
+  text-align: left;
+  font-family: var(--body2-bold-20px-font-family, "Inter-Bold", sans-serif);
+  font-size: var(--body2-bold-20px-font-size, 20px);
+  line-height: var(--body2-bold-20px-line-height, 140%);
+  letter-spacing: var(--body2-bold-20px-letter-spacing, -0.02em);
+  font-weight: var(--body2-bold-20px-font-weight, 700);
+  position: relative;
+  width: 1204px; /* Adjust as needed for responsiveness */
+  resize: none;
+  overflow: hidden;
+  justify-content: flex-start;
+  border: none;
+  outline: none;
+}
+
+.textareaUnderline {
+  margin-top: -3px;
+  border-style: solid;
+  border-color: var(--font-color-40, #7b83b1);
+  border-width: 3px 0 0 0;
+  flex-shrink: 0;
+  width: 1204px; /* Adjust as needed for responsiveness */
+  height: 0px;
+  position: relative;
+}
+.buttonGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+/* Note: The following classes were present in the provided CSS but not used in the CustomInput_write component's JSX.
+   They are kept here for completeness if they are used elsewhere or intended for future use. */
+.buttonColorEnabled {
+  background: var(--primary-color-50, #597edb);
+  border-radius: 20px;
+  padding: 11px 142px 11px 142px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 200px;
+  height: 50px;
+  position: relative;
+}
+.buttonColorEnabledText {
+  color: var(--netural-white, #ffffff);
+  text-align: center;
+  font-family: var(--body2-bold-20px-font-family, "Inter-Bold", sans-serif);
+  font-size: var(--body2-bold-20px-font-size, 20px);
+  line-height: var(--body2-bold-20px-line-height, 140%);
+  letter-spacing: var(--body2-bold-20px-letter-spacing, -0.02em);
+  font-weight: var(--body2-bold-20px-font-weight, 700);
+  position: relative;
+}
+.buttonBlackCancel {
+  background: var(--netural-white, #ffffff);
+  border-radius: 20px;
+  border-style: solid;
+  border-color: var(--font-color-50, #4b527e);
+  border-width: 1px;
+  padding: 11px 142px 11px 142px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 200px;
+  height: 50px;
+  position: relative;
+}
+.buttonBlackCancelText {
+  color: var(--font-color-50, #4b527e);
+  text-align: center;
+  font-family: var(--body2-bold-20px-font-family, "Inter-Bold", sans-serif);
+  font-size: var(--body2-bold-20px-font-size, 20px);
+  line-height: var(--body2-bold-20px-line-height, 140%);
+  letter-spacing: var(--body2-bold-20px-letter-spacing, -0.02em);
+  font-weight: var(--body2-bold-20px-font-weight, 700);
+  position: relative;
+}

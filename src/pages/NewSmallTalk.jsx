@@ -20,12 +20,12 @@ const NewSmallTalk = () => {
 
   const handleTargetChange = (e) => {
     const input = e.target.value;
-    if (input.length <= 13) setTargetText(input);
+    if (input.length <= 12) setTargetText(input);
   };
 
   const handlePurposeChange = (e) => {
     const input = e.target.value;
-    if (input.length <= 13) setPurposeText(input);
+    if (input.length <= 12) setPurposeText(input);
   };
 
   const postsmalltalk = async () => {
@@ -38,6 +38,7 @@ const NewSmallTalk = () => {
         },
       );
       console.log("스몰톡 생성", res.data);
+      return res.data.data;
     } catch (error) {
       console.error("실패:", error);
     }

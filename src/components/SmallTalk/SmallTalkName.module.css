@@ -10,7 +10,7 @@
   position: relative;
 }
 .title_section {
-  padding: 0px 0.625rem 0px 0.625rem;
+  padding: 0px 10px 10px 10px;
   display: flex;
   flex-direction: row;
   gap: 0px 2.4375rem;

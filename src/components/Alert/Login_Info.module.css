@@ -1,0 +1,317 @@
+.div,
+.div * {
+  box-sizing: border-box;
+}
+.div {
+  background: linear-gradient(
+    180deg,
+    rgba(75, 82, 126, 0.2) 0%,
+    rgba(75, 82, 126, 0.1) 100%
+  );
+  border-radius: 20px;
+  padding: 7px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 854px;
+  width: 390px;
+  position: relative;
+}
+.loginInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 376px;
+  position: relative;
+}
+.loginInfoHeader {
+  display: flex;
+  flex-direction: row;
+  gap: 11px;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.bellIconWrapper {
+  background: linear-gradient(
+    180deg,
+    rgba(75, 82, 126, 0.2) 0%,
+    rgba(75, 82, 126, 0.1) 100%
+  );
+  border-radius: 20px;
+  padding: 9px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-end;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  position: relative;
+}
+
+.bellIconWrapper:hover {
+  background: #a4abd5;
+  box-shadow: inset 0px 4px 20px rgba(75, 82, 126, 0.5);
+  backdrop-filter: blur(22.5px);
+}
+.bellIconButton {
+  display: flex;
+  width: 45px;
+  height: 45px;
+  align-items: center;
+  justify-content: center; /* 가로도 가운데 정렬 */
+  border-radius: 50%;
+  background: #fff;
+  overflow: hidden; /* 테두리 밖은 자르기 */
+  padding: 0; /* 불필요한 패딩 제거 */
+}
+
+.userInfoSection {
+  background: linear-gradient(
+    180deg,
+    rgba(75, 82, 126, 0.2) 0%,
+    rgba(75, 82, 126, 0.1) 100%
+  );
+  border-radius: 20px;
+  padding: 6px 7px 6px 7px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  max-height: 771px;
+  position: relative;
+  box-shadow: inset 0px 4px 20px 0px rgba(75, 82, 126, 0.3);
+  backdrop-filter: blur(22.5px);
+}
+.profileImgWrapper {
+  flex-shrink: 0;
+  width: 236px;
+  height: 236px;
+  position: relative;
+  overflow: visible;
+  display: flex;
+
+  align-items: center;
+  justify-content: center; /* 가로도 가운데 정렬 */
+  border-radius: 50%;
+  background: #fff;
+  overflow: hidden; /* 테두리 밖은 자르기 */
+  padding: 0; /* 불필요한 패딩 제거 */
+}
+.userInfoWrapper {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 361px;
+  max-height: 756px;
+  position: relative;
+  justify-content: center; /* 수평 중앙 */
+  align-items: center;
+  overflow: hidden;
+}
+
+.loginButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(75, 82, 126, 0.2) 0%,
+    rgba(75, 82, 126, 0.1) 100%
+  );
+  box-shadow: 0px 4px 20px 0px rgba(75, 82, 126, 0.3) inset;
+  backdrop-filter: blur(22.5px);
+  cursor: pointer;
+  width: 181px;
+  height: 64px;
+}
+
+.loginButtonInner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.loginButtonIcon {
+  display: flex;
+  width: 45px;
+  height: 45px;
+  align-items: center;
+  justify-content: center; /* 가로도 가운데 정렬 */
+  border-radius: 50%;
+  background: #fff;
+  overflow: hidden; /* 테두리 밖은 자르기 */
+  padding: 0; /* 불필요한 패딩 제거 */
+}
+
+.loginButtonLabel {
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 600;
+  color: #252b5a;
+  letter-spacing: -0.4px;
+  line-height: 140%;
+}
+
+.userInfoContent,
+.userInfoContent * {
+  box-sizing: border-box;
+}
+.userInfoContent {
+  padding: 10px 0px 10px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 223px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 311px;
+  position: relative;
+}
+.userInfoDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.profileImg {
+  flex-shrink: 0;
+  width: 127px;
+  height: 127px;
+  position: relative;
+  overflow: visible;
+  aspect-ratio: 1;
+}
+.userName {
+  color: var(--font-color-70, #252b5a);
+  text-align: center;
+  font-family: var(--body2-semibold-20px-font-family, "Inter-Bold", sans-serif);
+  font-size: var(--body2-semibold-20px-font-size, 20px);
+  line-height: var(--body2-semibold-20px-line-height, 140%);
+  letter-spacing: var(--body2-semibold-20px-letter-spacing, -0.02em);
+  font-weight: var(--body2-semibold-20px-font-weight, 700);
+  position: relative;
+  align-self: stretch;
+}
+.userEmail {
+  color: var(--font-color-70, #252b5a);
+  text-align: center;
+  font-family: var(--body2-semibold-20px-font-family, "Inter-Bold", sans-serif);
+  font-size: var(--body2-semibold-20px-font-size, 20px);
+  line-height: var(--body2-semibold-20px-line-height, 140%);
+  letter-spacing: var(--body2-semibold-20px-letter-spacing, -0.02em);
+  font-weight: var(--body2-semibold-20px-font-weight, 700);
+  position: relative;
+  align-self: stretch;
+}
+.linkedAccountWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.linkedAccountInner {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 11px 89px 11px 89px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 51px;
+  position: relative;
+  box-shadow: var(
+    --basic-button2-box-shadow,
+    2px 2px 10px 5px rgba(209, 209, 209, 0.5)
+  );
+}
+.linkedAccountContent {
+  display: flex;
+  flex-direction: row;
+  gap: 14px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.linkedIcon {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  height: auto;
+  position: relative;
+  overflow: visible;
+}
+.linkedStatusText {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 20px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  position: relative;
+}
+.logoutSection {
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.logoutIcon {
+  flex-shrink: 0;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  overflow: visible;
+  aspect-ratio: 1;
+}
+.logoutLabel {
+  color: var(--font-color-70, #252b5a);
+  text-align: center;
+  font-family: var(--body2-semibold-20px-font-family, "Inter-Bold", sans-serif);
+  font-size: var(--body2-semibold-20px-font-size, 20px);
+  line-height: var(--body2-semibold-20px-line-height, 140%);
+  letter-spacing: var(--body2-semibold-20px-letter-spacing, -0.02em);
+  font-weight: var(--body2-semibold-20px-font-weight, 700);
+  position: relative;
+}

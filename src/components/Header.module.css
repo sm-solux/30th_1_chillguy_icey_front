@@ -110,3 +110,10 @@
   /* color: #fff; */
   filter: blur(2px);
 }
+
+.sideMenuWrapper {
+  position: absolute;
+  top: 100%; /* 헤더 바로 아래 */
+  right: 36px; /* 오른쪽에 정렬 */
+  z-index: 1000;
+}

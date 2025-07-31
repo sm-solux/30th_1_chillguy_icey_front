@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import TeamsTest from "./util/TeamsTest";
 import SmallTalk from "./pages/SmallTalk";
 import NewSmallTalk from "./pages/NewSmallTalk";
+import EditSmall from "./pages/EditSmall";
 
 import React, { useEffect } from "react";
 
