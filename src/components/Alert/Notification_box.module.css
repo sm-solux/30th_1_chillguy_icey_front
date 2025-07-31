@@ -91,6 +91,7 @@
   align-self: stretch;
   flex-shrink: 0;
   max-height: 771px;
+
   position: relative;
   box-shadow: inset 0px 4px 20px 0px rgba(75, 82, 126, 0.3);
   backdrop-filter: blur(22.5px);
@@ -105,6 +106,19 @@
   flex-shrink: 0;
   width: 361px;
   max-height: 756px;
+  overflow-y: auto;
   position: relative;
-  overflow: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.noNotifications {
+  color: var(--font-color-70, #252b5a);
+  text-align: left;
+  font-family: var(--body2-semibold-20px-font-family, "Inter-Bold", sans-serif);
+  font-size: var(--body2-semibold-20px-font-size, 20px);
+  line-height: var(--body2-semibold-20px-line-height, 140%);
+  letter-spacing: var(--body2-semibold-20px-letter-spacing, -0.02em);
+  font-weight: var(--body2-semibold-20px-font-weight, 700);
 }
