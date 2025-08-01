@@ -8,22 +8,22 @@
     rgba(75, 82, 126, 0.2) 0%,
     rgba(75, 82, 126, 0.1) 100%
   );
-  border-radius: 20px;
-  padding: 13px 19px 13px 19px;
+  border-radius: 1.25rem;
+  padding: 0.8125rem 1.1875rem 0.8125rem 1.1875rem;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
   align-items: flex-start;
   justify-content: center;
   align-self: stretch;
   flex-shrink: 0;
-  height: 133px;
+  height: 8.3125rem;
   position: relative;
 }
 .content {
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 0.5625rem;
   align-items: flex-start;
   justify-content: flex-start;
   align-self: stretch;
@@ -33,7 +33,7 @@
 .header {
   display: flex;
   flex-direction: row;
-  gap: 13px;
+  gap: 0.8125rem;
   align-items: center;
   justify-content: flex-start;
   align-self: stretch;
@@ -42,8 +42,8 @@
 }
 .iconWrapper {
   display: flex;
-  width: 45px;
-  height: 45px;
+  width: 2.8125rem;
+  height: 2.8125rem;
   align-items: center;
   justify-content: center; /* 가로도 가운데 정렬 */
   border-radius: 50%;
@@ -60,7 +60,7 @@
   letter-spacing: var(--body2-semibold-20px-letter-spacing, -0.02em);
   font-weight: var(--body2-semibold-20px-font-weight, 700);
   position: relative;
-  width: 232px;
+  width: 14.5rem;
 }
 
 .description {
@@ -72,8 +72,8 @@
   letter-spacing: var(--body3-semibold-16px-letter-spacing, -0.02em);
   font-weight: var(--body3-semibold-16px-font-weight, 700);
   position: relative;
-  width: 323px;
-  height: 44px;
+  width: 20.1875rem;
+  height: 2.75rem;
 }
 
 /* 읽음 상태일 때 스타일 */

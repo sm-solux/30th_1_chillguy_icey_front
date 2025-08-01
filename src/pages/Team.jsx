@@ -295,12 +295,15 @@ const Team = () => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
-        toggleBoardExpand();
+        if (isBoardExpanded) {
+          setIsBoardExpanded(false);
+        }
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [toggleBoardExpand]);
+  }, [isBoardExpanded]);
 
   // ✅ 메시지 (linkMessage) 스낵바
   const handleSnackbar = () => {

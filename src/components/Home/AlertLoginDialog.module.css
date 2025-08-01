@@ -4,16 +4,16 @@
 }
 .alert {
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 29px;
+  gap: 1.8125rem;
   align-items: center;
   justify-content: center;
-  height: 450px;
+  height: 28.125rem;
   position: relative;
   overflow: hidden;
-  width: 800px;
+  width: 50rem;
   height: 450px;
   position: fixed;
   top: 0;
@@ -30,37 +30,37 @@
 }
 .button_body {
   background: #fee102;
-  border-radius: 93px;
-  padding: 46px 84px 46px 84px;
+  border-radius: 5.8125rem;
+  padding: 2.875rem 5.25rem 2.875rem 5.25rem;
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 0.5rem;
   align-items: center;
   justify-content: flex-start;
   flex-shrink: 0;
-  width: 186px;
-  height: 186px;
+  width: 11.625rem;
+  height: 11.625rem;
   position: relative;
 }
 
 .mark {
   flex-shrink: 0;
-  width: 18px;
-  height: 92px;
+  width: 1.125rem;
+  height: 5.75rem;
   position: static;
 }
 .q_1 {
   background: var(--netural-white, #ffffff);
-  width: 18px;
-  height: 57px;
+  width: 1.125rem;
+  height: 3.5625rem;
   position: absolute;
   left: 84px;
   top: 47px;
 }
 .q_2 {
   background: var(--netural-white, #ffffff);
-  width: 18px;
-  height: 18px;
+  width: 1.125rem;
+  height: 1.125rem;
   position: absolute;
   left: 84px;
   top: 121px;
@@ -68,7 +68,7 @@
 .have_to {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
   align-items: center;
   justify-content: flex-start;
   flex-shrink: 0;
@@ -90,7 +90,7 @@
 .login_button {
   display: flex;
   flex-direction: row;
-  gap: 15px;
+  gap: 0.9375rem;
   align-items: center;
   justify-content: flex-start;
   flex-shrink: 0;
@@ -98,19 +98,19 @@
 }
 .button {
   background: var(--netural-white, #ffffff);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   border-style: solid;
   border-color: var(--font-color-50, #4b527e);
   border-width: 1px;
-  padding: 11px 142px 11px 142px;
+  padding: 0.6875rem 8.875rem 0.6875rem 8.875rem;
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 200px;
-  height: 50px;
+  width: 12.5rem;
+  height: 3.125rem;
   position: relative;
 }
 .div3 {

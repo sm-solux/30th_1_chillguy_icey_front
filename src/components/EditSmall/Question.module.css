@@ -4,7 +4,7 @@
 }
 .questionCard {
   background: var(--netural-white, #ffffff);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -65,7 +65,7 @@
 }
 .questionDetailCard {
   background: var(--primary-color-10, #e4f0ff);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 20px;
   display: flex;
   flex-direction: row;
@@ -132,7 +132,7 @@
 }
 .tipButton {
   background: #edfbd8;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   border-style: solid;
   border-color: #65bc3a;
   border-width: 2px;
@@ -168,7 +168,7 @@
     rgba(255, 255, 255, 0.3) 0%,
     rgba(255, 255, 255, 0.2) 100%
   );
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 20px 40px 20px 40px;
   display: flex;
   flex-direction: column;
@@ -377,7 +377,7 @@
 /* 스크롤바 막대 (thumb) */
 .questionsScrollContainer::-webkit-scrollbar-thumb {
   background-color: white;
-  border-radius: 50px;
+  border-radius: 3.125rem;
   border: 2px solid transparent;
   background-clip: content-box;
 }
@@ -388,7 +388,7 @@
 }
 .longButton {
   background: var(--primary-color-50, #597edb);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 11px 142px 11px 142px;
   display: flex;
   flex-direction: row;
@@ -412,7 +412,7 @@
 }
 .deleteButton {
   background: #ff4f49;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 11px 142px 11px 142px;
   display: flex;
   flex-direction: row;
@@ -426,7 +426,7 @@
 }
 .addQuestionButtonWrapper {
   background: var(--netural-white, #ffffff);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 7px 20px 7px 20px;
   display: flex;
   flex-direction: row;
@@ -456,7 +456,7 @@
 }
 .blackEnabledButton {
   background: var(--netural-white, #ffffff);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 11px 142px 11px 142px;
   display: flex;
   flex-direction: row;

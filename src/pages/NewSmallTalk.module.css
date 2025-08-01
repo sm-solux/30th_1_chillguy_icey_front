@@ -1,5 +1,5 @@
 .body {
-  max-width: 1364px;
+  max-width: 85.25rem;
   width: 100%; /* (필수) auto margin이 적용되려면 있어야 함 */
   margin: 0 auto;
   background: linear-gradient(
@@ -7,16 +7,16 @@
     rgba(255, 255, 255, 0.3) 0%,
     rgba(255, 255, 255, 0.2) 100%
   );
-  border-radius: 20px;
-  padding: 50px 40px 50px 40px;
+  border-radius: 1.25rem;
+  padding: 3.125rem 2.5rem 3.125rem 2.5rem;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 1.875rem;
   align-items: center;
   justify-content: flex-start;
   align-self: stretch;
   flex-shrink: 0;
-  height: 825px;
+  height: 51.5625rem;
 
   box-shadow: var(
     ---box-shadow,
@@ -26,7 +26,7 @@
 .title {
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 0.5625rem;
   align-items: center;
   justify-content: flex-start;
   align-self: stretch;
@@ -66,7 +66,7 @@
   justify-content: center;
 }
 .target_purpose {
-  padding: 20px 0px 20px 0px;
+  padding: 1.25rem 0px 1.25rem 0px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -81,21 +81,21 @@
     rgba(255, 255, 255, 0.3) 0%,
     rgba(255, 255, 255, 0.2) 100%
   );
-  border-radius: 20px;
+  border-radius: 1.25rem;
   border-width: 3px;
   border-style: solid;
   border: none;
   border-image: transparent;
   border-image-slice: 1;
-  padding: 39px 42px 39px 42px;
+  padding: 2.4375rem 2.625rem 2.4375rem 2.625rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   align-self: stretch;
   flex: 1;
-  height: 400px;
-  max-width: 417px;
+  height: 25rem;
+  max-width: 26.0625rem;
   margin: 0 auto;
 
   position: relative;
@@ -109,7 +109,7 @@
   color: var(--font-color-60, #363d6c);
   text-align: left;
   font-family: "Inter-Bold", sans-serif;
-  font-size: 48px;
+  font-size: 3rem;
   line-height: 140%;
   letter-spacing: -0.02em;
   font-weight: 700;
@@ -121,7 +121,7 @@
 .ex_div {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 0.1875rem;
   align-items: flex-start;
   justify-content: flex-start;
   align-self: stretch;
@@ -132,7 +132,7 @@
   color: #7b83b1;
   text-align: left;
   font-family: "Inter-SemiBold", sans-serif;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 140%;
   letter-spacing: -0.02em;
   font-weight: 600;
@@ -146,7 +146,7 @@
   color: #7b83b1;
   text-align: left;
   font-family: "Inter-SemiBold", sans-serif;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 140%;
   letter-spacing: -0.02em;
   font-weight: 600;
@@ -159,7 +159,7 @@
 .input {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 0.4375rem;
   align-items: flex-start;
   justify-content: flex-start;
   align-self: stretch;
@@ -170,7 +170,7 @@
   color: var(--font-color-40, #363d6c);
   text-align: left;
   font-family: "Inter-Bold", sans-serif;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 140%;
   letter-spacing: -0.02em;
   font-weight: 700;

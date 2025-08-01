@@ -17,7 +17,7 @@
 }
 .popupContainer {
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 29px;
@@ -31,7 +31,7 @@
 }
 .iconBackground {
   background: #fee102;
-  border-radius: 93px;
+  border-radius: 5.8125rem;
   padding: 46px 84px 46px 84px;
   display: flex;
   flex-direction: row;
@@ -86,7 +86,7 @@
 }
 .defaultButton {
   background: var(--netural-white, #ffffff);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   border-style: solid;
   border-color: var(--font-color-50, #4b527e);
   border-width: 1px;

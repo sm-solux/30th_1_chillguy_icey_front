@@ -6,8 +6,10 @@ import memo_save from "../../assets/memo_save.svg";
 import { fetchMemoDetail, saveMemo } from "../../util/BoardDataAPI";
 
 const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
+  // state: 메모 내용 저장
   const [text, setText] = useState("");
 
+  // 기존 메모 내용 불러오기
   useEffect(() => {
     if (!teamId || !editingMemo?.memoId) {
       setText("");
@@ -26,6 +28,7 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
     loadMemo();
   }, [editingMemo, teamId]);
 
+  // 글자 수/줄 수 제한
   const handleChange = (e) => {
     const input = e.target.value;
 
@@ -37,6 +40,7 @@ const MemoEdit = ({ teamId, editingMemo, onSave, onClose }) => {
     setText(input);
   };
 
+  // 저장 버튼 클릭
   const handleSave = async () => {
     if (!text.trim()) return;
 

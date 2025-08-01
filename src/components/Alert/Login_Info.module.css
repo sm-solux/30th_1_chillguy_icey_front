@@ -8,7 +8,7 @@
     rgba(75, 82, 126, 0.2) 0%,
     rgba(75, 82, 126, 0.1) 100%
   );
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 7px;
   display: flex;
   flex-direction: row;
@@ -46,7 +46,7 @@
     rgba(75, 82, 126, 0.2) 0%,
     rgba(75, 82, 126, 0.1) 100%
   );
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 9px;
   display: flex;
   flex-direction: row;
@@ -82,7 +82,7 @@
     rgba(75, 82, 126, 0.2) 0%,
     rgba(75, 82, 126, 0.1) 100%
   );
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 6px 7px 6px 7px;
   display: flex;
   flex-direction: row;
@@ -112,7 +112,7 @@
   padding: 0; /* 불필요한 패딩 제거 */
 }
 .userInfoWrapper {
-  border-radius: 20px;
+  border-radius: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -133,7 +133,7 @@
   align-items: center;
   padding: 9px 12px;
   border: none;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   background: linear-gradient(
     180deg,
     rgba(75, 82, 126, 0.2) 0%,
@@ -241,7 +241,7 @@
 }
 .linkedAccountInner {
   background: #ffffff;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   padding: 11px 89px 11px 89px;
   display: flex;
   flex-direction: column;
