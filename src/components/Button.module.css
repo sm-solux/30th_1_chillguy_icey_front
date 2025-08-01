@@ -3,7 +3,7 @@
   background-color: #ffffff;
   cursor: pointer;
   border: none;
-  border-radius: 1.25rem;
+  border-radius: 20px;
   width: 5rem;
   height: 3.125rem;
   padding: 0.625rem 0.3125rem;
@@ -162,7 +162,6 @@
 .Button_disabled {
   cursor: auto;
 }
-
 /* 330x50 흰색 버튼 */
 .Button_longdisabled {
   width: 330px;

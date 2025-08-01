@@ -73,12 +73,8 @@
   background: #ffffff;
 
   border-radius: 0.625rem;
-<<<<<<< HEAD
-  padding: 0.4375rem 1.3125rem 0.4375rem 1.3125rem;
-=======
 
-  padding: 0.4375rem 1.3125rem;
->>>>>>> 2ca2290 (지금까지 수정사항 전부 커밋)
+  padding: 0.4375rem 1.3125rem 0.4375rem 1.3125rem;
 
   display: flex;
   flex-direction: row;

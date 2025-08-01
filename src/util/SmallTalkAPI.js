@@ -56,7 +56,6 @@ export const editSmallTalkQuestions = async (listId, data, token) => {
 
 // 새로운 스몰톡 저장
 export const saveSmallTalk = async (data, token) => {
-  console.log("저장되는 거 확인", data);
   return axios.post(`${BASE_URL}/save`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });

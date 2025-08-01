@@ -131,19 +131,7 @@
     rgba(255, 255, 255, 0.3) 0%,
     rgba(255, 255, 255, 0.2) 100%
   );
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2ca2290 (지금까지 수정사항 전부 커밋)
-
   border-radius: 1.25rem;
-=======
-  border-radius: 20px;
->>>>>>> 3d9ac38 (css update)
-=======
-  border-radius: 1.25rem;
->>>>>>> 79c519f (update css)
   border-width: 1px;
   border-style: solid;
   border-image: linear-gradient(

@@ -214,7 +214,6 @@ function EditSmall() {
       // 현재 화면에 표시되는 AI 질문과 사용자 질문을 모두 포함
       const allCurrentQuestionsForNewSave = [
         ...currentDisplayedApiQuestions,
-        ...availableReplacementPool, // ✅ 교체된 AI 질문들
         ...userQuestions,
       ];
 
@@ -225,17 +224,8 @@ function EditSmall() {
           tip: q.tip || "",
           answer: q.answer || "",
           questionType: q.questionType, // 이미 결정된 questionType 사용
-          show: q.show !== undefined ? q.show : true,
         });
       });
-
-      console.log("전체 질문 수:", allCurrentQuestionsForNewSave.length);
-      console.table(
-        allCurrentQuestionsForNewSave.map((q) => ({
-          q: q.question,
-          show: q.show,
-        })),
-      );
 
       // 백엔드 API 스키마에 따라 smallTalks 배열이 비어있으면 400 Bad Request가 발생할 수 있습니다.
       if (finalSmallTalksForPayload.length === 0) {
@@ -248,7 +238,6 @@ function EditSmall() {
           tip: "",
           answer: "",
           questionType: "AI",
-          show: true,
         });
       }
 
@@ -318,7 +307,6 @@ function EditSmall() {
           tip: currentQ.tip || "",
           answer: currentQ.answer || "",
           questionType: currentQ.questionType,
-          show: currentQ.show !== undefined ? currentQ.show : true,
         });
       });
 

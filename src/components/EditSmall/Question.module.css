@@ -6,7 +6,6 @@
   background: #ffffff;
   border-radius: 1.25rem;
   padding: 1.25rem;
-
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
@@ -64,7 +63,6 @@
   background: #e4f0ff;
   border-radius: 1.25rem;
   padding: 1.25rem;
-
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
@@ -160,9 +158,7 @@
   );
 
   border-radius: 1.25rem;
-
   padding: 1.25rem 2.5rem 1.25rem 2.5rem;
-
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -364,7 +360,6 @@
   background: #597edb;
   border-radius: 1.25rem;
   padding: 0.6875rem 8.875rem 0.6875rem 8.875rem;
-
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
@@ -389,9 +384,7 @@
   background: #ff4f49;
 
   border-radius: 1.25rem;
-
   padding: 0.6875rem 8.875rem 0.6875rem 8.875rem;
-
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
@@ -406,7 +399,6 @@
   background: #ffffff;
   border-radius: 1.25rem;
   padding: 0.4375rem 1.25rem 0.4375rem 1.25rem;
-
   display: flex;
   flex-direction: row;
   gap: 1.25rem;
@@ -437,7 +429,6 @@
   background: #ffffff;
   border-radius: 1.25rem;
   padding: 0.6875rem 8.875rem 0.6875rem 8.875rem;
-
   display: flex;
   flex-direction: row;
   gap: 0.5rem;

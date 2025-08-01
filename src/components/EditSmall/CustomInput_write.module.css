@@ -3,19 +3,10 @@
   box-sizing: border-box;
 }
 .writeCardContainer {
-<<<<<<< HEAD
-  background: var(--netural-white, #ffffff);
-  border-radius: 1.25rem;
-  padding: 20px;
-=======
   background: #ffffff;
   border-radius: 1.25rem;
   padding: 1.25rem;
-<<<<<<< HEAD
->>>>>>> 3d9ac38 (css update)
-=======
 
->>>>>>> 2ca2290 (지금까지 수정사항 전부 커밋)
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -74,19 +65,10 @@
 }
 
 .buttonColorEnabled {
-<<<<<<< HEAD
-  background: var(--primary-color-50, #597edb);
-  border-radius: 1.25rem;
-  padding: 11px 142px 11px 142px;
-=======
   background: #597edb;
   border-radius: 1.25rem;
   padding: 0.6875rem 8.875rem 0.6875rem 8.875rem;
-<<<<<<< HEAD
->>>>>>> 3d9ac38 (css update)
-=======
 
->>>>>>> 2ca2290 (지금까지 수정사항 전부 커밋)
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
@@ -108,22 +90,9 @@
   position: relative;
 }
 .buttonBlackCancel {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  background: var(--netural-white, #ffffff);
-=======
   background: #ffffff;
 
->>>>>>> 2ca2290 (지금까지 수정사항 전부 커밋)
   border-radius: 1.25rem;
-=======
-  background: #ffffff;
-<<<<<<< HEAD
-  border-radius: 20px;
->>>>>>> 3d9ac38 (css update)
-=======
-  border-radius: 1.25rem;
->>>>>>> 79c519f (update css)
   border-style: solid;
   border-color: #4b527e;
   border-width: 1px;

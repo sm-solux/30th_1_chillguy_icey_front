@@ -127,7 +127,6 @@ const SmallTalk = () => {
       await deleteSmallTalkList(listId, token);
       console.log(`스몰톡 ID ${listId} 삭제 성공`);
       alert("스몰톡이 성공적으로 삭제되었습니다.");
-
       fetchSmallTalkList();
     } catch (error) {
       console.error(`스몰톡 ID ${listId} 삭제 실패:`, error);
@@ -198,7 +197,6 @@ const SmallTalk = () => {
         ...selectedSmallTalkDetail.smallTalks
           .filter((q) => q.questionType === "AI" || q.answer || q.tip)
           .slice(0, QUESTIONS_PER_PREVIEW),
-
         ...selectedSmallTalkDetail.smallTalks.filter(
           (q) => q.questionType === "USER" || (!q.answer && !q.tip),
         ),
