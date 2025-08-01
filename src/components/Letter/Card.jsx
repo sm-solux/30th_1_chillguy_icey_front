@@ -48,7 +48,7 @@ const Card = ({
     회색: 10,
   };
 
-  const accessoryMap = { 동물: "animal", 리본: "ribbon", 별: "star" };
+  const accessoryMap = { Basic: "animal", Ribbon: "ribbon", Star: "star" };
 
   const animalKey = animalMap[data.animal] || "pig";
   const colorKey = colorMap[data.profileColor] || "9";

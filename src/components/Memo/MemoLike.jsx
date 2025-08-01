@@ -27,7 +27,7 @@ const MemoLike = ({ users = [] }) => {
     회색: 10,
   };
 
-  const accessoryMap = { 동물: "animal", 리본: "ribbon", 별: "star" };
+  const accessoryMap = { Basic: "animal", Ribbon: "ribbon", Star: "star" };
 
   return (
     <div className={st.MemoLike}>
