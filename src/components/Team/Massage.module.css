@@ -37,7 +37,7 @@
   background: var(--Primary-Color-20, #afcdff);
   z-index: 99;
   position: absolute;
-  top: 40px;
+  top: 2.5rem;
   left: 0;
   right: 0;
   bottom: 0;
