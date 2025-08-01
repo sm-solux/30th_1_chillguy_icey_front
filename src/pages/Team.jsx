@@ -344,9 +344,7 @@ const Team = () => {
         <section className={st.Team_section1}>
           <div
             className={`${st.box} ${st.team_board_box} ${
-              isBoardExpanded && selectedTeam?.confirmedDate === null
-                ? st.promExpandedBoard
-                : ""
+              isBoardExpanded ? st.promExpandedBoard : ""
             }`}
           >
             {selectedTeam && teams !== 401 ? (
