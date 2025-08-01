@@ -33,14 +33,14 @@ const CardM = ({ card, team }) => {
     돼지: "pig",
     토끼: "rabbit",
   };
-  const accessoryMap = { 동물: "animal", 리본: "ribbon", 별: "star" };
+  const accessoryMap = { BASIC: "animal", RIBBON: "ribbon", STAR: "star" };
+  const images = import.meta.glob("/src/assets/animal/*.svg", { eager: true });
 
-  const images = import.meta.glob("../../assets/animal/*.svg", { eager: true });
   const pickAnimalImg = () => {
     if (!card || !card.animal || !card.profileColor) return null;
 
     const fileName = `${accessoryMap[card.accessory]}_${animalMap[card.animal]}${colorMap[card.profileColor]}.svg`;
-    const imagePath = images[`../../assets/animal/${fileName}`];
+    const imagePath = images[`/src/assets/animal/${fileName}`];
 
     return (
       <div className={st.cardM_img_background}>

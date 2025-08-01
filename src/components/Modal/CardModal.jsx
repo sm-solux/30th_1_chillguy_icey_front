@@ -65,6 +65,8 @@ const CardModal = ({
     } else {
       setAdjective(defaultValue?.adjective || "");
     }
+
+    setAccessory(reverseAccessoryMap[defaultValue?.accessory] || "BASIC");
   }, [defaultValue]);
 
   const handleSave = () => {
@@ -72,6 +74,7 @@ const CardModal = ({
     if (
       !adjective.trim() ||
       !animal.trim() ||
+      !accessory.trim() ||
       !mbti.trim() ||
       !hobby.trim() ||
       !secretTip.trim() ||
@@ -84,7 +87,15 @@ const CardModal = ({
     // 에러 메시지 초기화
     setErrorMsg("");
 
-    const cardData = { adjective, animal, mbti, hobby, secretTip, tmi };
+    const cardData = {
+      adjective,
+      animal,
+      accessory,
+      mbti,
+      hobby,
+      secretTip,
+      tmi,
+    };
     if (onSave) onSave(cardData);
   };
 
@@ -122,7 +133,7 @@ const CardModal = ({
     회색: 10,
   };
 
-  const accessoryMap = { 동물: "animal", 리본: "ribbon", 별: "star" };
+  const accessoryMap = { BASIC: "animal", RIBBON: "ribbon", STAR: "star" };
 
   // animal, color 키 변환
   const animalKey = animalMap[animal] || "pig";
@@ -132,18 +143,28 @@ const CardModal = ({
   // 여기서 실제 사용할 accessoryKey는 영어값으로 변환
   const accessoryKey = accessoryMap[accessory] || "animal";
 
-  // accessories 배열은 한글 키 기준으로 관리 (상태값과 일치시키기 위함)
-  const accessories = ["동물", "리본", "별"];
+  const accessories = ["BASIC", "RIBBON", "STAR"];
+
+  const reverseAccessoryMap = {
+    animal: "BASIC",
+    ribbon: "RIBBON",
+    star: "STAR",
+  };
 
   const handleAccessoryChange = (direction) => {
-    const currentIndex = accessories.indexOf(accessory); // 현재 accessory는 한글 키(동물, 리본, 별)
+    const currentIndex = accessories.indexOf(accessory);
+    if (currentIndex === -1) {
+      setAccessory("BASIC");
+      return;
+    }
+
     let nextIndex;
     if (direction === "left") {
       nextIndex = (currentIndex - 1 + accessories.length) % accessories.length;
     } else if (direction === "right") {
       nextIndex = (currentIndex + 1) % accessories.length;
     }
-    setAccessory(accessories[nextIndex === -1 ? 0 : nextIndex]); // 한글 키 저장
+    setAccessory(accessories[nextIndex]);
   };
 
   // getAnimalImage 호출 시에는 accessoryKey (영어 값) 사용
