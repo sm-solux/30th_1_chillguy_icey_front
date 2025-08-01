@@ -47,10 +47,13 @@ const LetterModal = ({ card, teamId, onClose, sender, onSendSuccess }) => {
     회색: 10,
   };
 
-  // 이미지 경로 받아오기
-  const animalKey = animalMap[card.animal] || "default";
-  const colorKey = colorMap[card.profileColor] || "default";
-  const animalImageSrc = getAnimalImage(animalKey, colorKey);
+  const accessoryMap = { 동물: "animal", 리본: "ribbon", 별: "star" };
+
+  const animalKey = animalMap[card.animal] || "pig";
+  const colorKey = colorMap[card.profileColor] || "9";
+  const accessoryKey = accessoryMap[card.accessory] || "animal";
+
+  const animalImageSrc = getAnimalImage(animalKey, colorKey, accessoryKey);
 
   const handleSendClick = async () => {
     if (!message.trim()) return;

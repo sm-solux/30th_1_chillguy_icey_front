@@ -27,12 +27,19 @@ const MemoLike = ({ users = [] }) => {
     회색: 10,
   };
 
+  const accessoryMap = { 동물: "animal", 리본: "ribbon", 별: "star" };
+
   return (
     <div className={st.MemoLike}>
       {users.map((data, idx) => {
         const animalKey = animalMap[data.animal] || "pig";
         const colorKey = colorMap[data.profileColor] || "9";
-        const animalImageSrc = getAnimalImage(animalKey, colorKey);
+        const accessoryKey = accessoryMap[data.accessory] || "animal";
+        const animalImageSrc = getAnimalImage(
+          animalKey,
+          colorKey,
+          accessoryKey,
+        );
 
         return (
           <img

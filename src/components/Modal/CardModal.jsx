@@ -27,7 +27,8 @@ const CardModal = ({
   // state: 명함 추가 시 작성한 내용(CardModal)
   const [adjective, setAdjective] = useState("");
   const [animal, setAnimal] = useState("");
-  const [profileColor, setProfileColor] = useState("1"); // 나중에 삭제
+  const [profileColor, setProfileColor] = useState("");
+  const [accessory, setAccessory] = useState("");
   const [mbti, setMbti] = useState("");
   const [hobby, setHobby] = useState("");
   const [secretTip, setSecretTip] = useState("");
@@ -41,6 +42,7 @@ const CardModal = ({
     setAnimal(defaultValue?.animal || "");
     setMbti(defaultValue?.mbti || "");
     setProfileColor(defaultValue?.profileColor || "9");
+    setAccessory(defaultValue?.accessory || "animal");
     setHobby(defaultValue?.hobby || "");
     setSecretTip(defaultValue?.secretTip || "");
     setTmi(defaultValue?.tmi || "");
@@ -120,10 +122,32 @@ const CardModal = ({
     회색: 10,
   };
 
-  // 이미지 경로 받아오기
+  const accessoryMap = { 동물: "animal", 리본: "ribbon", 별: "star" };
+
+  // animal, color 키 변환
   const animalKey = animalMap[animal] || "pig";
   const colorKey = colorMap[profileColor] || "9";
-  const animalImageSrc = getAnimalImage(animalKey, colorKey);
+
+  // accessory 상태는 한글 키(동물, 리본, 별)를 저장함
+  // 여기서 실제 사용할 accessoryKey는 영어값으로 변환
+  const accessoryKey = accessoryMap[accessory] || "animal";
+
+  // accessories 배열은 한글 키 기준으로 관리 (상태값과 일치시키기 위함)
+  const accessories = ["동물", "리본", "별"];
+
+  const handleAccessoryChange = (direction) => {
+    const currentIndex = accessories.indexOf(accessory); // 현재 accessory는 한글 키(동물, 리본, 별)
+    let nextIndex;
+    if (direction === "left") {
+      nextIndex = (currentIndex - 1 + accessories.length) % accessories.length;
+    } else if (direction === "right") {
+      nextIndex = (currentIndex + 1) % accessories.length;
+    }
+    setAccessory(accessories[nextIndex === -1 ? 0 : nextIndex]); // 한글 키 저장
+  };
+
+  // getAnimalImage 호출 시에는 accessoryKey (영어 값) 사용
+  const animalImageSrc = getAnimalImage(animalKey, colorKey, accessoryKey);
 
   return (
     <div className={st.Overlay}>
@@ -143,7 +167,10 @@ const CardModal = ({
                 {adjective} {animal}
               </div>
               <div className={st.Image_wrapper}>
-                <button className={st.Arrow_button}>
+                <button
+                  className={st.Arrow_button}
+                  onClick={() => handleAccessoryChange("left")}
+                >
                   <img
                     className={st.left_right}
                     src={cardmodal_left}
@@ -155,10 +182,13 @@ const CardModal = ({
                   src={animalImageSrc}
                   alt={`${animal} image`}
                   onError={(e) => {
-                    e.currentTarget.src = exPig; // 디폴트 이미지 나중에 변경
+                    e.currentTarget.src = exPig;
                   }}
                 />
-                <button className={st.Arrow_button}>
+                <button
+                  className={st.Arrow_button}
+                  onClick={() => handleAccessoryChange("right")}
+                >
                   <img
                     className={st.left_right}
                     src={cardmodal_right}
@@ -166,7 +196,7 @@ const CardModal = ({
                   />
                 </button>
               </div>
-              <div className={st.Info_text}>Team</div>
+              <div className={st.Info_text}></div>
             </div>
           </div>
 

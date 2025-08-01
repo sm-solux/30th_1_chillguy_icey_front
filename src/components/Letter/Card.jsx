@@ -47,9 +47,14 @@ const Card = ({
     하양: 9,
     회색: 10,
   };
-  const animalKey = animalMap[data.animal] || "default";
-  const colorKey = colorMap[data.profileColor] || "default";
-  const animalImageSrc = getAnimalImage(animalKey, colorKey);
+
+  const accessoryMap = { 동물: "animal", 리본: "ribbon", 별: "star" };
+
+  const animalKey = animalMap[data.animal] || "pig";
+  const colorKey = colorMap[data.profileColor] || "9";
+  const accessoryKey = accessoryMap[data.accessory] || "animal";
+
+  const animalImageSrc = getAnimalImage(animalKey, colorKey, accessoryKey);
 
   // 해당 명함을 사용 중인 팀 목록
   // "칠가이 외 3" 형식으로 표시
