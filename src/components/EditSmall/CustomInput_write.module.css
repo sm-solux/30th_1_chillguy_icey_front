@@ -9,7 +9,7 @@
   padding: 20px;
 =======
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 1.25rem;
 >>>>>>> 3d9ac38 (css update)
   display: flex;
@@ -76,7 +76,7 @@
   padding: 11px 142px 11px 142px;
 =======
   background: #597edb;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 0.6875rem 8.875rem 0.6875rem 8.875rem;
 >>>>>>> 3d9ac38 (css update)
   display: flex;
@@ -105,8 +105,12 @@
   border-radius: 1.25rem;
 =======
   background: #ffffff;
+<<<<<<< HEAD
   border-radius: 20px;
 >>>>>>> 3d9ac38 (css update)
+=======
+  border-radius: 1.25rem;
+>>>>>>> 79c519f (update css)
   border-style: solid;
   border-color: #4b527e;
   border-width: 1px;

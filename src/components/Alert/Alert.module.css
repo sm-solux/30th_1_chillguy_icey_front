@@ -9,10 +9,14 @@
     rgba(75, 82, 126, 0.1) 100%
   );
 <<<<<<< HEAD
+<<<<<<< HEAD
   border-radius: 1.25rem;
   padding: 0.8125rem 1.1875rem 0.8125rem 1.1875rem;
 =======
   border-radius: 20px;
+=======
+  border-radius: 1.25rem;
+>>>>>>> 79c519f (update css)
   padding: 0.8125rem 1.1875rem 0.8125rem 1.1875rem; /* 0.8125rem = 13px, 1.1875rem = 19px */
 >>>>>>> d84c8c2 (alert css update)
   display: flex;
