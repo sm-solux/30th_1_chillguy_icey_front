@@ -33,6 +33,7 @@
   background: #fee102;
 
   border-radius: 5.8125rem;
+
   padding: 2.875rem 5.25rem 2.875rem 5.25rem;
 
   display: flex;
@@ -88,6 +89,7 @@
 }
 .defaultButton {
   background: #ffffff;
+
   border-radius: 1.25rem;
 
   border-style: solid;

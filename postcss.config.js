@@ -4,6 +4,7 @@ export default {
       rootValue: 16, // 기준 폰트 크기 (1rem = 16px)
       unitPrecision: 5, // 소수점 자릿수
       propList: [
+<<<<<<< HEAD
         // "padding",
         // "margin",
         // "font-size",
@@ -11,6 +12,15 @@ export default {
         // "width",
         // "gap",
         // "max-width",
+=======
+        "padding",
+        "margin",
+        "font-size",
+        "height",
+        "width",
+        "gap",
+        "max-width",
+>>>>>>> 2ca2290 (지금까지 수정사항 전부 커밋)
         "border-radius",
       ], // 어떤 CSS 속성을 변환할지 (모두 변환)
       selectorBlackList: [], // 변환 제외할 class (예: ['.no-rem'])

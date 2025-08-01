@@ -30,8 +30,13 @@
   padding: 0.5rem; /* 0.5rem */
   display: flex;
   align-items: center;
+<<<<<<< HEAD
 
   gap: 0.5rem;
+=======
+  gap: 0.5rem; /* 0.5rem */
+
+>>>>>>> 2ca2290 (지금까지 수정사항 전부 커밋)
   border-radius: 1.40625rem;
 
   background: #fff;

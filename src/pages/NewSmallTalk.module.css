@@ -77,15 +77,22 @@
 <<<<<<< HEAD
 
   border-radius: 1.25rem;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2ca2290 (지금까지 수정사항 전부 커밋)
   border-width: 3px;
   border-style: solid;
   border: none;
   border-image: transparent;
   border-image-slice: 1;
 
+<<<<<<< HEAD
 =======
   border-radius: 1.25rem;
 >>>>>>> 79c519f (update css)
+=======
+>>>>>>> 2ca2290 (지금까지 수정사항 전부 커밋)
   padding: 2.4375rem 2.625rem 2.4375rem 2.625rem;
   display: flex;
   flex-direction: column;
