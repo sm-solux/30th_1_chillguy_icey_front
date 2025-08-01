@@ -24,7 +24,7 @@
   position: absolute;
 }
 
-.infoRect:hover {
+.infoBox:hover .infoRect {
   border-radius: 20px;
   background: radial-gradient(
     79.17% 56.79% at 54.85% 53.15%,
@@ -33,7 +33,4 @@
     rgba(141, 176, 240, 0) 100%
   );
   filter: blur(2px);
-}
-
-.infoHoverBox:hover {
 }

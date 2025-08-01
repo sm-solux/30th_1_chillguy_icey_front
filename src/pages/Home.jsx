@@ -87,7 +87,8 @@ const Home = () => {
             </div>
           </div>
           <div className={st2.infoBox}>
-            <div className={st2.infoRect}>안녕</div>
+            <div className={st2.infoRect}></div>
+            <div>안녕</div>
           </div>
         </div>
         {showPopup && <AlertLoginDialog onClose={closePopup} />}
