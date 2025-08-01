@@ -62,6 +62,7 @@ const CardM = ({ card, team }) => {
         <img className={st.cardM_img} src={pickAnimalImg()} alt="" />
       </div> */}
         {pickAnimalImg()}
+        <div className={st.cardM_vline}></div>
         <div className={st.cardM_board}>
           <div className={st.cardM_text}>{card.nickname}</div>
           <div className={st.cardM_text}>{card.mbti}</div>

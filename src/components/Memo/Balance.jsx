@@ -47,8 +47,8 @@ const Balance = ({
     const fetchVotes = async () => {
       try {
         const result = await getVoteResult(gameId); // totalVotes 반환하는 함수
-        setTotalVotes(result.totalVotes);
-        if (result.totalVotes >= teamMemberCount) {
+        setTotalVotes(result.data.totalVotes);
+        if (result.data.totalVotes >= teamMemberCount) {
           setIsVotingClosed(true);
         }
       } catch (err) {
@@ -70,6 +70,12 @@ const Balance = ({
         await onVote(gameId, selectedOption);
         setHasVoted(true);
         setVotedOption(option);
+
+        const result = await getVoteResult(gameId);
+        setTotalVotes(result.data.totalVotes);
+        if (result.data.totalVotes >= teamMemberCount) {
+          setIsVotingClosed(true);
+        }
       }
     } catch (err) {
       alert(err.message || "투표 중 오류가 발생했습니다.");
