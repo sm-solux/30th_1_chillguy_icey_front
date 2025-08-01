@@ -47,7 +47,7 @@ const LetterModal = ({ card, teamId, onClose, sender, onSendSuccess }) => {
     회색: 10,
   };
 
-  const accessoryMap = { Basic: "animal", Ribbon: "ribbon", Star: "star" };
+  const accessoryMap = { BASIC: "animal", RIBBON: "ribbon", STAR: "star" };
 
   const animalKey = animalMap[card.animal] || "pig";
   const colorKey = colorMap[card.profileColor] || "9";

@@ -72,6 +72,7 @@ const CardModal = ({
     if (
       !adjective.trim() ||
       !animal.trim() ||
+      !accessory.trim() ||
       !mbti.trim() ||
       !hobby.trim() ||
       !secretTip.trim() ||
@@ -84,7 +85,15 @@ const CardModal = ({
     // 에러 메시지 초기화
     setErrorMsg("");
 
-    const cardData = { adjective, animal, mbti, hobby, secretTip, tmi };
+    const cardData = {
+      adjective,
+      animal,
+      accessory,
+      mbti,
+      hobby,
+      secretTip,
+      tmi,
+    };
     if (onSave) onSave(cardData);
   };
 
@@ -122,7 +131,7 @@ const CardModal = ({
     회색: 10,
   };
 
-  const accessoryMap = { Basic: "animal", Ribbon: "ribbon", Star: "star" };
+  const accessoryMap = { BASIC: "animal", RIBBON: "ribbon", STAR: "star" };
 
   // animal, color 키 변환
   const animalKey = animalMap[animal] || "pig";
