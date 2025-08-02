@@ -76,7 +76,6 @@ const IcyLogin = () => {
             <img className="google-img" src={google} alt="구글 로그인" />
             <div className="google-text">구글로 시작하기</div>
           </button>
-          <button onClick={handleLogin}>테스트</button>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import st from "./EditSmall.module.css";
 import {
   deleteSmallTalkTalkItem,
@@ -65,6 +65,28 @@ function EditSmall() {
   // 스몰톡 로드 시 초기 질문 상태를 저장하여 변경 사항을 추적할 수 있도록 함
   const [originalQuestionsState, setOriginalQuestionsState] = useState([]);
 
+  const hasAutoSavedRef = useRef(false); // 🚨 저장 여부를 추적하는 ref
+
+  useEffect(() => {
+    const isNewSmallTalk =
+      smallTalk?.id === null || smallTalk?.id === undefined;
+
+    const hasValidContent =
+      title.trim() !== "" &&
+      (currentDisplayedApiQuestions.length > 0 || userQuestions.length > 0);
+
+    if (
+      token &&
+      isNewSmallTalk &&
+      hasValidContent &&
+      !hasAutoSavedRef.current // ✅ 한 번도 저장 안했을 때만
+    ) {
+      console.log("🚀 최초 진입한 새 스몰톡 → 자동 저장 시작");
+      hasAutoSavedRef.current = true; // ✅ 저장 후 다시 저장되지 않도록 설정
+      handleSaveAllChanges();
+    }
+  }, [token, smallTalk, title, currentDisplayedApiQuestions, userQuestions]);
+
   // smallTalk 데이터가 변경될 때마다 제목과 질문들을 초기화합니다.
   useEffect(() => {
     if (smallTalk) {
@@ -77,10 +99,8 @@ function EditSmall() {
       if (Array.isArray(smallTalk.smallTalks)) {
         const initialCombinedQuestions = smallTalk.smallTalks.map((q) => ({
           ...q,
-          id:
-            q.id === null || q.id === undefined || q.id === ""
-              ? crypto.randomUUID()
-              : q.id,
+          id: q.id,
+
           questionType: q.questionType || (q.answer || q.tip ? "AI" : "SELF"),
         }));
 
@@ -132,17 +152,13 @@ function EditSmall() {
       alert("제목을 입력해주세요.");
       return;
     }
-    // 제목 길이 제한 추가
-    if (title.length > 5) {
-      alert("제목은 5글자 이하로 입력해주세요.");
-      return;
-    }
+
     if (!token) {
       console.error("토큰이 없습니다. 제목을 저장할 수 없습니다.");
       return;
     }
     if (smallTalk?.id === null || smallTalk?.id === undefined) {
-      alert("스몰톡 ID가 없어 제목을 업데이트할 수 없습니다.");
+      alert("제목을 저장하려면 먼저 '저장하기'를 눌러 전체 저장해주세요.");
       console.error("스몰톡 ID가 없어 제목 업데이트 불가");
       return;
     }
@@ -174,10 +190,6 @@ function EditSmall() {
       return;
     }
     // 제목 길이 제한 추가
-    if (title.length > 5) {
-      alert("제목은 5글자 이하로 입력해주세요.");
-      return;
-    }
 
     if (!token) {
       console.error("토큰이 없습니다. 저장할 수 없습니다.");
@@ -451,32 +463,37 @@ function EditSmall() {
         <div className={st.headerContent}>
           <img className={st.snowIcon} src={Snow} alt="snow" />
           <div className={st.dateText}>{formatDate(smallTalk?.createdAt)}</div>
-          <div className={st.titleEditContainer}>
-            <div className={st.titleInputWrapper}>
-              {isEditing ? (
-                <>
-                  <input
-                    className={st.titleInput}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="제목 입력.."
-                    spellCheck={false}
-                    maxLength={6} // 제목 길이 제한 추가
-                  />
-                  <div className={st.titleUnderline}></div>
-                </>
-              ) : (
-                <div className={st.smallTalkTitle}>{title}</div>
-              )}
+          {token ? (
+            <div className={st.titleEditContainer}>
+              <div className={st.titleInputWrapper}>
+                {isEditing ? (
+                  <>
+                    <input
+                      className={st.titleInput}
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      placeholder="제목 입력.."
+                      spellCheck={false}
+                    />
+                    <div className={st.titleUnderline}></div>
+                  </>
+                ) : (
+                  <div className={st.smallTalkTitle}>{title}</div>
+                )}
+              </div>
+              <img
+                className={st.editSaveIcon}
+                src={isEditing ? save : edit}
+                alt={isEditing ? "save" : "edit"}
+                onClick={isEditing ? handleSaveTitleOnly : onEdit} // 제목 저장 아이콘 클릭 핸들러 변경
+                style={{ cursor: "pointer" }}
+              />
             </div>
-            <img
-              className={st.editSaveIcon}
-              src={isEditing ? save : edit}
-              alt={isEditing ? "save" : "edit"}
-              onClick={isEditing ? handleSaveTitleOnly : onEdit} // 제목 저장 아이콘 클릭 핸들러 변경
-              style={{ cursor: "pointer" }}
-            />
-          </div>
+          ) : (
+            <div className={st.titleEditContainer}>
+              <div></div>
+            </div>
+          )}
 
           <div className={st.targetText}>{smallTalk?.target}</div>
           <div className={st.purposeText}>{smallTalk?.purpose}</div>

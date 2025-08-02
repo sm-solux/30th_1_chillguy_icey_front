@@ -83,6 +83,22 @@ const Team = () => {
   // 로딩중 판단 state
   const [isLoading, setIsLoading] = useState(true);
 
+  // 일정 시간 이상 로딩되면 자동으로 홈페이지로 이동
+  useEffect(() => {
+    let timeoutId;
+
+    if (isLoading) {
+      timeoutId = setTimeout(() => {
+        console.warn("로딩 지연으로 홈페이지로 이동합니다.");
+        alert("정보를 불러올 수 없습니다.");
+
+        navigate("/notfound", { replace: true });
+      }, 10000); // ⏱️ 10초
+    }
+
+    return () => clearTimeout(timeoutId); // cleanup
+  }, [isLoading, navigate]);
+
   // 🔁 팀 리스트 로드
   useEffect(() => {
     const loadTeams = async () => {
