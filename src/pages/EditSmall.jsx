@@ -99,10 +99,8 @@ function EditSmall() {
       if (Array.isArray(smallTalk.smallTalks)) {
         const initialCombinedQuestions = smallTalk.smallTalks.map((q) => ({
           ...q,
-          id:
-            q.id === null || q.id === undefined || q.id === ""
-              ? crypto.randomUUID()
-              : q.id,
+          id: q.id,
+
           questionType: q.questionType || (q.answer || q.tip ? "AI" : "SELF"),
         }));
 
@@ -154,11 +152,7 @@ function EditSmall() {
       alert("제목을 입력해주세요.");
       return;
     }
-    // 제목 길이 제한 추가
-    if (title.length > 5) {
-      alert("제목은 5글자 이하로 입력해주세요.");
-      return;
-    }
+
     if (!token) {
       console.error("토큰이 없습니다. 제목을 저장할 수 없습니다.");
       return;
@@ -196,10 +190,6 @@ function EditSmall() {
       return;
     }
     // 제목 길이 제한 추가
-    if (title.length > 5) {
-      alert("제목은 5글자 이하로 입력해주세요.");
-      return;
-    }
 
     if (!token) {
       console.error("토큰이 없습니다. 저장할 수 없습니다.");
@@ -484,7 +474,6 @@ function EditSmall() {
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="제목 입력.."
                       spellCheck={false}
-                      maxLength={6} // 제목 길이 제한 추가
                     />
                     <div className={st.titleUnderline}></div>
                   </>
