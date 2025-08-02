@@ -101,7 +101,8 @@ const Balance = ({
           onClick={handleDeleteClick}
         />
       </div>
-      <img className={st.Balance_line_img} src={balance_line} alt="구분선" />
+      {/* <img className={st.Balance_line_img} src={balance_line} alt="구분선" /> */}
+      <hr />
 
       {/* 밸런스 게임 버튼 영역 */}
       <div className={st.Button_wrapper}>

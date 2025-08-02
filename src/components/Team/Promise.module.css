@@ -16,7 +16,7 @@
   aspect-ratio: 1 / 1; /* ✅ 항상 정사각형 유지 */
   background-color: #fff;
   border-radius: 1.25rem;
-  margin-left: 10px;
+  margin-left: 12px;
 }
 
 /* 텍스트 박스 (오른쪽 영역) */
