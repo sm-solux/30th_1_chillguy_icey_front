@@ -97,3 +97,14 @@ hr {
   letter-spacing: -0.02em;
   font-weight: 700;
 }
+
+.MemoLike_more {
+  margin-left: 0.3rem;
+  color: #4b527e;
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 0.75rem;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}

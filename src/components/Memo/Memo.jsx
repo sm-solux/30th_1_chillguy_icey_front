@@ -74,7 +74,12 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
           />
           {likeUsers.length > 0 && (
             <div className={st.MemoLike_container}>
-              <MemoLike users={likeUsers} />
+              <MemoLike users={likeUsers.slice(0, 3)} />
+              {likeUsers.length > 3 && (
+                <span className={st.MemoLike_more}>
+                  +{likeUsers.length - 3}
+                </span>
+              )}
             </div>
           )}
         </div>
