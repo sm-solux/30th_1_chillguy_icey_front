@@ -62,7 +62,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: 140%; /* 67.2px */
-  letter-spacing: -0.96px;
+  letter-spacing: -0.5px;
 }
 
 .promise_dday {
@@ -78,7 +78,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: 140%; /* 70px */
-  letter-spacing: -2.5px;
+  letter-spacing: 0rem;
 }
 
 .promise_time {
@@ -91,7 +91,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: 140%; /* 33.6px */
-  letter-spacing: -0.48px;
+  letter-spacing: 0rem;
 }
 
 @media (max-width: 68.125rem) {
