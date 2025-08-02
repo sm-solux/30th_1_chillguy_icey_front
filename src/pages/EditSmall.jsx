@@ -65,6 +65,24 @@ function EditSmall() {
   // 스몰톡 로드 시 초기 질문 상태를 저장하여 변경 사항을 추적할 수 있도록 함
   const [originalQuestionsState, setOriginalQuestionsState] = useState([]);
 
+  useEffect(() => {
+    const shouldAutoSave =
+      token &&
+      (!smallTalk?.id || smallTalk.id === 0) &&
+      title.trim() !== "" &&
+      (currentDisplayedApiQuestions.length > 0 || userQuestions.length > 0);
+
+    if (shouldAutoSave) {
+      // 자동 저장은 단 1번만 실행되도록 상태로 제어
+      const hasSaved = sessionStorage.getItem("hasAutoSaved");
+      if (!hasSaved) {
+        console.log("🚀 최초 생성된 스몰톡 자동 저장 실행 중...");
+        handleSaveAllChanges();
+        sessionStorage.setItem("hasAutoSaved", "true");
+      }
+    }
+  }, [token, smallTalk, title, currentDisplayedApiQuestions, userQuestions]);
+
   // smallTalk 데이터가 변경될 때마다 제목과 질문들을 초기화합니다.
   useEffect(() => {
     if (smallTalk) {
@@ -449,32 +467,38 @@ function EditSmall() {
         <div className={st.headerContent}>
           <img className={st.snowIcon} src={Snow} alt="snow" />
           <div className={st.dateText}>{formatDate(smallTalk?.createdAt)}</div>
-          <div className={st.titleEditContainer}>
-            <div className={st.titleInputWrapper}>
-              {isEditing ? (
-                <>
-                  <input
-                    className={st.titleInput}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="제목 입력.."
-                    spellCheck={false}
-                    maxLength={6} // 제목 길이 제한 추가
-                  />
-                  <div className={st.titleUnderline}></div>
-                </>
-              ) : (
-                <div className={st.smallTalkTitle}>{title}</div>
-              )}
+          {token ? (
+            <div className={st.titleEditContainer}>
+              <div className={st.titleInputWrapper}>
+                {isEditing ? (
+                  <>
+                    <input
+                      className={st.titleInput}
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      placeholder="제목 입력.."
+                      spellCheck={false}
+                      maxLength={6} // 제목 길이 제한 추가
+                    />
+                    <div className={st.titleUnderline}></div>
+                  </>
+                ) : (
+                  <div className={st.smallTalkTitle}>{title}</div>
+                )}
+              </div>
+              <img
+                className={st.editSaveIcon}
+                src={isEditing ? save : edit}
+                alt={isEditing ? "save" : "edit"}
+                onClick={isEditing ? handleSaveTitleOnly : onEdit} // 제목 저장 아이콘 클릭 핸들러 변경
+                style={{ cursor: "pointer" }}
+              />
             </div>
-            <img
-              className={st.editSaveIcon}
-              src={isEditing ? save : edit}
-              alt={isEditing ? "save" : "edit"}
-              onClick={isEditing ? handleSaveTitleOnly : onEdit} // 제목 저장 아이콘 클릭 핸들러 변경
-              style={{ cursor: "pointer" }}
-            />
-          </div>
+          ) : (
+            <div className={st.titleEditContainer}>
+              <div></div>
+            </div>
+          )}
 
           <div className={st.targetText}>{smallTalk?.target}</div>
           <div className={st.purposeText}>{smallTalk?.purpose}</div>
