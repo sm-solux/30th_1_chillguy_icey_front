@@ -93,7 +93,7 @@ const Team = () => {
         alert("정보를 불러올 수 없습니다.");
 
         navigate("/notfound", { replace: true });
-      }, 10000); // ⏱️ 10초
+      }, 30000); // ⏱️ 10초
     }
 
     return () => clearTimeout(timeoutId); // cleanup
@@ -162,6 +162,7 @@ const Team = () => {
   useEffect(() => {
     if (teams === 401) return;
     if (selectedTeam === 401) return;
+    if (teams.length === 0) setIsLoading(false);
 
     const loadTeamDetail = async () => {
       if (!selectedTeamId) return;

@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import CardList from "../components/Letter/CardList";
 import CardModal from "../components/Modal/CardModal";
 import Button from "../components/Button";
 import AlertDialog from "../components/Dialog/AlertDialog";
 import Snackbar from "../components/Snackbar/Snackbar";
+import back_arrow from "../assets/back_arrow.svg";
 
 import st from "./MyCard.module.css";
 
@@ -162,8 +164,20 @@ const MyCard = () => {
   const selectedCard =
     cardList.find((card) => card.cardId === selectedCardId) || null;
 
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
+      <div className={st.back_wrapper}>
+        <button className={st.back_button} onClick={handleGoBack}>
+          <img src={back_arrow} alt="뒤로가기" className={st.back_icon} />
+          <span className={st.back_text}>팀페이지로 돌아가기</span>
+        </button>
+      </div>
+
       <div className={st.Card_body}>
         {/* 타이틀 */}
         <div className={st.TitleSection}>

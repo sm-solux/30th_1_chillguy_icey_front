@@ -45,7 +45,10 @@ hr {
 }
 
 .MemoLike_container {
-  width: 4.75rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .Memo_like_img {
@@ -95,5 +98,14 @@ hr {
   font-size: 0.75rem;
   line-height: 140%;
   letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.MemoLike_more {
+  color: #4b527e;
+  text-align: left;
+  font-family: "Inter-Bold", sans-serif;
+  font-size: 0.75rem;
+  line-height: 140%;
   font-weight: 700;
 }
