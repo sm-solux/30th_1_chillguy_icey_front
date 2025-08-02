@@ -162,6 +162,7 @@ const Team = () => {
   useEffect(() => {
     if (teams === 401) return;
     if (selectedTeam === 401) return;
+    // if (teams.length === 0) setIsLoading(false);
 
     const loadTeamDetail = async () => {
       if (!selectedTeamId) return;
