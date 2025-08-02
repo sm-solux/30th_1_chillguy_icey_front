@@ -4,9 +4,11 @@ import hd from "./Header.module.css";
 import menu from "../assets/menu.svg";
 import Notification_box from "./Alert/Notification_box";
 import { useAuth } from "../context/AuthContext";
+import AlertLoginDialog from "./Home/AlertLoginDialog";
 
 const Header = () => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
   const sideMenuRef = useRef(null);
   const menuIconRef = useRef(null);
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ const Header = () => {
 
   const toggleSideMenu = () => {
     if (!token) {
-      alert("로그인이 필요합니다."); // ⛔ 비로그인 시 알림
+      setShowLoginAlert(true);
       return;
     }
     setIsSideMenuOpen((prev) => !prev);
@@ -42,6 +44,10 @@ const Header = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isSideMenuOpen]);
+
+  const closeLoginAlert = () => {
+    setShowLoginAlert(false);
+  };
 
   return (
     <>
@@ -75,6 +81,7 @@ const Header = () => {
         </div>
         <hr className={hd.headerLine} />
       </header>
+      {showLoginAlert && <AlertLoginDialog onClose={closeLoginAlert} />}
     </>
   );
 };
