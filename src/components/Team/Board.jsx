@@ -22,7 +22,13 @@ import {
   fetchBalanceGameResult,
 } from "../../util/BoardDataAPI";
 
-const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
+const Board = ({
+  team,
+  isBoardExpanded,
+  onToggleExpand,
+  setBoardMessage,
+  handleBasicSnackbar,
+}) => {
   const [memos, setMemos] = useState([]);
   const [editingMemo, setEditingMemo] = useState(null);
   const [isMemoEditOpen, setIsMemoEditOpen] = useState(false);
@@ -52,9 +58,13 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
 
   const openMemoEdit = (memo = null) => {
     if (!memo && isLimitReached) {
-      alert(
-        "게시판에는 메모와 밸런스 게임을 합쳐 최대 18개까지만 생성할 수 있습니다.",
-      );
+      //   alert(
+      //     "게시판에는 메모와 밸런스 게임을 합쳐 최대 18개까지만 생성할 수 있습니다.",
+      //   );
+      // setBoardMessage(
+      //   "메모와 밸런스 게임은 최대 18개까지만 생성할 수 있습니다.",
+      // );
+      // handleBasicSnackbar();
       return;
     }
     setEditingMemo(memo);
@@ -84,19 +94,27 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
       setMemos((prev) => prev.filter((memo) => memo.memoId !== memoId));
     } catch (error) {
       console.error("메모 삭제 실패", error);
-      alert("삭제에 실패했습니다. 다시 시도해주세요.");
+      // alert("삭제에 실패했습니다. 다시 시도해주세요.");
+      setBoardMessage("메모 삭제에 실패했습니다.");
+      handleBasicSnackbar();
     }
   };
 
   const handleAddBalance = async () => {
     if (isLimitReached) {
-      alert(
-        "게시판에는 메모와 밸런스 게임을 합쳐 최대 18개까지만 생성할 수 있습니다.",
+      // alert(
+      //   "게시판에는 메모와 밸런스 게임을 합쳐 최대 18개까지만 생성할 수 있습니다.",
+      // );
+      setBoardMessage(
+        "메모와 밸런스 게임은 최대 18개까지만 생성할 수 있습니다.",
       );
+      handleBasicSnackbar();
       return;
     }
     if (balanceGames.length >= 2) {
-      alert("밸런스 게임은 최대 2개까지만 생성할 수 있습니다.");
+      // alert("밸런스 게임은 최대 2개까지만 생성할 수 있습니다.");
+      setBoardMessage("밸런스 게임은 2개까지 생성 가능합니다.");
+      handleBasicSnackbar();
       return;
     }
     try {
@@ -107,7 +125,9 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
       setBalanceGames(balanceList);
     } catch (error) {
       console.error("밸런스 게임 생성 실패", error);
-      alert("밸런스 게임 생성에 실패했습니다.");
+      // alert("밸런스 게임 생성에 실패했습니다.");
+      setBoardMessage("밸런스 게임 생성에 실패했습니다.");
+      handleBasicSnackbar();
     }
   };
 
@@ -117,7 +137,9 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
       setBalanceGames((prev) => prev.filter((game) => game.id !== gameId));
     } catch (error) {
       console.error("밸런스 게임 삭제 실패", error);
-      alert("밸런스 게임 삭제에 실패했습니다.");
+      // alert("밸런스 게임 삭제에 실패했습니다.");
+      setBoardMessage("밸런스 게임 삭제에 실패했습니다.");
+      handleBasicSnackbar();
     }
   };
 
@@ -135,7 +157,9 @@ const Board = ({ team, isBoardExpanded, onToggleExpand }) => {
       ) {
         throw new Error("이미 투표하셨습니다!");
       } else {
-        alert("투표에 실패했습니다.");
+        // alert("투표에 실패했습니다.");
+        setBoardMessage("투표에 실패했습니다.");
+        handleBasicSnackbar();
         throw error;
       }
     }

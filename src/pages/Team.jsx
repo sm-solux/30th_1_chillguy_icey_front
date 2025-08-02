@@ -83,21 +83,27 @@ const Team = () => {
   // 로딩중 판단 state
   const [isLoading, setIsLoading] = useState(true);
 
+  // 스낵바 메시지 내용 정리
+  const [snackbarMessage, setSnackbarMessage] = useState(null);
+  const [isBasicSnackbarOpen, setIsBasicSnackbarOpen] = useState(false);
+  const [delayedNavigate, setDelayedNavigate] = useState(false);
+  const [boardMessage, setBoardMessage] = useState(null);
+
   // 일정 시간 이상 로딩되면 자동으로 홈페이지로 이동
   useEffect(() => {
     let timeoutId;
 
     if (isLoading) {
       timeoutId = setTimeout(() => {
-        console.warn("로딩 지연으로 홈페이지로 이동합니다.");
-        alert("정보를 불러올 수 없습니다.");
-
-        navigate("/notfound", { replace: true });
-      }, 30000); // ⏱️ 10초
+        console.warn("로딩 지연으로 스낵바만 띄움 (이동은 보류)");
+        setSnackbarMessage("정보를 불러올 수 없습니다.");
+        handleBasicSnackbar();
+        setDelayedNavigate(true); // 👈 이동은 상태로 따로 저장
+      }, 10000);
     }
 
-    return () => clearTimeout(timeoutId); // cleanup
-  }, [isLoading, navigate]);
+    return () => clearTimeout(timeoutId);
+  }, [isLoading]);
 
   // 🔁 팀 리스트 로드
   useEffect(() => {
@@ -367,6 +373,28 @@ const Team = () => {
     }
   }, [linkMessage]);
 
+  // ✅ 일반 메시지 스낵바
+  const handleBasicSnackbar = () => {
+    setIsBasicSnackbarOpen(true);
+  };
+
+  // ✅ 일반 메시지 확인 버튼 눌러서 닫기
+  const handleCloseBasicSnackbar = () => {
+    setSnackbarMessage(null);
+    setIsBasicSnackbarOpen(false);
+
+    if (delayedNavigate) {
+      navigate("/notfound", { replace: true });
+      setDelayedNavigate(false); // 다시 초기화
+    }
+  };
+
+  // ✅ 보드 메시지 확인 버튼 눌러서 닫기
+  const handleCloseBoardSnackbar = () => {
+    setBoardMessage(null);
+    setIsBasicSnackbarOpen(false);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -386,6 +414,8 @@ const Team = () => {
                     isBoardExpanded={isBoardExpanded}
                     onToggleExpand={toggleBoardExpand}
                     onCloseExpand={() => setIsBoardExpanded(false)}
+                    setBoardMessage={setBoardMessage}
+                    handleBasicSnackbar={handleBasicSnackbar}
                   />
                 ) : (
                   <div></div>
@@ -478,6 +508,14 @@ const Team = () => {
               </div>
             </section>
           </div>
+          {/* <button
+            onClick={() => {
+              setSnackbarMessage("정보를 불러올 수 없습니다.");
+              handleBasicSnackbar();
+            }}
+          >
+            스낵바테스트
+          </button> */}
 
           {isLinkSnackbarOpen && <LinkSnackbar link={invitationLink} />}
 
@@ -495,6 +533,18 @@ const Team = () => {
               text={linkMessage}
               buttontext="확인"
               buttonOnclick={handleCloseSnackbar} // ✅ 오타 수정 및 핸들러 연결
+            />
+          )}
+
+          {isBasicSnackbarOpen && (snackbarMessage || boardMessage) && (
+            <Snackbar
+              text={snackbarMessage ? snackbarMessage : boardMessage}
+              buttontext="확인"
+              buttonOnclick={
+                snackbarMessage
+                  ? handleCloseBasicSnackbar
+                  : handleCloseBoardSnackbar
+              } // ✅ 오타 수정 및 핸들러 연결
             />
           )}
         </>
