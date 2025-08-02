@@ -17,7 +17,10 @@
   justify-content: center; /* 가로 중앙 */
   align-items: center;
   width: 100%;
-  padding: 0 2.375rem;
+  padding: 0 0;
+  padding-left: max(3.125rem, 12.5rem) !important;
+  padding-right: max(3.125rem, 12.5rem) !important;
+
   min-height: 100vh;
 
   position: relative;
@@ -29,8 +32,8 @@
   gap: 1.375rem;
   align-items: center;
   justify-content: flex-start;
-  min-width: 744px;
-  max-width: 90rem;
+  min-width: 46.5rem;
+  /* max-width: 90rem; */
   position: relative;
   overflow-y: auto;
 }
@@ -127,14 +130,14 @@
 
 .headerLine {
   width: 100%;
-  min-width: 666px;
+  min-width: 41.625rem;
   /* max-width: 90rem; */
   height: 0.125rem;
 
-  border: 2px solid #fff;
+  border: 0.125rem solid #fff;
   opacity: 0.7;
   /* color: #fff; */
-  filter: blur(2px);
+  filter: blur(0.125rem);
 }
 
 .body {
