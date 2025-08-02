@@ -112,8 +112,10 @@ const Team = () => {
             console.warn("토큰 만료 또는 인증 실패. 로그인 필요.");
             logout();
 
-            setTeams(status);
-            setSelectedTeam(status);
+            // setTeams(status);
+            // setSelectedTeam(status);
+            navigate("/", { replace: true }); // 👈 홈 또는 로그인으로 리디렉션
+            setIsLoading(false); // 👈 로딩 종료
           }
         } else {
           console.error("네트워크 에러 또는 서버 응답 없음:", error.message);
