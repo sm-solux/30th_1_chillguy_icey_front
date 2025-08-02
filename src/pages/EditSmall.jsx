@@ -140,7 +140,7 @@ function EditSmall() {
       return;
     }
     if (smallTalk?.id === null || smallTalk?.id === undefined) {
-      alert("스몰톡 ID가 없어 제목을 업데이트할 수 없습니다.");
+      alert("제목을 저장하려면 먼저 '저장하기'를 눌러 전체 저장해주세요.");
       console.error("스몰톡 ID가 없어 제목 업데이트 불가");
       return;
     }

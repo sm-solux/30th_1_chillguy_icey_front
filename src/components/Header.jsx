@@ -52,24 +52,26 @@ const Header = () => {
               ICEY
             </div>
           </div>
-          <div className={hd.Header_menu}>
-            <img
-              ref={menuIconRef} // 메뉴 아이콘에 ref 추가
-              className={hd.Menu_logo}
-              onClick={toggleSideMenu}
-              src={menu}
-              alt="menu"
-            />
+          <div className={hd.Menu_wrapper}>
+            <div className={hd.Header_menu}>
+              <img
+                ref={menuIconRef} // 메뉴 아이콘에 ref 추가
+                className={hd.Menu_logo}
+                onClick={toggleSideMenu}
+                src={menu}
+                alt="menu"
+              />
+            </div>
+            {/* 사이드 메뉴 */}
+            {isSideMenuOpen && (
+              <div ref={sideMenuRef} className={hd.sideMenuWrapper}>
+                <Notification_box />
+              </div>
+            )}
           </div>
         </div>
 
         <hr className={hd.headerLine} />
-        {/* 사이드 메뉴 */}
-        {isSideMenuOpen && (
-          <div ref={sideMenuRef} className={hd.sideMenuWrapper}>
-            <Notification_box />
-          </div>
-        )}
       </header>
     </>
   );

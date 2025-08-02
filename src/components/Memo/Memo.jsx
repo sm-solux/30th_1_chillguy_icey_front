@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import st from "./Memo.module.css";
 import MemoLike from "./MemoLike";
 
-import memo_line from "../../assets/memo_line.svg";
-import memo_like from "../../assets/memo_like.svg";
+import memo_like from "../../assets/favorite.svg";
 import memo_edit from "../../assets/memo_edit.svg";
 import memo_delete from "../../assets/memo_delete.svg";
 

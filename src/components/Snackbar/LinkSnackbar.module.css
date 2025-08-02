@@ -47,13 +47,13 @@
 
 .link_text {
   width: 25rem;
-  height: 2.1875rem;
+  /* height: 2.1875rem; */
 
   color: var(--Font-Color-30, #a4abd5);
 
   /* Body2/Bold/20px */
   font-family: Inter;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%; /* 28px */
@@ -61,5 +61,15 @@
 
   /* ✅ 하단 경계선만 */
   border-bottom: 3px solid #7b83b1;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  user-select: text;
+}
+
+.link_text::-webkit-scrollbar {
+  display: none;
 }

@@ -28,7 +28,6 @@ const Header = () => {
           </div>
         </div>
         <Button text="홈으로 이동" type="long" onClick={handleLogoClick} />
-        <button onClick={handleKakaoLogin}>로그아웃</button>
       </div>
     </>
   );
