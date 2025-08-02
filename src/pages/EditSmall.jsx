@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import st from "./EditSmall.module.css";
 import {
   deleteSmallTalkTalkItem,
@@ -65,21 +65,25 @@ function EditSmall() {
   // 스몰톡 로드 시 초기 질문 상태를 저장하여 변경 사항을 추적할 수 있도록 함
   const [originalQuestionsState, setOriginalQuestionsState] = useState([]);
 
+  const hasAutoSavedRef = useRef(false); // 🚨 저장 여부를 추적하는 ref
+
   useEffect(() => {
-    const shouldAutoSave =
-      token &&
-      (!smallTalk?.id || smallTalk.id === 0) &&
+    const isNewSmallTalk =
+      smallTalk?.id === null || smallTalk?.id === undefined;
+
+    const hasValidContent =
       title.trim() !== "" &&
       (currentDisplayedApiQuestions.length > 0 || userQuestions.length > 0);
 
-    if (shouldAutoSave) {
-      // 자동 저장은 단 1번만 실행되도록 상태로 제어
-      const hasSaved = sessionStorage.getItem("hasAutoSaved");
-      if (!hasSaved) {
-        console.log("🚀 최초 생성된 스몰톡 자동 저장 실행 중...");
-        handleSaveAllChanges();
-        sessionStorage.setItem("hasAutoSaved", "true");
-      }
+    if (
+      token &&
+      isNewSmallTalk &&
+      hasValidContent &&
+      !hasAutoSavedRef.current // ✅ 한 번도 저장 안했을 때만
+    ) {
+      console.log("🚀 최초 진입한 새 스몰톡 → 자동 저장 시작");
+      hasAutoSavedRef.current = true; // ✅ 저장 후 다시 저장되지 않도록 설정
+      handleSaveAllChanges();
     }
   }, [token, smallTalk, title, currentDisplayedApiQuestions, userQuestions]);
 
