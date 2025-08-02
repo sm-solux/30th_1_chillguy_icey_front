@@ -16,14 +16,14 @@
 .Letter_body {
   display: flex;
   flex-direction: column;
-  gap: 3.125rem;
+  gap: 1rem;
   align-items: center;
   justify-content: flex-start;
   align-self: stretch;
   flex-shrink: 0;
   width: 100%;
   max-width: 85.25rem;
-  height: 51.5625rem;
+  height: 48rem;
   position: relative;
   margin: 0 auto;
 }
@@ -162,4 +162,35 @@
 
 .Letter_message_text::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.back_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.back_button {
+  display: flex;
+  align-items: center;
+  gap: 0.31rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.back_icon {
+  width: 1.875rem;
+  height: 1.875rem;
+}
+
+.back_text {
+  color: #fff;
+  font-family: Inter;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: -0.025rem;
 }
