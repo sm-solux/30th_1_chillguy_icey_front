@@ -193,16 +193,8 @@ const SmallTalk = () => {
   }, [location.state, navigate, location.pathname]);
 
   const previewQuestions = selectedSmallTalkDetail
-    ? [
-        ...selectedSmallTalkDetail.smallTalks
-          .filter((q) => q.questionType === "AI" || q.answer || q.tip)
-          .slice(0, QUESTIONS_PER_PREVIEW),
-        ...selectedSmallTalkDetail.smallTalks.filter(
-          (q) => q.questionType === "USER" || (!q.answer && !q.tip),
-        ),
-      ]
+    ? selectedSmallTalkDetail.smallTalks
     : [];
-
   // 3. 컴포넌트 렌더링 시 현재 list 상태 로그 (최종 화면에 표시되는 목록 확인)
   useEffect(() => {
     console.log("SmallTalk 컴포넌트 렌더링: 현재 list 상태:", list);
