@@ -42,7 +42,6 @@ const CardModal = ({
     setAnimal(defaultValue?.animal || "");
     setMbti(defaultValue?.mbti || "");
     setProfileColor(defaultValue?.profileColor || "9");
-    setAccessory(defaultValue?.accessory || "animal");
     setHobby(defaultValue?.hobby || "");
     setSecretTip(defaultValue?.secretTip || "");
     setTmi(defaultValue?.tmi || "");
@@ -66,7 +65,12 @@ const CardModal = ({
       setAdjective(defaultValue?.adjective || "");
     }
 
-    setAccessory(reverseAccessoryMap[defaultValue?.accessory] || "BASIC");
+    const validAccessories = ["BASIC", "RIBBON", "STAR"];
+    if (validAccessories.includes(defaultValue?.accessory)) {
+      setAccessory(defaultValue.accessory);
+    } else {
+      setAccessory("BASIC");
+    }
   }, [defaultValue]);
 
   const handleSave = () => {
@@ -144,12 +148,6 @@ const CardModal = ({
   const accessoryKey = accessoryMap[accessory] || "animal";
 
   const accessories = ["BASIC", "RIBBON", "STAR"];
-
-  const reverseAccessoryMap = {
-    animal: "BASIC",
-    ribbon: "RIBBON",
-    star: "STAR",
-  };
 
   const handleAccessoryChange = (direction) => {
     const currentIndex = accessories.indexOf(accessory);

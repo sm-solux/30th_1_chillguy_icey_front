@@ -3,6 +3,7 @@ import st from "./NewSmallTalk.module.css";
 import axios from "axios";
 import Button from "../components/Button";
 import ConfirmSnackbar from "../components/NewSmallTalk/ConfirmSnackbar";
+import Loading from "../components/Loading";
 
 const NewSmallTalk = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -28,7 +29,11 @@ const NewSmallTalk = () => {
     if (input.length <= 16) setPurposeText(input);
   };
 
+  const [loading, setLoading] = useState(false);
+  const [smallTalks, setSmallTalks] = useState(null);
+
   const postsmalltalk = async () => {
+    setLoading(true);
     try {
       const res = await axios.post(
         "https://icey-backend-1027532113913.asia-northeast3.run.app/api/smalltalk/preview",
@@ -41,8 +46,12 @@ const NewSmallTalk = () => {
       return res.data.data;
     } catch (error) {
       console.error("실패:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className={st.body}>

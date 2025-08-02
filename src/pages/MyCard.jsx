@@ -115,6 +115,7 @@ const MyCard = () => {
         subText: "명함 교체 후 삭제 가능합니다.",
         confirmText: "확인",
         confirmType: "midBlue",
+        onConfirm: closeAlert,
       });
     } else {
       setAlertDialogConfig({
@@ -122,6 +123,7 @@ const MyCard = () => {
         subText: "삭제하면 다시 복구할 수 없습니다.",
         confirmText: "삭제",
         confirmType: "midRed",
+        onConfirm: handleDeleteCard,
       });
     }
     setAlertOpen(true);
@@ -226,7 +228,7 @@ const MyCard = () => {
               subText={alertDialogConfig.subText}
               confirmText={alertDialogConfig.confirmText}
               confirmType={alertDialogConfig.confirmType}
-              onConfirm={handleDeleteCard}
+              onConfirm={alertDialogConfig.onConfirm}
               onCancel={closeAlert}
             />
           </div>

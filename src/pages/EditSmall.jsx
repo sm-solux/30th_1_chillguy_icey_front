@@ -127,6 +127,7 @@ function EditSmall() {
 
   // 제목만 저장하는 핸들러 (제목 옆 저장 아이콘 클릭 시)
   const handleSaveTitleOnly = async () => {
+    console.log("smallTalk.id:", smallTalk?.id);
     if (title.trim() === "") {
       alert("제목을 입력해주세요.");
       return;
@@ -140,7 +141,7 @@ function EditSmall() {
       console.error("토큰이 없습니다. 제목을 저장할 수 없습니다.");
       return;
     }
-    if (!smallTalk?.id) {
+    if (smallTalk?.id === null || smallTalk?.id === undefined) {
       alert("스몰톡 ID가 없어 제목을 업데이트할 수 없습니다.");
       console.error("스몰톡 ID가 없어 제목 업데이트 불가");
       return;

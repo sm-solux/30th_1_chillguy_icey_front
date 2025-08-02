@@ -142,6 +142,19 @@ const Letter = () => {
 
   const selectedLetter = letters.find((l) => l.id === openedId);
 
+  useEffect(() => {
+    if (modalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      // 컴포넌트 언마운트 시 원복
+      document.body.style.overflow = "";
+    };
+  }, [modalOpen]);
+
   return (
     <>
       <div className={st.Letter_wrapper}>
