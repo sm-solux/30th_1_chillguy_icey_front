@@ -11,7 +11,7 @@
 }
 
 .title_section {
-  padding: 0 0.625rem 1.875rem 0.625rem;
+  padding: 0 0.625rem 0.875rem 0.625rem;
   display: flex;
   flex-direction: row;
 
@@ -59,6 +59,10 @@
 .title {
   width: 7.125rem;
   cursor: pointer;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .headerLine {

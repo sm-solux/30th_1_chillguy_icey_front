@@ -85,3 +85,35 @@
   height: 3.125rem;
   margin: auto 0px;
 }
+
+.back_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.back_button {
+  display: flex;
+  align-items: center;
+  gap: 0.31rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.back_icon {
+  width: 1.875rem;
+  height: 1.875rem;
+}
+
+.back_text {
+  color: #fff;
+  font-family: Inter;
+  text-shadow: 0 2px 10px rgba(89, 126, 219, 0.5);
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: -0.025rem;
+}

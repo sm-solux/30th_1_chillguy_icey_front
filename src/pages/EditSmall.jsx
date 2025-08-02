@@ -16,12 +16,13 @@ import CustomInput from "../components/EditSmall/CustomInput"; // CustomInput �
 import CustomInput_write from "../components/EditSmall/CustomInput_write";
 import Question_pop_up from "../components/EditSmall/Question_pop_up";
 import { useLocation, useNavigate } from "react-router-dom";
+import Snackbar from "../components/Snackbar/Snackbar";
 
 function EditSmall() {
   const location = useLocation();
   const navigate = useNavigate();
   const smallTalk = location.state?.smallTalk; // SmallTalk.jsx에서 전달받은 스몰톡 데이터
-
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { token } = useAuth();
 
   // 디버깅을 위한 로그 (smallTalk 객체와 createdAt 값 확인)
@@ -66,6 +67,15 @@ function EditSmall() {
   const [originalQuestionsState, setOriginalQuestionsState] = useState([]);
 
   const hasAutoSavedRef = useRef(false); // 🚨 저장 여부를 추적하는 ref
+  // 스낵바 닫기 함수
+  const handleSnackbarClose = () => setSnackbarOpen(false);
+
+  const [snackbarText, setSnackbarText] = useState("");
+
+  function showSnackbar(message) {
+    setSnackbarText(message);
+    setSnackbarOpen(true);
+  }
 
   useEffect(() => {
     const isNewSmallTalk =
@@ -149,7 +159,8 @@ function EditSmall() {
   const handleSaveTitleOnly = async () => {
     console.log("smallTalk.id:", smallTalk?.id);
     if (title.trim() === "") {
-      alert("제목을 입력해주세요.");
+      showSnackbar("제목을 입력해주세요.");
+
       return;
     }
 
@@ -171,7 +182,8 @@ function EditSmall() {
         );
         await updateSmallTalkTitle(smallTalk.id, title, token);
         console.log("제목 업데이트 성공!");
-        alert("제목이 성공적으로 업데이트되었습니다.");
+
+        showSnackbar("제목이 업데이트되었습니다.");
       } catch (error) {
         console.error("제목 업데이트 중 오류 발생:", error);
         console.error("제목 업데이트 API 오류 응답:", error.response || error);
@@ -246,7 +258,8 @@ function EditSmall() {
       try {
         const res = await saveSmallTalk(payload, token);
         console.log("새 스몰톡 저장 성공:", res.data);
-        alert("새 스몰톡이 성공적으로 저장되었습니다!");
+
+        showSnackbar("스몰톡이 성공적으로 저장되었습니다!");
 
         navigate("/smalltalk", {
           state: { refresh: true, newSmallTalkId: res.data.data.id },
@@ -313,8 +326,8 @@ function EditSmall() {
           // API 스키마에 맞게 edits 배열을 { edits: [...] } 객체로 감싸서 전달
           const res = await editSmallTalkQuestions(listId, { edits }, token);
           console.log("기존 스몰톡 질문 업데이트 성공:", res.data);
-          alert("스몰톡 질문이 성공적으로 업데이트되었습니다!");
 
+          showSnackbar("스몰톡 질문이 업데이트되었습니다!");
           navigate("/smalltalk", {
             state: { refresh: true, newSmallTalkId: listId }, // 업데이트된 스몰톡 ID 전달
           });
@@ -531,7 +544,7 @@ function EditSmall() {
                   prevPool.filter((item) => item.id !== deletedId),
                 );
 
-                alert("질문이 삭제되었습니다.");
+                showSnackbar("질문이 삭제되었습니다.");
               } catch (error) {
                 console.error("질문 삭제 중 오류 발생:", error);
                 alert("질문 삭제 중 오류가 발생했습니다. 다시 시도해주세요.");
@@ -563,7 +576,8 @@ function EditSmall() {
                 setUserQuestions((prev) =>
                   prev.filter((item) => item.id !== deletedId),
                 );
-                alert("사용자 질문이 성공적으로 삭제되었습니다.");
+
+                showSnackbar("질문이 삭제되었습니다.");
               } else {
                 // 백엔드에서 온 ID인 경우 API 호출을 통해 삭제
                 try {
@@ -574,12 +588,12 @@ function EditSmall() {
                   setUserQuestions((prev) =>
                     prev.filter((item) => item.id !== deletedId),
                   );
-                  alert("사용자 질문이 성공적으로 삭제되었습니다.");
+
+                  showSnackbar("질문이 삭제되었습니다.");
                 } catch (error) {
                   console.error("사용자 질문 삭제 중 오류 발생:", error);
-                  alert(
-                    "사용자 질문 삭제 중 오류가 발생했습니다. 다시 시도해주세요.",
-                  );
+
+                  showSnackbar("저장 후 다시 시도해주세요.");
                 }
               }
             }}
@@ -620,6 +634,13 @@ function EditSmall() {
           }
         />
       )} */}
+      {snackbarOpen && (
+        <Snackbar
+          text={snackbarText}
+          buttontext={"확인"}
+          buttonOnclick={() => setSnackbarOpen(false)}
+        />
+      )}
     </div>
   );
 }

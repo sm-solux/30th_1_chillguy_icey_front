@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import ReceivedLetter from "../components/Letter/ReceivedLetter";
 import CardList from "../components/Letter/CardList";
 import Button from "../components/Button";
 import LetterModal from "../components/Modal/LetterModal";
 import Snackbar from "../components/Snackbar/Snackbar";
+import back_arrow from "../assets/back_arrow.svg";
 
 import st from "./Letter.module.css";
 
@@ -155,9 +157,20 @@ const Letter = () => {
     };
   }, [modalOpen]);
 
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
       <div className={st.Letter_wrapper}>
+        <div className={st.back_wrapper}>
+          <button className={st.back_button} onClick={handleGoBack}>
+            <img src={back_arrow} alt="뒤로가기" className={st.back_icon} />
+            <span className={st.back_text}>팀페이지로 돌아가기</span>
+          </button>
+        </div>
         <div ref={letterBodyRef} className={st.Letter_body}>
           <div
             ref={letterListRef}
@@ -205,11 +218,19 @@ const Letter = () => {
           </div>
 
           {/* 명함 리스트 */}
-          <CardList
-            cards={cards.filter((card) => card.cardId !== myCardId)}
-            onSendClick={openModal}
-            showSendButton={true}
-          />
+          {cards.filter((card) => card.cardId !== myCardId).length > 0 ? (
+            <CardList
+              cards={cards.filter((card) => card.cardId !== myCardId)}
+              onSendClick={openModal}
+              showSendButton={true}
+            />
+          ) : (
+            <div className={st.NoMemberMessage}>
+              아직 팀원이 없습니다.
+              <br />
+              팀원을 초대해 보세요.
+            </div>
+          )}
         </div>
       </div>
       {/* 쪽지 작성 모달 LetterModal */}
