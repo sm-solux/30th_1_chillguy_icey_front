@@ -71,3 +71,13 @@ export const previewSmallTalk = async (target, purpose, token) => {
     },
   );
 };
+
+// 사용자 정보 가져오기
+export const getUserInfo = async (token) => {
+  return axios.get(
+    "https://icey-backend-1027532113913.asia-northeast3.run.app/api/user-info",
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+};
