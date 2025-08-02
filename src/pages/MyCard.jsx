@@ -177,7 +177,6 @@ const MyCard = () => {
           <span className={st.back_text}>팀페이지로 돌아가기</span>
         </button>
       </div>
-
       <div className={st.Card_body}>
         {/* 타이틀 */}
         <div className={st.TitleSection}>
