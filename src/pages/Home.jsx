@@ -5,6 +5,15 @@ import AlertLoginDialog from "../components/Home/AlertLoginDialog";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Snackbar from "../components/Snackbar/Snackbar";
+import SemiCurve from "../components/SemiCurve";
+
+import first from "../assets/seohyeon_1.svg";
+import second from "../assets/hwakyung_1.svg";
+import third from "../assets/younjea_2.svg";
+import fourth from "../assets/haeun_2.svg";
+import fifth from "../assets/sohyeon.svg";
+import sixth from "../assets/seoyoung.svg";
+import seventh from "../assets/sanghee_1.svg";
 
 const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -112,10 +121,92 @@ const Home = () => {
                   있어요
                 </div>
               </div>
-              <div className={st2.info_block_frame}>
+              <div className={st2.info_question_frame}>
                 <hr />
+                <div className={`${st2.question_box} ${st2.question_box1}`}>
+                  <span className={st2.question_text}>
+                    친구를 만났을 때 무슨 질문을 해야 할까?
+                  </span>
+                  <div className={st2.curve_overlap}>
+                    <SemiCurve />
+                  </div>
+                  <img
+                    className={`${st2.question_img} ${st2.question_img1}`}
+                    src={first}
+                    alt="first_image"
+                  />
+                </div>
+                <div className={`${st2.question_box} ${st2.question_box2}`}>
+                  <span className={st2.question_text}>
+                    낯을 많이 가리는데 자연스럽게 다가갈 수 있을까?
+                  </span>
+                  <div className={st2.curve_overlap}>
+                    <SemiCurve />
+                  </div>
+                  <img
+                    className={`${st2.question_img} ${st2.question_img2}`}
+                    src={second}
+                    alt="second_img"
+                  />
+                </div>
+                <div className={`${st2.question_box} ${st2.question_box3}`}>
+                  <span className={st2.question_text}>
+                    질문이 단답으로 끝나면 대화가 끊길까 봐 걱정돼
+                  </span>
+                  <div className={st2.curve_overlap}>
+                    <SemiCurve />
+                  </div>
+                  <img
+                    className={`${st2.question_img} ${st2.question_img3}`}
+                    src={third}
+                    alt="third_image"
+                  />
+                </div>
+                <img
+                  className={`${st2.question_img} ${st2.question_img7}`}
+                  src={seventh}
+                  alt="seventh_image"
+                />
+                <div className={`${st2.question_box} ${st2.question_box4}`}>
+                  <span className={st2.question_text}>
+                    팀원들에 대해 아무 정보도 없어서 불안해
+                  </span>
+                  <div className={st2.curve_overlap}>
+                    <SemiCurve />
+                  </div>
+                  <img
+                    className={`${st2.question_img} ${st2.question_img4}`}
+                    src={fourth}
+                    alt="fourth_image"
+                  />
+                </div>
+                <div className={`${st2.question_box} ${st2.question_box5}`}>
+                  <span className={st2.question_text}>
+                    모임 날짜도 정해야 해
+                  </span>
+                  <div className={st2.curve_overlap}>
+                    <SemiCurve />
+                  </div>
+                  <img
+                    className={`${st2.question_img} ${st2.question_img5}`}
+                    src={fifth}
+                    alt="fifth_image"
+                  />
+                </div>
+                <div className={`${st2.question_box} ${st2.question_box6}`}>
+                  <span className={st2.question_text}>
+                    아이스브레이킹으로 대면에서는 효율적인 만남을 가지고 싶어
+                  </span>
+                  <div className={st2.curve_overlap}>
+                    <SemiCurve />
+                  </div>
+                  <img
+                    className={`${st2.question_img} ${st2.question_img6}`}
+                    src={sixth}
+                    alt="sixth_image"
+                  />
+                </div>
               </div>
-              <div></div>
             </div>
           </div>
 
