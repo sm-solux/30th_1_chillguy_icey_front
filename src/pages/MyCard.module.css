@@ -110,6 +110,7 @@
 .back_text {
   color: #fff;
   font-family: Inter;
+  text-shadow: 0 2px 10px rgba(89, 126, 219, 0.5);
   font-size: 1.25rem;
   font-style: normal;
   font-weight: 700;

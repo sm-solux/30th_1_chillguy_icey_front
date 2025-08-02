@@ -189,9 +189,29 @@
 .back_text {
   color: #fff;
   font-family: Inter;
+  text-shadow: 0 2px 10px rgba(89, 126, 219, 0.5);
   font-size: 1.25rem;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
   letter-spacing: -0.025rem;
+}
+
+.NoMemberMessage {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(89, 126, 219, 0.5);
+  font-family: Inter;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: -0.03rem;
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 15rem;
+  white-space: pre-line;
 }

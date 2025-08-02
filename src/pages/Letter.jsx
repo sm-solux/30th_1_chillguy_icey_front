@@ -218,11 +218,19 @@ const Letter = () => {
           </div>
 
           {/* 명함 리스트 */}
-          <CardList
-            cards={cards.filter((card) => card.cardId !== myCardId)}
-            onSendClick={openModal}
-            showSendButton={true}
-          />
+          {cards.filter((card) => card.cardId !== myCardId).length > 0 ? (
+            <CardList
+              cards={cards.filter((card) => card.cardId !== myCardId)}
+              onSendClick={openModal}
+              showSendButton={true}
+            />
+          ) : (
+            <div className={st.NoMemberMessage}>
+              아직 팀원이 없습니다.
+              <br />
+              팀원을 초대해 보세요.
+            </div>
+          )}
         </div>
       </div>
       {/* 쪽지 작성 모달 LetterModal */}
