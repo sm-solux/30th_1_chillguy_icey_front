@@ -75,62 +75,38 @@ function EditSmall() {
       }
 
       if (Array.isArray(smallTalk.smallTalks)) {
-        // 모든 질문에 클라이언트 측에서 사용할 고유 ID를 부여하고 questionType을 명확히 함
         const initialCombinedQuestions = smallTalk.smallTalks.map((q) => ({
           ...q,
           id:
             q.id === null || q.id === undefined || q.id === ""
-              ? crypto.randomUUID() // 임시 클라이언트 ID
+              ? crypto.randomUUID()
               : q.id,
-          questionType: q.questionType || (q.answer || q.tip ? "AI" : "USER"),
+          questionType: q.questionType || (q.answer || q.tip ? "AI" : "SELF"),
         }));
 
-        // 초기 상태 저장 (diffing을 위해)
         setOriginalQuestionsState(initialCombinedQuestions);
 
-        // questionType이 'AI'이거나 answer 또는 tip 필드가 있는 경우를 API 질문으로 간주
         const fetchedApiQuestions = initialCombinedQuestions.filter(
           (q) => q.questionType === "AI",
         );
 
-        // questionType이 'USER'이거나 answer와 tip 필드가 모두 없는 경우를 사용자 질문으로 간주
         const fetchedUserQuestions = initialCombinedQuestions.filter(
-          (q) => q.questionType === "USER",
+          (q) => q.questionType === "SELF",
         );
 
-        setAllApiQuestions(fetchedApiQuestions); // 모든 API 질문 (마스터 목록) 저장
-        setUserQuestions(fetchedUserQuestions); // 사용자 질문 저장
+        setAllApiQuestions(fetchedApiQuestions);
+        setUserQuestions(fetchedUserQuestions);
 
-        // 초기 화면에 표시될 질문들 (API 질문 중 처음 5개)
-        setCurrentDisplayedApiQuestions(
-          fetchedApiQuestions.slice(0, QUESTIONS_PER_PAGE),
-        );
-        // 교체에 사용될 나머지 질문들
-        const initialReplacementPool =
-          fetchedApiQuestions.slice(QUESTIONS_PER_PAGE);
-        setAvailableReplacementPool(initialReplacementPool);
-        setReplaceCount(0); // 새로운 스몰톡 로드 시 교체 횟수 초기화
+        // 최대 5개가 아니라 전부 다 보여주도록 변경
+        setCurrentDisplayedApiQuestions(fetchedApiQuestions);
 
-        // 초기 질문 풀 크기 로그 추가
-        console.log(
-          "초기화: fetchedApiQuestions.length:",
-          fetchedApiQuestions.length,
-        );
-        console.log(
-          "초기화: availableReplacementPool.length (slice 후):",
-          initialReplacementPool.length,
-        );
-        console.log(
-          "초기화: availableReplacementPool 내용:",
-          initialReplacementPool,
-        );
+        // setAvailableReplacementPool( ... ) 삭제
       } else {
         setAllApiQuestions([]);
         setUserQuestions([]);
         setCurrentDisplayedApiQuestions([]);
-        setAvailableReplacementPool([]);
-        setReplaceCount(0);
-        setOriginalQuestionsState([]); // 초기 상태도 초기화
+        // setAvailableReplacementPool([]); 삭제
+        setOriginalQuestionsState([]);
       }
     }
   }, [smallTalk]);
@@ -283,30 +259,22 @@ function EditSmall() {
 
       // 1. 현재 클라이언트가 가지고 있는 모든 질문을 'edits' 배열에 추가 (추가 또는 수정된 것으로 간주)
       questionsToPersist.forEach((currentQ) => {
-        let processedIdForEdit = 0;
-        if (typeof currentQ.id === "number" && currentQ.id !== 0) {
-          processedIdForEdit = currentQ.id; // 기존 백엔드 ID 유지
-        } else if (
-          typeof currentQ.id === "string" &&
-          currentQ.id.startsWith("new_")
-        ) {
-          processedIdForEdit = 0; // 클라이언트 측에서 생성된 새 임시 ID -> 0으로 변환
-        } else {
-          // 백엔드에서 온 문자열 ID 중 숫자로 변환 가능한 경우
-          const numId = Number(currentQ.id);
-          if (!isNaN(numId) && currentQ.id !== "") {
-            processedIdForEdit = numId;
-          } else {
-            processedIdForEdit = 0; // 유효하지 않은 문자열 ID는 새로 추가된 것으로 간주
-          }
-        }
+        const processedIdForEdit =
+          currentQ.id === null || currentQ.id === undefined
+            ? null
+            : typeof currentQ.id === "number"
+              ? currentQ.id
+              : 0; // 혹시 잘못된 string ID 대비 예외 처리
 
         edits.push({
           id: processedIdForEdit,
           question: currentQ.question,
           tip: currentQ.tip || "",
           answer: currentQ.answer || "",
-          questionType: currentQ.questionType,
+          questionType: currentQ.questionType || "SELF",
+          show: typeof currentQ.show === "boolean" ? currentQ.show : true,
+          change_time:
+            typeof currentQ.change_time === "number" ? currentQ.change_time : 0,
         });
       });
 
@@ -324,6 +292,8 @@ function EditSmall() {
         "handleSaveAllChanges: 기존 스몰톡 질문 업데이트 페이로드 (edits):",
         edits,
       );
+      console.log("userQuestions clone:", structuredClone(userQuestions));
+      console.log("PUT /api/smalltalk/list/{listId}/edit payload:", { edits });
 
       if (edits.length > 0) {
         try {
@@ -373,11 +343,13 @@ function EditSmall() {
       ...prevQuestions,
       {
         question: newQuestionText,
-        id: `new_${crypto.randomUUID()}`,
+        id: null,
         answer: "",
-        questionType: "USER",
-      }, // 임시 ID 및 answer, questionType 필드 추가
+        questionType: "SELF",
+        show: true,
+      },
     ]);
+
     setIsWriting(false); // 저장 후 CustomInput_write 숨기기
   };
 
@@ -542,8 +514,6 @@ function EditSmall() {
                 alert("질문 삭제 중 오류가 발생했습니다. 다시 시도해주세요.");
               }
             }}
-            onReplaceClick={handleOpenReplaceConfirm}
-            disableReplaceButton={disableReplaceButton}
           />
         ))}
 
@@ -613,7 +583,7 @@ function EditSmall() {
         onClick={handleSaveAllChanges}
         disabled={!token}
       />
-      {showConfirmPopup && (
+      {/* {showConfirmPopup && (
         <Question_pop_up
           currentCount={replaceCount}
           maxCount={MAX_REPLACE_COUNT}
@@ -624,7 +594,7 @@ function EditSmall() {
             availableReplacementPool.length === 0
           }
         />
-      )}
+      )} */}
     </div>
   );
 }
