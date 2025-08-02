@@ -96,7 +96,8 @@ const Memo = ({ memo, teamId, memoId, onDelete, onEdit }) => {
           </div>
         )}
       </div>
-      <img className={st.Memo_line_img} src={memo_line} alt="memo_line" />
+      {/* <img className={st.Memo_line_img} src={memo_line} alt="memo_line" /> */}
+      <hr />
       {/* 메모 내용 */}
       <div className={st.Memo_text}>{content}</div>
     </div>

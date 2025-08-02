@@ -24,7 +24,7 @@ const AlertLoginDialog = ({ onClose }) => {
         {/* 텍스트 영역 */}
         <div className={st.Text_contanier}>
           <div className={st.Main}>
-            해당 기능을 사용하기 위해서는
+            해당 기능을 이용하기 위해서
             <br />
             로그인이 필요합니다!
           </div>

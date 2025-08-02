@@ -29,6 +29,8 @@ import {
   fetchScheduleConfirm,
 } from "../util/TeamVoteAPI";
 
+import Loading from "../components/Loading";
+
 const Team = () => {
   const { token, logout } = useAuth();
 
@@ -78,6 +80,9 @@ const Team = () => {
   // 팀 카드 미리보기를 위한 추가 변수 코드
   const [selectedCardM, setSelectedCardM] = useState([]);
 
+  // 로딩중 판단 state
+  const [isLoading, setIsLoading] = useState(true);
+
   // 🔁 팀 리스트 로드
   useEffect(() => {
     const loadTeams = async () => {
@@ -107,15 +112,20 @@ const Team = () => {
             console.warn("토큰 만료 또는 인증 실패. 로그인 필요.");
             logout();
 
-            setTeams(status);
-            setSelectedTeam(status);
+            // setTeams(status);
+            // setSelectedTeam(status);
+            navigate("/", { replace: true }); // 👈 홈 또는 로그인으로 리디렉션
+            setIsLoading(false); // 👈 로딩 종료
           }
         } else {
           console.error("네트워크 에러 또는 서버 응답 없음:", error.message);
         }
       }
     };
-    if (token) loadTeams();
+    if (token) {
+      setIsLoading(true);
+      loadTeams();
+    }
   }, [token]);
 
   // 새 팀 선택 시 데이터 초기화
@@ -150,8 +160,10 @@ const Team = () => {
           `🐳${selectedTeamId} 팀 카드 미리보기 조회 성공 :`,
           res_card,
         );
+        setIsLoading(false);
       } catch (error) {
         console.error("팀 상세 정보 불러오기 실패", error);
+        setIsLoading(false);
       }
     };
     loadTeamDetail();
@@ -340,129 +352,135 @@ const Team = () => {
 
   return (
     <>
-      <div className={st.Team_container}>
-        <section className={st.Team_section1}>
-          <div
-            className={`${st.box} ${st.team_board_box} ${
-              isBoardExpanded ? st.promExpandedBoard : ""
-            }`}
-          >
-            {selectedTeam && teams !== 401 ? (
-              <Board
-                team={selectedTeam}
-                isBoardExpanded={isBoardExpanded}
-                onToggleExpand={toggleBoardExpand}
-                onCloseExpand={() => setIsBoardExpanded(false)}
-              />
-            ) : (
-              <div></div>
-            )}
-          </div>
-          <div className={st.card_message_wrapper}>
-            <div className={`${st.box} ${st.team_card_box}`}>
-              {selectedTeam && teams !== 401 ? (
-                <CardM card={selectedCardM} team={selectedTeam} />
-              ) : (
-                // TODO: card 데이터 별도 조회 필요 시 fetchTeamCard 추가 필요
-                <div></div>
-              )}
-            </div>
-            <div className={`${st.box} ${st.team_message_box}`}>
-              {selectedTeam && teams !== 401 ? (
-                <Massage team={selectedTeam} />
-              ) : (
-                <div></div>
-              )}
-            </div>
-          </div>
-        </section>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <div className={st.Team_container}>
+            <section className={st.Team_section1}>
+              <div
+                className={`${st.box} ${st.team_board_box} ${
+                  isBoardExpanded ? st.promExpandedBoard : ""
+                }`}
+              >
+                {selectedTeam && teams !== 401 ? (
+                  <Board
+                    team={selectedTeam}
+                    isBoardExpanded={isBoardExpanded}
+                    onToggleExpand={toggleBoardExpand}
+                    onCloseExpand={() => setIsBoardExpanded(false)}
+                  />
+                ) : (
+                  <div></div>
+                )}
+              </div>
+              <div className={st.card_message_wrapper}>
+                <div className={`${st.box} ${st.team_card_box}`}>
+                  {selectedTeam && teams !== 401 ? (
+                    <CardM card={selectedCardM} team={selectedTeam} />
+                  ) : (
+                    // TODO: card 데이터 별도 조회 필요 시 fetchTeamCard 추가 필요
+                    <div></div>
+                  )}
+                </div>
+                <div className={`${st.box} ${st.team_message_box}`}>
+                  {selectedTeam && teams !== 401 ? (
+                    <Massage team={selectedTeam} />
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
+              </div>
+            </section>
 
-        <section className={st.Team_section2}>
-          <div
-            className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam?.confirmedDate === null ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : selectedTeam.confirmedDate ? "" : st.promExpanded) : ""}`}
-            onClick={handlePromiseClick}
-          >
-            {selectedTeam && teams !== 401 ? (
-              <Promise
-                team={selectedTeam}
-                teamCreateDate={selectedTeam.createdAt}
-                goalDate={selectedTeam.confirmedDate}
-              />
-            ) : (
-              <div></div>
-            )}
+            <section className={st.Team_section2}>
+              <div
+                className={`${st.box} ${st.team_promise_box} ${isExpanded && selectedTeam?.confirmedDate === null ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : selectedTeam.confirmedDate ? "" : st.promExpanded) : ""}`}
+                onClick={handlePromiseClick}
+              >
+                {selectedTeam && teams !== 401 ? (
+                  <Promise
+                    team={selectedTeam}
+                    teamCreateDate={selectedTeam.createdAt}
+                    goalDate={selectedTeam.confirmedDate}
+                  />
+                ) : (
+                  <div></div>
+                )}
 
-            <div
-              className={`${st.fadeWrap} ${fadeState === "visible" ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? st.hide : selectedTeam.confirmedDate ? st.hide : st.show) : st.hide}`}
-              style={{
-                display:
-                  fadeState === "hidden"
-                    ? "none"
-                    : selectedTeam.role === "MEMBER" &&
-                        !selectedTeam.hasSchedule
-                      ? "none"
-                      : selectedTeam?.confirmedDate
+                <div
+                  className={`${st.fadeWrap} ${fadeState === "visible" ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? st.hide : selectedTeam.confirmedDate ? st.hide : st.show) : st.hide}`}
+                  style={{
+                    display:
+                      fadeState === "hidden"
                         ? "none"
-                        : "block",
-              }}
-              onTransitionEnd={onFadeTransitionEnd}
-            >
-              {selectedTeam && teams !== 401 ? (
-                <PromiseCheck2
-                  team={selectedTeam}
-                  setSelectedTeam={setSelectedTeam}
-                  handleSaveTime={handleSaveTime}
-                  summary={summary}
-                  myVotes={myVotes}
-                  setMyVotes={setMyVotes}
-                  hasDateVotes={hasDateVotes}
-                  savedVotes={savedVotes}
-                  setSavedVotes={setSavedVotes}
-                  setSummary={setSummary}
-                  openPromiseDialog={openPromiseDialog}
-                  selectedDates={selectedDates}
-                  setSelectedDates={setSelectedDates}
-                  isDateSaved={isDateSaved}
-                  onSaveDate={handleSaveDate}
+                        : selectedTeam.role === "MEMBER" &&
+                            !selectedTeam.hasSchedule
+                          ? "none"
+                          : selectedTeam?.confirmedDate
+                            ? "none"
+                            : "block",
+                  }}
+                  onTransitionEnd={onFadeTransitionEnd}
+                >
+                  {selectedTeam && teams !== 401 ? (
+                    <PromiseCheck2
+                      team={selectedTeam}
+                      setSelectedTeam={setSelectedTeam}
+                      handleSaveTime={handleSaveTime}
+                      summary={summary}
+                      myVotes={myVotes}
+                      setMyVotes={setMyVotes}
+                      hasDateVotes={hasDateVotes}
+                      savedVotes={savedVotes}
+                      setSavedVotes={setSavedVotes}
+                      setSummary={setSummary}
+                      openPromiseDialog={openPromiseDialog}
+                      selectedDates={selectedDates}
+                      setSelectedDates={setSelectedDates}
+                      isDateSaved={isDateSaved}
+                      onSaveDate={handleSaveDate}
+                    />
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className={`${st.box} ${st.team_list_box} ${isExpanded && selectedTeam?.confirmedDate === null ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : selectedTeam?.confirmedDate ? "" : st.listShrinked) : ""}`}
+                onClick={handleListClick}
+              >
+                <Teamlist
+                  teams={teams}
+                  onTeamAdd={handleTeamAdd}
+                  onLinkClick={handleLinkSnackbar}
+                  onTeamCheckClick={handleTeamSelect}
+                  selectedTeamId={selectedTeamId}
                 />
-              ) : (
-                <div></div>
-              )}
-            </div>
+              </div>
+            </section>
           </div>
 
-          <div
-            className={`${st.box} ${st.team_list_box} ${isExpanded && selectedTeam?.confirmedDate === null ? (selectedTeam.role === "MEMBER" && !selectedTeam.hasSchedule ? "" : selectedTeam?.confirmedDate ? "" : st.listShrinked) : ""}`}
-            onClick={handleListClick}
-          >
-            <Teamlist
-              teams={teams}
-              onTeamAdd={handleTeamAdd}
-              onLinkClick={handleLinkSnackbar}
-              onTeamCheckClick={handleTeamSelect}
-              selectedTeamId={selectedTeamId}
+          {isLinkSnackbarOpen && <LinkSnackbar link={invitationLink} />}
+
+          {isPromiseDialogOpen && (
+            <PromiseDialog
+              bestCandidates={bestCandidates}
+              onConfirm={confirmPromiseDialog}
+              onCancel={closePromiseDialog}
+              setConfirmVoteData={setConfirmVoteData}
             />
-          </div>
-        </section>
-      </div>
+          )}
 
-      {isLinkSnackbarOpen && <LinkSnackbar link={invitationLink} />}
-
-      {isPromiseDialogOpen && (
-        <PromiseDialog
-          bestCandidates={bestCandidates}
-          onConfirm={confirmPromiseDialog}
-          onCancel={closePromiseDialog}
-          setConfirmVoteData={setConfirmVoteData}
-        />
-      )}
-
-      {isSnackbarOpen && linkMessage && (
-        <Snackbar
-          text={linkMessage}
-          buttontext="확인"
-          buttonOnclick={handleCloseSnackbar} // ✅ 오타 수정 및 핸들러 연결
-        />
+          {isSnackbarOpen && linkMessage && (
+            <Snackbar
+              text={linkMessage}
+              buttontext="확인"
+              buttonOnclick={handleCloseSnackbar} // ✅ 오타 수정 및 핸들러 연결
+            />
+          )}
+        </>
       )}
     </>
   );
