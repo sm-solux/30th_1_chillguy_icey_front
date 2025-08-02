@@ -1,7 +1,6 @@
 import { useState } from "react";
 import st from "./Home.module.css";
 import st2 from "./Home2.module.css";
-import line from "../assets/line.svg";
 import AlertLoginDialog from "../components/Home/AlertLoginDialog";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -143,7 +142,9 @@ const Home = () => {
               <div className={st2.info_block_frame}>
                 <hr />
                 <div className={st2.info_block_flex}>
-                  <div className={st2.info_block}>
+                  <div
+                    className={`${st2.info_block} ${st2.floating} ${st2.floatingDelay1}`}
+                  >
                     <div className={st2.info_block_block_inner}>
                       <div className={st2.info_block_title_group}>
                         <div className={st2.info_block_title}>대상과</div>
@@ -167,7 +168,9 @@ const Home = () => {
                     </div>
                   </div>
 
-                  <div className={st2.info_block}>
+                  <div
+                    className={`${st2.info_block} ${st2.floating} ${st2.floatingDelay2}`}
+                  >
                     <div className={st2.info_block_block_inner}>
                       <div className={st2.info_block_title_group}>
                         <div className={st2.info_block_title}>적절한</div>
@@ -191,7 +194,9 @@ const Home = () => {
                     </div>
                   </div>
 
-                  <div className={st2.info_block}>
+                  <div
+                    className={`${st2.info_block} ${st2.floating} ${st2.floatingDelay3}`}
+                  >
                     <div className={st2.info_block_block_inner}>
                       <div className={st2.info_block_title_group}>
                         <div className={st2.info_block_title}>마음에</div>
@@ -243,7 +248,9 @@ const Home = () => {
               <div className={st2.info_block_frame}>
                 <hr />
                 <div className={st2.info_block_flex}>
-                  <div className={st2.info_block}>
+                  <div
+                    className={`${st2.info_block} ${st2.floating} ${st2.floatingDelay1}`}
+                  >
                     <div className={st2.info_block_block_inner}>
                       <div className={st2.info_block_title_group}>
                         <div className={st2.info_block_title}>다양한</div>
@@ -267,7 +274,9 @@ const Home = () => {
                     </div>
                   </div>
 
-                  <div className={st2.info_block}>
+                  <div
+                    className={`${st2.info_block} ${st2.floating} ${st2.floatingDelay2}`}
+                  >
                     <div className={st2.info_block_block_inner}>
                       <div className={st2.info_block_title_group}>
                         <div className={st2.info_block_title}>명함과</div>
@@ -291,7 +300,9 @@ const Home = () => {
                     </div>
                   </div>
 
-                  <div className={st2.info_block}>
+                  <div
+                    className={`${st2.info_block} ${st2.floating} ${st2.floatingDelay3}`}
+                  >
                     <div className={st2.info_block_block_inner}>
                       <div className={st2.info_block_title_group}>
                         <div className={st2.info_block_title}>팀과</div>

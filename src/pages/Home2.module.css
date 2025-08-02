@@ -279,3 +279,31 @@
   flex-direction: column;
   gap: 5px;
 }
+
+@keyframes float {
+  0% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+.floatingDelay1 {
+  animation-delay: 0s;
+}
+
+.floatingDelay2 {
+  animation-delay: 0.5s;
+}
+
+.floatingDelay3 {
+  animation-delay: 1s;
+}
