@@ -77,10 +77,8 @@ function EditSmall() {
       if (Array.isArray(smallTalk.smallTalks)) {
         const initialCombinedQuestions = smallTalk.smallTalks.map((q) => ({
           ...q,
-          id:
-            q.id === null || q.id === undefined || q.id === ""
-              ? crypto.randomUUID()
-              : q.id,
+          id: q.id,
+
           questionType: q.questionType || (q.answer || q.tip ? "AI" : "SELF"),
         }));
 

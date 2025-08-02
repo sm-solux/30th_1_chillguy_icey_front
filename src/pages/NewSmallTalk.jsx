@@ -4,6 +4,7 @@ import axios from "axios";
 import Button from "../components/Button";
 import ConfirmSnackbar from "../components/NewSmallTalk/ConfirmSnackbar";
 import Loading from "../components/Loading";
+import api from "../util/api";
 
 const NewSmallTalk = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -35,13 +36,10 @@ const NewSmallTalk = () => {
   const postsmalltalk = async () => {
     setLoading(true);
     try {
-      const res = await axios.post(
-        "https://icey-backend-1027532113913.asia-northeast3.run.app/api/smalltalk/preview",
-        {
-          target: targetText,
-          purpose: purposeText,
-        },
-      );
+      const res = await api.post("/api/smalltalk/preview", {
+        target: targetText,
+        purpose: purposeText,
+      });
       console.log("스몰톡 생성", res.data);
       return res.data.data;
     } catch (error) {
