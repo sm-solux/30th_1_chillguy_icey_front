@@ -100,7 +100,7 @@
 
 ## 🌐 서비스 아키텍처
 
-<img width="4983" height="2160" alt="서비스아키텍처" src="https://raw.githubusercontent.com/khwak/for-image/main/icey_arch.png" />
+<img width="4983" height="2160" alt="서비스아키텍처" src="https://github.com/khwak/for-image/blob/main/icey_arch.png" />
 
 ## 📁 프로젝트 디렉터리 구조
 
