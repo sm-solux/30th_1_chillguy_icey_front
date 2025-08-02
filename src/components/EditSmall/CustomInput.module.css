@@ -1,8 +1,9 @@
-.customInputCard,
-.customInputCard * {
+.questionCard,
+.questionCard * {
   box-sizing: border-box;
 }
-.customInputCard {
+
+.questionCard {
   background: #ffffff;
   border-radius: 1.25rem;
   padding: 1.25rem;
@@ -15,7 +16,8 @@
   flex-shrink: 0;
   position: relative;
 }
-.customInputHeader {
+
+.questionCardHeader {
   display: flex;
   flex-direction: row;
   row-gap: 10px;
@@ -28,7 +30,8 @@
   position: relative;
   overflow: hidden;
 }
-.customInputText {
+
+.questionText {
   color: #4b527e;
   text-align: left;
   font-family: "Inter-SemiBold", sans-serif;
@@ -38,8 +41,11 @@
   font-weight: 600;
   position: relative;
   flex: 1;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
-.customInputActions {
+
+.questionActions {
   display: flex;
   flex-direction: row;
   gap: 0.625rem;
@@ -47,4 +53,63 @@
   justify-content: flex-start;
   flex-shrink: 0;
   position: relative;
+}
+
+.questionDetailSection {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.questionDetailCard {
+  background: #e4f0ff;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.detailContentText {
+  color: #4b527e;
+  text-align: left;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 1.5rem;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.detailContentText textarea {
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 1.5rem;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: #4b527e;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  min-height: 40px; /* 한 줄 높이 대략 설정 */
+  line-break: anywhere;
+  cursor: text;
 }

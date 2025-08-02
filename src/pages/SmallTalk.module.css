@@ -104,27 +104,6 @@
   flex-shrink: 0;
   position: relative;
 }
-.target_purpose {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.2) 100%
-  );
-  border-radius: 1.25rem;
-  padding: 1.25rem 2.5rem 1.25rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  align-items: flex-start;
-  justify-content: center;
-  align-self: stretch;
-  flex: 1 1 0;
-  min-width: 0;
-  position: relative;
-  box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.5);
-  overflow: hidden;
-  backdrop-filter: blur(22.5px);
-}
 .notselected {
   background: linear-gradient(
     180deg,
@@ -186,16 +165,31 @@
   align-items: center;
   justify-content: center;
 }
-/* 대상 목적 */
-.d {
+
+.target_purpose {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  border-radius: 1.25rem;
+  padding: 1.25rem 2.5rem 1.25rem 2.5rem;
   display: flex;
-  flex-direction: row;
-  gap: 0.75rem;
-  align-items: center;
-  justify-content: flex-start;
-  flex-shrink: 0;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: stretch;
+  flex: 1 1 0;
+  min-width: 0;
   position: relative;
+  box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  backdrop-filter: blur(22.5px);
+  max-width: 100%;
 }
+/* 대상 목적 */
+
 .ds {
   color: #ffffff;
   text-align: left;
@@ -210,41 +204,33 @@
   align-items: center;
   justify-content: flex-start;
 }
-.dg {
-  color: #ffffff;
-  text-align: left;
-  font-family: "Inter-Bold", sans-serif;
-  font-size: 2.25rem;
-  line-height: 140%;
-  letter-spacing: -0.02em;
-  font-weight: 700;
-  position: relative;
-  width: 21.875rem;
-  height: 3.125rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
+.d,
 .mj {
   display: flex;
   flex-direction: row;
-  gap: 0.625rem;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  position: relative;
+  align-items: center;
+  gap: 0.75rem;
+
+  flex: 1;
+  min-width: 0;
+  width: 100%;
 }
+
+.dg,
 .o {
+  display: block; /* 🔥 핵심: flex ❌ block ✅ */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+
   color: #ffffff;
-  text-align: left;
   font-family: "Inter-Bold", sans-serif;
   font-size: 2.25rem;
   line-height: 140%;
   letter-spacing: -0.02em;
   font-weight: 700;
-  position: relative;
-  width: 21.875rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
 }

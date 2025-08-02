@@ -433,6 +433,11 @@ function EditSmall() {
         q.id === questionId ? { ...q, answer: newDetailText } : q,
       ),
     );
+    setUserQuestions((prevUserQs) =>
+      prevUserQs.map((q) =>
+        q.id === questionId ? { ...q, answer: newDetailText } : q,
+      ),
+    );
   };
 
   // '바꾸기' 버튼 비활성화 여부 결정
@@ -522,6 +527,7 @@ function EditSmall() {
             key={q.id}
             id={q.id}
             text={q.question}
+            initialAnswer={q.answer || ""}
             onDelete={async (deletedId) => {
               if (!token) {
                 console.error("토큰이 없습니다. 삭제할 수 없습니다.");
@@ -559,6 +565,7 @@ function EditSmall() {
                 }
               }
             }}
+            onAnswerChange={handleDetailTextChange}
           />
         ))}
 
