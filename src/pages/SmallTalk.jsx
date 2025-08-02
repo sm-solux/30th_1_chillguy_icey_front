@@ -203,11 +203,15 @@ const SmallTalk = () => {
   return (
     <div className={st.body}>
       <div className={st.list_section}>
-        <div className={st.list_title}>
+        {/* 타이틀 영역 */}
+        <div className={st.list_header}>
           <div className={st.list_div}>
             <div className={st.list}>스몰톡 리스트</div>
           </div>
+        </div>
 
+        {/* 스몰톡 리스트 항목 영역 */}
+        <div className={st.list_items}>
           {list.map((item) => (
             <SmallTalkName
               key={item.id}

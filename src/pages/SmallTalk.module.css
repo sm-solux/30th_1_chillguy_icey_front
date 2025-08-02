@@ -21,7 +21,7 @@
   padding: 2.5rem 1.25rem 2.5rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 2rem;
   align-items: center;
   justify-content: flex-start;
   flex: 1 1 0;
@@ -32,7 +32,8 @@
   box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(22.5px);
 }
-.list_title {
+.list_header {
+  /* 기존 .list_title의 타이틀 관련 스타일만 넣기 */
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -42,6 +43,48 @@
   flex-shrink: 0;
   position: relative;
 }
+
+.list_items {
+  flex: 1 1 auto;
+  width: 100%;
+  overflow-y: auto;
+  max-height: calc(51.4375rem - 6rem);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* 아이템 간 세로 간격 */
+  box-sizing: border-box;
+}
+
+.list_title {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  /* ✅ 스크롤 적용 */
+  overflow-y: auto;
+  padding-right: 5px;
+  scrollbar-gutter: stable;
+}
+/* 크롬, 사파리, 엣지 등 Webkit 기반 브라우저용 */
+.list_items::-webkit-scrollbar {
+  display: none;
+}
+
+/* 파이어폭스용 */
+.list_items {
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨김 */
+}
+
+/* IE, Edge (구버전)용 */
+.list_items {
+  -ms-overflow-style: none; /* IE, Edge */
+}
+
 .list_div {
   display: flex;
   flex-direction: row;
