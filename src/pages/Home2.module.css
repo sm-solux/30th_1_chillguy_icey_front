@@ -331,40 +331,40 @@
 
 /* 개별 박스 너비 조절 */
 .question_box1 {
-  top: 0px;
+  top: 2rem;
   width: 21.875rem;
-  transform: translateX(calc(-50% - 200px));
+  transform: translateX(calc(-50% - 12rem));
 }
 
 .question_box2 {
-  top: 140px;
+  top: 12rem;
   width: 26.875rem;
-  transform: translateX(calc(-50% - 300px));
+  transform: translateX(calc(-50% - 27rem));
 }
 
 .question_box3 {
-  top: 280px;
+  top: 23rem;
   width: 27.5rem;
-  transform: translateX(calc(-50% - 200px));
+  transform: translateX(calc(-50% - 16rem));
 }
 
 /* 필요하면 top 위치 조정 */
 .question_box4 {
-  top: 0px;
+  top: 2rem;
   width: 22.5rem;
-  transform: translateX(calc(-50% + 200px));
+  transform: translateX(calc(-50% + 12rem));
 }
 
 .question_box5 {
-  top: 140px;
+  top: 12rem;
   width: 13.4375rem;
-  transform: translateX(calc(-50% + 350px));
+  transform: translateX(calc(-50% + 27rem));
 }
 
 .question_box6 {
-  top: 280px;
+  top: 23rem;
   width: 32.8125rem;
-  transform: translateX(calc(-50% + 250px));
+  transform: translateX(calc(-50% + 16rem));
 }
 
 .question_text {
@@ -378,7 +378,7 @@
 }
 
 .curve_overlap {
-  margin-top: -10px;
+  margin-top: -0.625rem;
   width: 100%;
 }
 
@@ -406,7 +406,7 @@
 }
 .question_img7 {
   position: absolute;
-  top: 100px;
+  top: 10rem;
   left: 50%;
   transform: translateX(-50%);
   width: 12.5rem;
