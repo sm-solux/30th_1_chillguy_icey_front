@@ -5,18 +5,28 @@ import back from "../assets/back.svg";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+
+import Loading from "../components/Loading";
 
 const IcyLogin = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    await login();
-
-    const redirectPath = location.state?.from || "/";
-    console.log("Redirecting to:", redirectPath);
-    navigate(redirectPath, { replace: true });
+    setLoading(true);
+    try {
+      await login();
+      const redirectPath = location.state?.from || "/";
+      console.log("Redirecting to:", redirectPath);
+      navigate(redirectPath, { replace: true });
+    } catch (error) {
+      console.error("Login failed:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const kakaolink = `https://icey-backend-1027532113913.asia-northeast3.run.app/oauth2/authorization/kakao`;
@@ -24,11 +34,13 @@ const IcyLogin = () => {
   const googlelink = `https://icey-backend-1027532113913.asia-northeast3.run.app/oauth2/authorization/google`;
 
   const handleKakaoLogin = async () => {
+    setLoading(true);
     localStorage.setItem("loginType", "kakao");
     window.location.href = kakaolink;
   };
 
   const handleGoogleLogin = () => {
+    setLoading(true);
     localStorage.setItem("loginType", "google");
     window.location.href = googlelink;
   };
@@ -39,6 +51,7 @@ const IcyLogin = () => {
 
   return (
     <div className="login-body">
+      {loading && <Loading />}
       <div className="login-content">
         <button className="backButton" onClick={goToHome}>
           <img className="backButton" src={back} alt="홈페이지 돌아가기" />
